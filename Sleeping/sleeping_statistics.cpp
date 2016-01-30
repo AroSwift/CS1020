@@ -10,14 +10,51 @@ using namespace std;
 
 
 int main() {
-  int num_records;
   SleepData sleep[MAX_NUM_SLEEP_STATISTICS];
+  int num_records;
+  char choice;
+  bool exit = false;
 
   // Read a given file into an array of structures
   read_file( sleep, num_records );
 
-  // Give the user a menu
-  display_menu( sleep, num_records );
+  // Display a menu
+  do {
+
+    // Get user choice
+    cout << "MAIN MENU" << endl
+    << "-----------------------------" << endl
+    << "1.) Search by Name" << endl
+    << "2.) See Longest Sleep Time(s)" << endl
+    << "3.) See Shortest Sleep Times(s)" << endl
+    << "4.) Exit Program" << endl
+    << "Choice: ";
+    cin >> choice;
+
+    // Associate choice with an action
+    switch(choice) {
+      case '1': // Search by name
+        search_by_name(sleep, num_records);
+        break;
+
+      case '2': // See longest sleep time(s)
+        longest_sleep_times(sleep, num_records);
+        break;
+
+      case '3': // See shortest sleep time(s)
+        shortest_sleep_times(sleep, num_records);
+        break;
+
+      case '4': // Exit program
+        exit = true;
+        break;
+
+      default: // Error occured
+        cout << "Please enter a valid option." << endl;
+        break;
+    }
+
+  } while(!exit);
 
   return 0;
 }

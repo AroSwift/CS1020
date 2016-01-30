@@ -9,14 +9,15 @@ using namespace std;
 
 const int MAX_NUM_SLEEP_STATISTICS = 10; // Max sleeping statistics to utilize
 const int MAX_FILE_LENGTH = 256; // Max file length is 255
-const string DEFAULT_ERROR_MESSAGE = "An error has occured. ";
 
+// Full date in MM-DD-YYYY format
 struct FullDate {
   int month;
   int day;
   int year;
 };
 
+// Time in 24 hour HH:MM format
 struct Time {
   int hour;
   int minute;
@@ -28,9 +29,6 @@ struct SleepData {
   FullDate date;
   Time start_time;
   Time end_time;
-  // string date;
-  // string sleep_start_time;
-  // string sleep_end_time;
 };
 
 
@@ -148,6 +146,7 @@ void search_by_name( SleepData sleep[], int num_records ) {
   cin >> last_name;
 
   for( int i = 0; i < num_records; i++ ) {
+    // Select the first instance of first and last name matching given values name
     if( sleep[i].first_name == first_name && sleep[i].last_name == last_name ) {
       cout << "" << endl; // display dat stuff
       break;
@@ -178,15 +177,29 @@ void longest_sleep_times( SleepData sleep[], int num_records ) {
   // break it up using c_str
   // compare using to_i or equivalent
 
-  // Alphabetical order each structure by their county name
+  // Numerically order each structure by the longest sleep times
   for( top = 0; top < num_records; top++ ) {
     min_index = top;
     for ( i = top+1; i < num_records; i++ ) {
-      // Compare the county name’s alphabetical position
-      // if( sleep[min_index].name == sleep[i].name ) {
-      //   // Update the minimum index
-      //   min_index = i;
+      // Compare the sleeper's numerical position
+      int hour, minute;
+
+      // if( sleep[min_index].start_time.hour > sleep[i].start_time.hour ) {
+
+      //   if( sleep[min_index].start_time.minute > sleep[i].start_time.minute ) {
+      //     hour = sleep[min_index].start_time.hour - sleep[i].start_time.hour;
+      //     minute = sleep[min_index].start_time.minute - sleep[i].start_time.minute;
+      //   } else { // sleeper i .....
+      //     hour = sleep[i].start_time.hour - sleep[min_index].start_time.hour;
+      //     minute = sleep[i].start_time.minute - sleep[min_index].start_time.minute;
+      //   }
+
+      // } else { // min_index hour is not greater than
+
       // }
+
+      // Update the minimum index
+      min_index = i;
 
     }
 
@@ -199,53 +212,7 @@ void longest_sleep_times( SleepData sleep[], int num_records ) {
 
 
 void shortest_sleep_times( SleepData sleep[], int num_records ) {
-
   // break it up using c_str
   // compare using to_i or equivalent
-
 }
 
-
-
-
-void display_menu( SleepData sleep[], int num_records ) {
-  int choice;
-
-  do {
-
-    // Get user choice
-    cout << "MAIN MENU" << endl
-    << "-----------------------------" << endl
-    << "1.) Search by Name" << endl
-    << "2.) See Longest Sleep Time(s)" << endl
-    << "3.) See Shortest Sleep Times(s)" << endl
-    << "4.) Exit Program" << endl
-    << "Choice: ";
-    cin >> choice;
-
-    // Associate choice with an action
-    switch(choice) {
-      case 1: // Search by name
-        search_by_name(sleep, num_records);
-        break;
-
-      case 2: // See longest sleep time(s)
-        longest_sleep_times(sleep, num_records);
-        break;
-
-      case 3: // See shortest sleep time(s)
-        shortest_sleep_times(sleep, num_records);
-        break;
-
-      case 4: // Exit program
-        exit(1);
-        break;
-
-      default: // Error occured
-        cout << DEFAULT_ERROR_MESSAGE << "Please enter a valid option.";
-        break;
-    }
-
-  } while(choice != 4);
-
-}

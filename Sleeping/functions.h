@@ -12,14 +12,14 @@ const int MAX_FILE_LENGTH = 256; // Max file length is 255
 const string DEFAULT_ERROR_MESSAGE = "An error has occured. ";
 
 struct FullDate {
-  string month;
-  string day;
-  string year;
+  int month;
+  int day;
+  int year;
 };
 
 struct Time {
-  string hour;
-  string minute;
+  int hour;
+  int minute;
 };
 
 struct SleepData {
@@ -40,7 +40,7 @@ void get_file_name( char filename[] ) {
   cin.getline( filename, MAX_FILE_LENGTH ); // Max file length on linux is 255
 }
 
-void read_file( SleepData sleep[], int& num_statistics ) {
+void read_file( SleepData sleep[], int& num_records ) {
   char filename[MAX_FILE_LENGTH];
   int row, file_errors = 0;
   ifstream input;
@@ -72,17 +72,33 @@ void read_file( SleepData sleep[], int& num_statistics ) {
     getline( input, sleep[row].last_name );
 
     // Get date
-    getline( input, sleep[row].date.month, '-' );
-    getline( input, sleep[row].date.day, '-' );
-    getline( input, sleep[row].date.year );
+    string month, day, year;
+    getline( input, month, '-' );
+    getline( input, day, '-' );
+    getline( input, year );
 
     // Get sleep start time
-    getline( input, sleep[row].start_time.hour, ':' );
-    getline( input, sleep[row].start_time.minute );
+    string start_hour, start_minute;
+    getline( input, start_hour, ':' );
+    getline( input, start_minute );
 
     // Get sleep start time
-    getline( input, sleep[row].end_time.hour, ':' );
-    getline( input, sleep[row].end_time.minute  );
+    string end_hour, end_minute;
+    getline( input, end_hour, ':' );
+    getline( input, end_minute  );
+
+    // Convert date objects to integers
+    sleep[row].date.month = stoi(month);
+    sleep[row].date.day = stoi(day);
+    sleep[row].date.year = stoi(year);
+
+    // Convert start time objects to integers
+    sleep[row].start_time.hour = stoi(start_hour);
+    sleep[row].start_time.minute = stoi(start_minute);
+
+    // Convert end time objects to integers
+    sleep[row].end_time.hour = stoi(end_hour);
+    sleep[row].end_time.minute = stoi(end_minute);
 
     // Exit loop when end of file
     if( input.peek() == EOF) {
@@ -107,9 +123,9 @@ void read_file( SleepData sleep[], int& num_statistics ) {
   }
 
   // The number of sleeping statistics retrieved
-  num_statistics = row;
+  num_records = row;
 
-  // Then let the user know..
+  // Then inform user of success
   cout << "File successfully loaded." << endl;
 
   input.close();
@@ -167,10 +183,10 @@ void longest_sleep_times( SleepData sleep[], int num_records ) {
     min_index = top;
     for ( i = top+1; i < num_records; i++ ) {
       // Compare the county name’s alphabetical position
-      if( sleep[min_index].name == sleep[i].name ) {
-        Update the minimum index
-        min_index = i;
-      }
+      // if( sleep[min_index].name == sleep[i].name ) {
+      //   // Update the minimum index
+      //   min_index = i;
+      // }
 
     }
 

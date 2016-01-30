@@ -8,7 +8,7 @@ using namespace std;
 
 
 const int MAX_NUM_SLEEP_STATISTICS = 10; // Max sleeping statistics to utilize
-const int MAX_FILE_LENGTH = 256; // Max file length is 255
+const int MAX_FILE_LENGTH = 256; // Max file length on linux is 255
 
 // Full date in MM-DD-YYYY format
 struct FullDate {
@@ -29,6 +29,9 @@ struct SleepData {
   FullDate date;
   Time start_time;
   Time end_time;
+  Time amount;
+
+  void determine_sleep_amount();
 };
 
 
@@ -65,38 +68,40 @@ void read_file( SleepData sleep[], int& num_records ) {
   // Read file data into an array of structures
   for( row = 0; row < MAX_NUM_SLEEP_STATISTICS; row++ ) {
 
-    // Get name
+    // Get first and last name
     getline( input, sleep[row].first_name );
     getline( input, sleep[row].last_name );
 
-    // Get date
+    // Get date from MM-DD-YYYY format
     string month, day, year;
     getline( input, month, '-' );
     getline( input, day, '-' );
     getline( input, year );
 
-    // Get sleep start time
+    // Get sleep start time from HH:MM format
     string start_hour, start_minute;
     getline( input, start_hour, ':' );
     getline( input, start_minute );
 
-    // Get sleep start time
+    // Get sleep start time from HH:MM format
     string end_hour, end_minute;
     getline( input, end_hour, ':' );
     getline( input, end_minute  );
 
-    // Convert date objects to integers
+    // Convert strings to integers and set date
     sleep[row].date.month = stoi(month);
     sleep[row].date.day = stoi(day);
     sleep[row].date.year = stoi(year);
 
-    // Convert start time objects to integers
+    // Convert strings to integers and set start time
     sleep[row].start_time.hour = stoi(start_hour);
     sleep[row].start_time.minute = stoi(start_minute);
 
-    // Convert end time objects to integers
+    // Convert strings to integers and set end time
     sleep[row].end_time.hour = stoi(end_hour);
     sleep[row].end_time.minute = stoi(end_minute);
+
+    sleep[row].determine_sleep_amount();
 
     // Exit loop when end of file
     if( input.peek() == EOF) {
@@ -117,7 +122,10 @@ void read_file( SleepData sleep[], int& num_records ) {
     cout << sleep[i].start_time.minute << ", ";
 
     cout << sleep[i].end_time.hour << ", ";
-    cout << sleep[i].end_time.minute << endl;
+    cout << sleep[i].end_time.minute << ", ";
+
+    cout << sleep[i].amount.hour << ", ";
+    cout << sleep[i].amount.minute << ", ";
   }
 
   // The number of sleeping statistics retrieved
@@ -130,12 +138,23 @@ void read_file( SleepData sleep[], int& num_records ) {
 
 }
 
+void SleepData::determine_sleep_amount() {
+  amount.hour = end_time.hour - start_time.hour;
+  amount.minute = end_time.minute - start_time.minute;
+}
 
+void swap_sleep_data( SleepData& x, SleepData& y ){
+  SleepData temp;
+  temp = x;
+  x = y;
+  y = temp;
+}
 
 void search_by_name( SleepData sleep[], int num_records ) {
   string first_name;
   string last_name;
 
+  // what to do in multiple cases of same first or last name? - just the first
   // lowercase for search to expand possible matches
   // search BY FIRST AND LAST NAME
 
@@ -155,21 +174,6 @@ void search_by_name( SleepData sleep[], int num_records ) {
 
 }
 
-
-void swap_data( SleepData& x, SleepData& y ){
-  SleepData temp;
-  temp = x;
-  x = y;
-  y = temp;
-}
-
-
-
-// what to do in multiple cases of same first or last name? - just the first
-// can i use constants? -YES
-// What is the best way to break up my files?-ONLY ONE .H FILE
-
-
 void longest_sleep_times( SleepData sleep[], int num_records ) {
   int top = 0;
   int min_index, i;
@@ -182,37 +186,24 @@ void longest_sleep_times( SleepData sleep[], int num_records ) {
     min_index = top;
     for ( i = top+1; i < num_records; i++ ) {
       // Compare the sleeper's numerical position
-      int hour, minute;
 
-      // if( sleep[min_index].start_time.hour > sleep[i].start_time.hour ) {
+      if( sleep[min_index].amount.hour > sleep[i].amount.hour ) {
+        // Update the minimum index
+        min_index = i;
+      } else { // next sleeper had more sleep
 
-      //   if( sleep[min_index].start_time.minute > sleep[i].start_time.minute ) {
-      //     hour = sleep[min_index].start_time.hour - sleep[i].start_time.hour;
-      //     minute = sleep[min_index].start_time.minute - sleep[i].start_time.minute;
-      //   } else { // sleeper i .....
-      //     hour = sleep[i].start_time.hour - sleep[min_index].start_time.hour;
-      //     minute = sleep[i].start_time.minute - sleep[min_index].start_time.minute;
-      //   }
-
-      // } else { // min_index hour is not greater than
-
-      // }
-
-      // Update the minimum index
-      min_index = i;
+      }
 
     }
 
     // Swap the structures
-    swap_data( sleep[min_index], sleep[top] );
+    swap_sleep_data( sleep[min_index], sleep[top] );
 
   }
 
 }
 
-
 void shortest_sleep_times( SleepData sleep[], int num_records ) {
   // break it up using c_str
   // compare using to_i or equivalent
 }
-

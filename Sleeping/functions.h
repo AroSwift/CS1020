@@ -167,13 +167,13 @@ void search_by_name( SleepData sleep[], int num_records ) {
     if( sleep[row].first_name == first_name && sleep[row].last_name == last_name ) {
       user_found = true;
 
-      cout << "Sleep Start   Sleep End   Sleep Amount" << endl;
-      cout << "--------------------------------------" << endl;
+      cout << "Sleep Start    Sleep End    Sleep Amount" << endl;
+      cout << "----------------------------------------" << endl;
 
       // Print start date, end date, and sleep amount
       cout << sleep[row].start_time.format_time();
-      cout << setw(10) << right << sleep[row].end_time.format_time();
-      cout << setw(10) << right << sleep[row].amount.format_time() << endl;
+      cout << setw(15) << right << sleep[row].end_time.format_time();
+      cout << setw(13) << right << sleep[row].amount.format_time() << endl;
     }
   }
 
@@ -185,7 +185,7 @@ void display_sleep_times( SleepData sleep[], int num_records ) {
   for( int row = 0; row < num_records; row++ ) {
     // Print start date, end date, and sleep amount
     cout << sleep[row].date.format_date();
-    cout << setw(10) << right << sleep[row].amount.format_time() << endl;
+    cout << setw(15) << right << sleep[row].amount.format_time() << endl;
   }
 }
 
@@ -212,8 +212,8 @@ void longest_sleep_times( SleepData sleep[], int num_records ) {
 
   }
 
-  cout << "Date        Longest Sleep Times" << endl;
-  cout << "-------------------------------" << endl;
+  cout << "Date                 Longest Sleep Times" << endl;
+  cout << "----------------------------------------" << endl;
 
   // print longest sleep times
   display_sleep_times( sleep, num_records );
@@ -244,8 +244,8 @@ void shortest_sleep_times( SleepData sleep[], int num_records ) {
 
   }
 
-  cout << "Date       Shortest Sleep Times" << endl;
-  cout << "-------------------------------" << endl;
+  cout << "Date                Shortest Sleep Times" << endl;
+  cout << "----------------------------------------" << endl;
 
   // print shortest sleep times
   display_sleep_times( sleep, num_records );

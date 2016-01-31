@@ -19,8 +19,8 @@ int main() {
   do {
 
     // Get user choice
-    cout << "Sleep Statistic: Main Menu" << endl
-    << "-------------------------------" << endl
+    cout << "Main Menu" << endl
+    << "----------------------------------------" << endl
     << "1.) Search by Name" << endl
     << "2.) See Longest Sleep Time(s)" << endl
     << "3.) See Shortest Sleep Times(s)" << endl

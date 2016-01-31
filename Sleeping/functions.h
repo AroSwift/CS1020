@@ -202,6 +202,27 @@ void display_longest_sleep_times( SleepData sleep[], int num_records ) {
 
 }
 
+void display_shortest_sleep_times( SleepData sleep[], int num_records ) {
+
+  cout << "Date       Shortest Sleep Times" << endl;
+  cout << "-------------------------------" << endl;
+
+  for( int row = 0; row < num_records; row++ ) {
+
+    // Print sleep dates
+    cout << left
+         << sleep[row].date.month << "-"
+         << sleep[row].date.day << "-"
+         << sleep[row].date.year;
+
+    // Print longest sleep times
+    cout << setw(10) << right
+         << sleep[row].amount.hour << ":"
+         << sleep[row].amount.minute << endl;
+  }
+
+}
+
 void longest_sleep_times( SleepData sleep[], int num_records ) {
   int top = 0;
   int min_index, i;
@@ -232,6 +253,30 @@ void longest_sleep_times( SleepData sleep[], int num_records ) {
 }
 
 void shortest_sleep_times( SleepData sleep[], int num_records ) {
-  // break it up using c_str
-  // compare using to_i or equivalent
+  int top = 0;
+  int min_index, i;
+
+  // Numerically order each structure by the shortest sleep times
+  for( top = 0; top < num_records; top++ ) {
+    min_index = top;
+    for ( i = top+1; i < num_records; i++ ) {
+
+      // Compare the sleeper's numerical position
+      if( sleep[min_index].amount.hour > sleep[i].amount.hour ) {
+        if( sleep[min_index].amount.minute > sleep[i].amount.minute ) {
+          // Update the minimum index
+          min_index = i;
+        }
+      }
+
+    }
+
+    // Swap the structures
+    swap_sleep_data( sleep[min_index], sleep[top] );
+
+  }
+
+  // print shortest sleep times
+  display_shortest_sleep_times( sleep, num_records );
+
 }

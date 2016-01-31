@@ -130,10 +130,7 @@ void swap_sleep_data( SleepData& x, SleepData& y ){
 void search_by_name( SleepData sleep[], int num_records ) {
   string first_name;
   string last_name;
-
-  // what to do in multiple cases of same first or last name? - just the first
-  // lowercase for search to expand possible matches
-  // search BY FIRST AND LAST NAME
+  bool user_found = false;
 
   cout << "Enter a first name: ";
   cin >> first_name;
@@ -141,13 +138,27 @@ void search_by_name( SleepData sleep[], int num_records ) {
   cout << "Enter a last name: ";
   cin >> last_name;
 
-  for( int i = 0; i < num_records; i++ ) {
+  for( int row = 0; row < num_records && !user_found; row++ ) {
     // Select the first instance of first and last name matching given values name
-    if( sleep[i].first_name == first_name && sleep[i].last_name == last_name ) {
-      cout << "" << endl; // display dat stuff
-      break;
+    if( sleep[row].first_name == first_name && sleep[row].last_name == last_name ) {
+      cout << "Sleep Start   Sleep End   Sleep Amount" << endl;
+      cout << "--------------------------------------" << endl;
+
+      cout << sleep[row].start_time.hour << ":"
+           << sleep[row].start_time.minute;
+
+        cout << setw(10) << right
+             << sleep[row].end_time.hour << ":"
+             << sleep[row].end_time.minute;
+
+        cout << setw(10) << right
+             << sleep[row].amount.hour << ":"
+             << sleep[row].amount.minute << endl;
+
     }
   }
+
+  if( !user_found ) cout << "No user was found.";
 
 }
 

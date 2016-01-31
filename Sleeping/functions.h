@@ -127,7 +127,7 @@ void SleepData::set_sleep_amount() {
 string Time::format_time() {
   string str_hour = to_string(hour), str_minute = to_string(minute);
 
-  // Append a zero before dates if necessary to ensure validity
+  // Append a zero before dates if necessary to ensure date validity
   if( hour < 10 ) str_hour = "0" + str_hour;
   if( minute < 10 ) str_minute = "0" + str_minute;
 
@@ -137,7 +137,7 @@ string Time::format_time() {
 string Date::format_date() {
   string str_month = to_string(month), str_day = to_string(day);
 
-  // Append a zero before dates if necessary to ensure validity
+  // Append a zero before dates if necessary to ensure date validity
   if( month < 10 ) str_month = "0" + str_month;
   if( day < 10 ) str_day = "0" + str_day;
 
@@ -145,6 +145,7 @@ string Date::format_date() {
 }
 
 void swap_sleep_data( SleepData& x, SleepData& y ){
+  // Swap two given SleepData structures
   SleepData temp;
   temp = x;
   x = y;
@@ -163,7 +164,7 @@ void search_by_name( SleepData sleep[], int num_records ) {
   cin >> last_name;
 
   for( int row = 0; row < num_records && !user_found; row++ ) {
-    // Select the first instance of first and last name matching given values name
+    // Select the first instance of first and last name matching given name
     if( sleep[row].first_name == first_name && sleep[row].last_name == last_name ) {
       user_found = true;
 

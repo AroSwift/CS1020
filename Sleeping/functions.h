@@ -111,23 +111,23 @@ void read_file( SleepData sleep[], int& num_records ) {
   }
 
 
-  // for( int i = 0; i < row; i++ ) {
-  //   cout << sleep[i].first_name << ", ";
-  //   cout << sleep[i].last_name << ", ";
+  for( int i = 0; i < row; i++ ) {
+    cout << sleep[i].first_name << ", ";
+    cout << sleep[i].last_name << ", ";
 
-  //   cout << sleep[i].date.month << ", ";
-  //   cout << sleep[i].date.day << ", ";
-  //   cout << sleep[i].date.year << ", ";
+    cout << sleep[i].date.month << ", ";
+    cout << sleep[i].date.day << ", ";
+    cout << sleep[i].date.year << ", ";
 
-  //   cout << sleep[i].start_time.hour << ", ";
-  //   cout << sleep[i].start_time.minute << ", ";
+    cout << sleep[i].start_time.hour << ", ";
+    cout << sleep[i].start_time.minute << ", ";
 
-  //   cout << sleep[i].end_time.hour << ", ";
-  //   cout << sleep[i].end_time.minute << ", ";
+    cout << sleep[i].end_time.hour << ", ";
+    cout << sleep[i].end_time.minute << ", ";
 
-  //   cout << sleep[i].amount.hour << ", ";
-  //   cout << sleep[i].amount.minute << ", " << endl;
-  // }
+    cout << sleep[i].amount.hour << ", ";
+    cout << sleep[i].amount.minute << endl;
+  }
 
   // The number of sleeping statistics retrieved
   num_records = row;
@@ -182,22 +182,50 @@ void search_by_name( SleepData sleep[], int num_records ) {
 }
 
 void display_longest_sleep_times( SleepData sleep[], int num_records ) {
+  string month, day, year, hour, minute;
 
   cout << "Date        Longest Sleep Times" << endl;
   cout << "-------------------------------" << endl;
 
+
+
   for( int row = 0; row < num_records; row++ ) {
+
+    // Append a zero before dates and times to make them valid
+    if( sleep[row].date.month < 10 ) {
+      month = "0" + to_string(sleep[row].date.month);
+    } else {
+      month = to_string(sleep[row].date.month);
+    }
+
+    if( sleep[row].date.day < 10 ) {
+      day = "0" + to_string(sleep[row].date.day);
+    } else {
+      day = to_string(sleep[row].date.day);
+    }
+
+    if( sleep[row].amount.hour < 10 ) {
+      hour = "0" + to_string(sleep[row].amount.hour);
+    } else {
+      hour = to_string(sleep[row].amount.hour);
+    }
+
+    if( sleep[row].amount.minute < 10 ) {
+      minute = "0" + to_string(sleep[row].amount.minute);
+    } else {
+      minute = to_string(sleep[row].amount.minute);
+    }
 
     // Print sleep dates
     cout << left
-         << sleep[row].date.month << "-"
-         << sleep[row].date.day << "-"
+         << month << "-"
+         << day << "-"
          << sleep[row].date.year;
 
     // Print longest sleep times
     cout << setw(10) << right
-         << sleep[row].amount.hour << ":"
-         << sleep[row].amount.minute << endl;
+         << hour << ":"
+         << minute << endl;
   }
 
 }

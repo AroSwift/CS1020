@@ -204,9 +204,12 @@ void longest_sleep_times( SleepData sleep[], int num_records ) {
     min_index = top;
     for ( i = top+1; i < num_records; i++ ) {
       // Compare the sleeper's numerical position
-      if( sleep[min_index].amount.hour < sleep[i].amount.hour ) {
-        // Update the minimum index
-        min_index = i;
+      if( sleep[min_index].amount.hour == sleep[i].amount.hour ) {
+        if( sleep[min_index].amount.minute <= sleep[i].amount.minute ) {
+          min_index = i; // Update the minimum index
+        }
+      } else if( sleep[min_index].amount.hour < sleep[i].amount.hour ) {
+        min_index = i; // Update the minimum index
       }
     }
 
@@ -231,11 +234,13 @@ void shortest_sleep_times( SleepData sleep[], int num_records ) {
   for( top = 0; top < num_records; top++ ) {
     min_index = top;
     for ( i = top+1; i < num_records; i++ ) {
-
       // Compare the sleeper's numerical position
-      if( sleep[min_index].amount.hour > sleep[i].amount.hour ) {
-        // Update the minimum index
-        min_index = i;
+      if( sleep[min_index].amount.hour == sleep[i].amount.hour ) {
+        if( sleep[min_index].amount.minute >= sleep[i].amount.minute ) {
+          min_index = i; // Update the minimum index
+        }
+      } else if( sleep[min_index].amount.hour > sleep[i].amount.hour ) {
+        min_index = i; // Update the minimum index
       }
 
     }

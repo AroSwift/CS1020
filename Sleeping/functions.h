@@ -36,34 +36,42 @@ struct SleepData {
 };
 
 
-void get_file_name( char filename[] ) {
+bool get_file_name( char filename[] ) {
+  bool file_errors = false;
+  ifstream input;
+
   cout << "Enter input file name: ";
   cin.getline( filename, MAX_FILE_LENGTH ); // Max file length on linux is 255
+
+  input.open( filename );
+
+  // When file could not be found
+  if( input.fail() ) {
+    cout << "Input file " << filename << " does not exist. \n";
+    file_errors = true;
+
+  // When file is empty
+  } else if( input.peek() == EOF ) {
+    cout << "Input file " << filename << " is empty. \n";
+    file_errors = true;
+  }
+
+  // Close file
+  input.close();
+
+  return file_errors;
 }
 
 void read_file( SleepData sleep[], int& row ) {
   char filename[MAX_FILE_LENGTH];
-  int file_errors;
+  bool file_errors;
   ifstream input;
 
   do {
-    file_errors = 0; // Set/reset the number of file errors
+    file_errors = get_file_name( filename );
+  } while( file_errors );
 
-    get_file_name( filename );
-    input.open( filename );
-
-    // When file could not be found
-    if( input.fail() ) {
-      cout << "Input file " << filename << " does not exist. \n";
-      file_errors++;
-
-    // When file is empty
-    } else if( input.peek() == EOF ) {
-      cout << "Input file " << filename << " is empty. \n";
-      file_errors++;
-    }
-
-  } while( file_errors != 0 );
+  input.open( filename );
 
   // Read file data into an array of structures
   for( row = 0; row < MAX_NUM_SLEEP_STATISTICS && !input.eof(); row++ ) {

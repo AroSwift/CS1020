@@ -4,6 +4,7 @@ Date: 1/31/2016
 Description: Allow users to read in and manipulate sleeping statistics
 */
 
+#include <iostream>
 #include "functions.h"
 
 int main() {

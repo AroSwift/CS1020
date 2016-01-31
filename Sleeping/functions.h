@@ -39,7 +39,7 @@ void get_file_name( char filename[] ) {
 
 void read_file( SleepData sleep[], int& row ) {
   char filename[MAX_FILE_LENGTH];
-  int row, file_errors;
+  int file_errors;
   ifstream input;
 
   do {

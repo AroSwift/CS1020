@@ -83,7 +83,7 @@ void read_file( SleepData sleep[], int& row ) {
     getline( input, start_hour, ':' );
     getline( input, start_minute );
 
-    // Get sleep start time from HH:MM format
+    // Get sleep end time from HH:MM format
     string end_hour, end_minute;
     getline( input, end_hour, ':' );
     getline( input, end_minute  );
@@ -125,39 +125,21 @@ void SleepData::set_sleep_amount() {
 }
 
 string Time::format_time() {
-  string str_hour, str_minute;
+  string str_hour = to_string(hour), str_minute = to_string(minute);
 
   // Append a zero before dates if necessary to ensure validity
-  if( hour < 10 ) {
-    str_hour = "0" + to_string(hour);
-  } else {
-    str_hour = to_string(hour);
-  }
-
-  if( minute < 10 ) {
-    str_minute = "0" + to_string(minute);
-  } else {
-    str_minute = to_string(minute);
-  }
+  if( hour < 10 ) str_hour = "0" + str_hour;
+  if( minute < 10 ) str_minute = "0" + str_minute;
 
   return str_hour + ":" + str_minute;
 }
 
 string Date::format_date() {
-  string str_month, str_day;
+  string str_month = to_string(month), str_day = to_string(day);
 
   // Append a zero before dates if necessary to ensure validity
-  if( month < 10 ) {
-    str_month = "0" + to_string(month);
-  } else {
-    str_month = to_string(month);
-  }
-
-  if( day < 10 ) {
-    str_day = "0" + to_string(month);
-  } else {
-    str_day = to_string(day);
-  }
+  if( month < 10 ) str_month = "0" + str_month;
+  if( day < 10 ) str_day = "0" + str_day;
 
   return str_month + "-" + str_day + "-" + to_string(year);
 }

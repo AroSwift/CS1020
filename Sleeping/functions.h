@@ -141,6 +141,8 @@ void search_by_name( SleepData sleep[], int num_records ) {
   for( int row = 0; row < num_records && !user_found; row++ ) {
     // Select the first instance of first and last name matching given values name
     if( sleep[row].first_name == first_name && sleep[row].last_name == last_name ) {
+      user_found = true;
+
       cout << "Sleep Start   Sleep End   Sleep Amount" << endl;
       cout << "--------------------------------------" << endl;
 
@@ -154,11 +156,10 @@ void search_by_name( SleepData sleep[], int num_records ) {
         cout << setw(10) << right
              << sleep[row].amount.hour << ":"
              << sleep[row].amount.minute << endl;
-
     }
   }
 
-  if( !user_found ) cout << "No user was found.";
+  if(!user_found) cout << "No user was found." << endl;
 
 }
 

@@ -4,10 +4,7 @@ Date: 1/31/2016
 Description: Allow users to read in and manipulate sleeping statistics
 */
 
-#include <iostream>
 #include "functions.h"
-using namespace std;
-
 
 int main() {
   SleepData sleep[MAX_NUM_SLEEP_STATISTICS];

@@ -2,8 +2,6 @@
 #include <iostream>
 #include <fstream>
 #include <iomanip>
-#include <cstdlib>
-#include <string>
 using namespace std;
 
 const int MAX_NUM_SLEEP_STATISTICS = 10; // Max sleeping statistics to utilize
@@ -39,13 +37,13 @@ void get_file_name( char filename[] ) {
   cin.getline( filename, MAX_FILE_LENGTH ); // Max file length on linux is 255
 }
 
-void read_file( SleepData sleep[], int& num_records ) {
+void read_file( SleepData sleep[], int& row ) {
   char filename[MAX_FILE_LENGTH];
-  int row, file_errors = 0;
+  int row, file_errors;
   ifstream input;
 
   do {
-    file_errors = 0; // Rest the number of file errors
+    file_errors = 0; // Set/reset the number of file errors
 
     get_file_name( filename );
     input.open( filename );
@@ -65,7 +63,6 @@ void read_file( SleepData sleep[], int& num_records ) {
 
   // Read file data into an array of structures
   for( row = 0; row < MAX_NUM_SLEEP_STATISTICS && !input.eof(); row++ ) {
-    // if( input.eof() ) break;
 
     // Get first and last name
     getline( input, sleep[row].first_name );
@@ -87,39 +84,27 @@ void read_file( SleepData sleep[], int& num_records ) {
     getline( input, end_hour, ':' );
     getline( input, end_minute  );
 
-    // Convert strings to integers and set date
+    // Convert strings to integers for date
     sleep[row].date.month = stoi(month);
     sleep[row].date.day = stoi(day);
     sleep[row].date.year = stoi(year);
 
-    // Convert strings to integers and set start time
+    // Convert strings to integers for start time
     sleep[row].start_time.hour = stoi(start_hour);
     sleep[row].start_time.minute = stoi(start_minute);
 
-    // Convert strings to integers and set end time
+    // Convert strings to integers for end time
     sleep[row].end_time.hour = stoi(end_hour);
     sleep[row].end_time.minute = stoi(end_minute);
 
     sleep[row].determine_sleep_amount();
 
-    // Exit loop when end of file
-    // if( input.peek() == EOF ) {
-    //   break;
-    // }
-
   }
-
-
-  for( int i = 0; i < row; i++ ) {
-    cout << "Record number: " << i << endl;
-  }
-
-  // The number of sleeping statistics retrieved
-  num_records = row;
 
   // Inform user of success
   cout << "File successfully loaded." << endl;
 
+  // Then close file
   input.close();
 
 }
@@ -218,13 +203,11 @@ void longest_sleep_times( SleepData sleep[], int num_records ) {
   for( top = 0; top < num_records; top++ ) {
     min_index = top;
     for ( i = top+1; i < num_records; i++ ) {
-
       // Compare the sleeper's numerical position
       if( sleep[min_index].amount.hour < sleep[i].amount.hour ) {
         // Update the minimum index
         min_index = i;
       }
-
     }
 
     // Swap the structures

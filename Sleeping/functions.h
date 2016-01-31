@@ -4,9 +4,7 @@
 #include <iomanip>
 #include <cstdlib>
 #include <string>
-
 using namespace std;
-
 
 const int MAX_NUM_SLEEP_STATISTICS = 10; // Max sleeping statistics to utilize
 const int MAX_FILE_LENGTH = 256; // Max file length on linux is 255
@@ -34,7 +32,6 @@ struct SleepData {
 
   void determine_sleep_amount();
 };
-
 
 
 void get_file_name( char filename[] ) {
@@ -67,7 +64,8 @@ void read_file( SleepData sleep[], int& num_records ) {
   } while( file_errors != 0 );
 
   // Read file data into an array of structures
-  for( row = 0; row < MAX_NUM_SLEEP_STATISTICS; row++ ) {
+  for( row = 0; row < MAX_NUM_SLEEP_STATISTICS && !input.eof(); row++ ) {
+    // if( input.eof() ) break;
 
     // Get first and last name
     getline( input, sleep[row].first_name );
@@ -105,34 +103,21 @@ void read_file( SleepData sleep[], int& num_records ) {
     sleep[row].determine_sleep_amount();
 
     // Exit loop when end of file
-    if( input.peek() == EOF) {
-      break;
-    }
+    // if( input.peek() == EOF ) {
+    //   break;
+    // }
+
   }
 
 
   for( int i = 0; i < row; i++ ) {
-    cout << sleep[i].first_name << ", ";
-    cout << sleep[i].last_name << ", ";
-
-    cout << sleep[i].date.month << ", ";
-    cout << sleep[i].date.day << ", ";
-    cout << sleep[i].date.year << ", ";
-
-    cout << sleep[i].start_time.hour << ", ";
-    cout << sleep[i].start_time.minute << ", ";
-
-    cout << sleep[i].end_time.hour << ", ";
-    cout << sleep[i].end_time.minute << ", ";
-
-    cout << sleep[i].amount.hour << ", ";
-    cout << sleep[i].amount.minute << endl;
+    cout << "Record number: " << i << endl;
   }
 
   // The number of sleeping statistics retrieved
   num_records = row;
 
-  // Then inform user of success
+  // Inform user of success
   cout << "File successfully loaded." << endl;
 
   input.close();
@@ -144,13 +129,6 @@ void SleepData::determine_sleep_amount() {
   if( end_time.hour >= start_time.hour ) {
     amount.hour = end_time.hour - start_time.hour;
     amount.minute = abs(end_time.minute - start_time.minute);
-
-    // if( end_time.minute >= start_time.minute) {
-    //   amount.minute = end_time.minute - start_time.minute;
-    // } else {
-    //   amount.minute = 0;
-    // }
-
   } else { // Sleep time is invalid
     amount.hour = 0;
     amount.minute = 0;
@@ -190,11 +168,6 @@ void search_by_name( SleepData sleep[], int num_records ) {
 
 void display_sleep_times( SleepData sleep[], int num_records ) {
   string month, day, year, hour, minute;
-
-  cout << "Date        Longest Sleep Times" << endl;
-  cout << "-------------------------------" << endl;
-
-
 
   for( int row = 0; row < num_records; row++ ) {
 
@@ -259,6 +232,9 @@ void longest_sleep_times( SleepData sleep[], int num_records ) {
 
   }
 
+  cout << "Date        Longest Sleep Times" << endl;
+  cout << "-------------------------------" << endl;
+
   // print longest sleep times
   display_sleep_times( sleep, num_records );
 
@@ -285,6 +261,9 @@ void shortest_sleep_times( SleepData sleep[], int num_records ) {
     swap_sleep_data( sleep[min_index], sleep[top] );
 
   }
+
+  cout << "Date       Shortest Sleep Times" << endl;
+  cout << "-------------------------------" << endl;
 
   // print shortest sleep times
   display_sleep_times( sleep, num_records );

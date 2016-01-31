@@ -144,6 +144,13 @@ void SleepData::determine_sleep_amount() {
   if( end_time.hour >= start_time.hour ) {
     amount.hour = end_time.hour - start_time.hour;
     amount.minute = abs(end_time.minute - start_time.minute);
+
+    // if( end_time.minute >= start_time.minute) {
+    //   amount.minute = end_time.minute - start_time.minute;
+    // } else {
+    //   amount.minute = 0;
+    // }
+
   } else { // Sleep time is invalid
     amount.hour = 0;
     amount.minute = 0;
@@ -181,7 +188,7 @@ void search_by_name( SleepData sleep[], int num_records ) {
 
 }
 
-void display_longest_sleep_times( SleepData sleep[], int num_records ) {
+void display_sleep_times( SleepData sleep[], int num_records ) {
   string month, day, year, hour, minute;
 
   cout << "Date        Longest Sleep Times" << endl;
@@ -230,27 +237,6 @@ void display_longest_sleep_times( SleepData sleep[], int num_records ) {
 
 }
 
-void display_shortest_sleep_times( SleepData sleep[], int num_records ) {
-
-  cout << "Date       Shortest Sleep Times" << endl;
-  cout << "-------------------------------" << endl;
-
-  for( int row = 0; row < num_records; row++ ) {
-
-    // Print sleep dates
-    cout << left
-         << sleep[row].date.month << "-"
-         << sleep[row].date.day << "-"
-         << sleep[row].date.year;
-
-    // Print longest sleep times
-    cout << setw(10) << right
-         << sleep[row].amount.hour << ":"
-         << sleep[row].amount.minute << endl;
-  }
-
-}
-
 void longest_sleep_times( SleepData sleep[], int num_records ) {
   int top = 0;
   int min_index, i;
@@ -262,10 +248,8 @@ void longest_sleep_times( SleepData sleep[], int num_records ) {
 
       // Compare the sleeper's numerical position
       if( sleep[min_index].amount.hour < sleep[i].amount.hour ) {
-        if( sleep[min_index].amount.minute < sleep[i].amount.minute ) {
-          // Update the minimum index
-          min_index = i;
-        }
+        // Update the minimum index
+        min_index = i;
       }
 
     }
@@ -276,7 +260,7 @@ void longest_sleep_times( SleepData sleep[], int num_records ) {
   }
 
   // print longest sleep times
-  display_longest_sleep_times( sleep, num_records );
+  display_sleep_times( sleep, num_records );
 
 }
 
@@ -291,10 +275,8 @@ void shortest_sleep_times( SleepData sleep[], int num_records ) {
 
       // Compare the sleeper's numerical position
       if( sleep[min_index].amount.hour > sleep[i].amount.hour ) {
-        if( sleep[min_index].amount.minute > sleep[i].amount.minute ) {
-          // Update the minimum index
-          min_index = i;
-        }
+        // Update the minimum index
+        min_index = i;
       }
 
     }
@@ -305,6 +287,6 @@ void shortest_sleep_times( SleepData sleep[], int num_records ) {
   }
 
   // print shortest sleep times
-  display_shortest_sleep_times( sleep, num_records );
+  display_sleep_times( sleep, num_records );
 
 }

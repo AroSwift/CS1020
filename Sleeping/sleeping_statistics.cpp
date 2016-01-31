@@ -1,7 +1,7 @@
 /*
 Name: Aaron Barlow
-Date: sleeping_statistics.cpp
-Description: Determine
+Date: 1/31/2016
+Description: Allow users to read in and manipulate sleeping statistics
 */
 
 #include <iostream>
@@ -22,8 +22,8 @@ int main() {
   do {
 
     // Get user choice
-    cout << "MAIN MENU" << endl
-    << "-----------------------------" << endl
+    cout << "Sleep Statistic: MAIN MENU" << endl
+    << "-------------------------------" << endl
     << "1.) Search by Name" << endl
     << "2.) See Longest Sleep Time(s)" << endl
     << "3.) See Shortest Sleep Times(s)" << endl
@@ -60,11 +60,6 @@ int main() {
 }
 
 
-
-
-// put "#pragma once" at the top of .h filetypes
-// g++ filename.cpp -o helloworld
-// requires an array
 // assume every record is on a new line
 // All structures, constants, definitions, and function definitions go in .h
 // seperate line for each record

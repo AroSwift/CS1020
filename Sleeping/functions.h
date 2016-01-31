@@ -1,8 +1,9 @@
 #pragma once
+#include <iostream>
+#include <fstream>
+#include <iomanip>
 #include <cstdlib>
 #include <string>
-#include <fstream>
-#include <iostream>
 
 using namespace std;
 
@@ -110,23 +111,23 @@ void read_file( SleepData sleep[], int& num_records ) {
   }
 
 
-  for( int i = 0; i < row; i++ ) {
-    cout << sleep[i].first_name << ", ";
-    cout << sleep[i].last_name << ", ";
+  // for( int i = 0; i < row; i++ ) {
+  //   cout << sleep[i].first_name << ", ";
+  //   cout << sleep[i].last_name << ", ";
 
-    cout << sleep[i].date.month << ", ";
-    cout << sleep[i].date.day << ", ";
-    cout << sleep[i].date.year << ", ";
+  //   cout << sleep[i].date.month << ", ";
+  //   cout << sleep[i].date.day << ", ";
+  //   cout << sleep[i].date.year << ", ";
 
-    cout << sleep[i].start_time.hour << ", ";
-    cout << sleep[i].start_time.minute << ", ";
+  //   cout << sleep[i].start_time.hour << ", ";
+  //   cout << sleep[i].start_time.minute << ", ";
 
-    cout << sleep[i].end_time.hour << ", ";
-    cout << sleep[i].end_time.minute << ", ";
+  //   cout << sleep[i].end_time.hour << ", ";
+  //   cout << sleep[i].end_time.minute << ", ";
 
-    cout << sleep[i].amount.hour << ", ";
-    cout << sleep[i].amount.minute << ", ";
-  }
+  //   cout << sleep[i].amount.hour << ", ";
+  //   cout << sleep[i].amount.minute << ", " << endl;
+  // }
 
   // The number of sleeping statistics retrieved
   num_records = row;
@@ -139,8 +140,14 @@ void read_file( SleepData sleep[], int& num_records ) {
 }
 
 void SleepData::determine_sleep_amount() {
-  amount.hour = end_time.hour - start_time.hour;
-  amount.minute = end_time.minute - start_time.minute;
+  // Ensure that sleep amount is valid
+  if( end_time.hour >= start_time.hour ) {
+    amount.hour = end_time.hour - start_time.hour;
+    amount.minute = abs(end_time.minute - start_time.minute);
+  } else { // Sleep time is invalid
+    amount.hour = 0;
+    amount.minute = 0;
+  }
 }
 
 void swap_sleep_data( SleepData& x, SleepData& y ){
@@ -174,24 +181,42 @@ void search_by_name( SleepData sleep[], int num_records ) {
 
 }
 
+void display_longest_sleep_times( SleepData sleep[], int num_records ) {
+
+  cout << "Date        Longest Sleep Times" << endl;
+  cout << "-------------------------------" << endl;
+
+  for( int row = 0; row < num_records; row++ ) {
+
+    // Print sleep dates
+    cout << left
+         << sleep[row].date.month << "-"
+         << sleep[row].date.day << "-"
+         << sleep[row].date.year;
+
+    // Print longest sleep times
+    cout << setw(10) << right
+         << sleep[row].amount.hour << ":"
+         << sleep[row].amount.minute << endl;
+  }
+
+}
+
 void longest_sleep_times( SleepData sleep[], int num_records ) {
   int top = 0;
   int min_index, i;
-
-  // break it up using c_str
-  // compare using to_i or equivalent
 
   // Numerically order each structure by the longest sleep times
   for( top = 0; top < num_records; top++ ) {
     min_index = top;
     for ( i = top+1; i < num_records; i++ ) {
+
       // Compare the sleeper's numerical position
-
-      if( sleep[min_index].amount.hour > sleep[i].amount.hour ) {
-        // Update the minimum index
-        min_index = i;
-      } else { // next sleeper had more sleep
-
+      if( sleep[min_index].amount.hour < sleep[i].amount.hour ) {
+        if( sleep[min_index].amount.minute < sleep[i].amount.minute ) {
+          // Update the minimum index
+          min_index = i;
+        }
       }
 
     }
@@ -200,6 +225,9 @@ void longest_sleep_times( SleepData sleep[], int num_records ) {
     swap_sleep_data( sleep[min_index], sleep[top] );
 
   }
+
+  // print longest sleep times
+  display_longest_sleep_times( sleep, num_records );
 
 }
 

@@ -135,9 +135,9 @@ string Time::format_time() {
   }
 
   if( minute < 10 ) {
-    str_minute = "0" + to_string(hour);
+    str_minute = "0" + to_string(minute);
   } else {
-    str_minute = to_string(hour);
+    str_minute = to_string(minute);
   }
 
   return str_hour + ":" + str_minute;
@@ -148,13 +148,13 @@ string Date::format_date() {
 
   // Append a zero before dates if necessary to ensure validity
   if( month < 10 ) {
-    str_month = "0";
+    str_month = "0" + to_string(month);
   } else {
     str_month = to_string(month);
   }
 
   if( day < 10 ) {
-    str_day = "0";
+    str_day = "0" + to_string(month);
   } else {
     str_day = to_string(day);
   }

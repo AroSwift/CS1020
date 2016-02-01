@@ -36,6 +36,12 @@ struct SleepData {
 };
 
 
+/*
+get_file_name: gets file name from user
+Parameters
+  filename: an array characters
+Returns: whether or not an error occured opening file
+*/
 bool get_file_name( char filename[] ) {
   bool file_errors = false;
   ifstream input;
@@ -62,6 +68,14 @@ bool get_file_name( char filename[] ) {
   return file_errors;
 }
 
+/*
+read_file: reads data into an array of structures
+Parameters:
+  sleep: an array of structures containing first name, last name,
+  date, sleep start time, sleep end time, and sleep amount
+  row: the number of sleep records retrieved from the file
+Returns: nothing
+*/
 void read_file( SleepData sleep[], int& row ) {
   char filename[MAX_FILE_LENGTH];
   bool file_errors;
@@ -121,6 +135,11 @@ void read_file( SleepData sleep[], int& row ) {
 
 }
 
+/*
+set_sleep_amount: sets the amount of time slept by end time minus start time
+Parameters: none
+Returns: nothing
+*/
 void SleepData::set_sleep_amount() {
   // Ensure that sleep amount is valid
   if( end_time.hour >= start_time.hour ) {
@@ -132,6 +151,11 @@ void SleepData::set_sleep_amount() {
   }
 }
 
+/*
+format_time: formats time into HH:MM
+Parameters: none
+Returns: a string of the formatted time
+*/
 string Time::format_time() {
   string str_hour = to_string(hour), str_minute = to_string(minute);
 
@@ -143,6 +167,11 @@ string Time::format_time() {
   return str_hour + ":" + str_minute;
 }
 
+/*
+format_date: formats date into MM-DD-YEAR
+Parameters: none
+Returns: a string of the formatted date
+*/
 string Date::format_date() {
   string str_month = to_string(month), str_day = to_string(day);
 
@@ -154,6 +183,13 @@ string Date::format_date() {
   return str_month + "-" + str_day + "-" + to_string(year);
 }
 
+/*
+swap_sleep_data: swaps two given SleepData structure
+Parameters:
+  x: a SleepData structure
+  y: a SleepData structure
+Returns: nothing
+*/
 void swap_sleep_data( SleepData& x, SleepData& y ){
   // Swap two given SleepData structures
   SleepData temp;
@@ -162,6 +198,14 @@ void swap_sleep_data( SleepData& x, SleepData& y ){
   y = temp;
 }
 
+/*
+search_by_name: find and display a sleep record's sleep start, end, and amount
+Parameters:
+  sleep: an array of structures containing first name, last name,
+  date, sleep start time, sleep end time, and sleep amount
+  num_records: the number of sleep records retrieved
+Returns: nothing
+*/
 void search_by_name( SleepData sleep[], int num_records ) {
   bool user_found = false;
   string first_name;
@@ -192,6 +236,14 @@ void search_by_name( SleepData sleep[], int num_records ) {
 
 }
 
+/*
+display_sleep_times: display formatted sleep date and sleep amount
+Parameters:
+  sleep: an array of structures containing first name, last name,
+  date, sleep start time, sleep end time, and sleep amount
+  num_records: the number of sleep records retrieved
+Returns: nothing
+*/
 void display_sleep_times( SleepData sleep[], int num_records ) {
   for( int row = 0; row < num_records; row++ ) {
     // Print date and sleep amount
@@ -200,6 +252,14 @@ void display_sleep_times( SleepData sleep[], int num_records ) {
   }
 }
 
+/*
+longest_sleep_times: sort the sleep records by longest sleep times
+Parameters:
+  sleep: an array of structures containing first name, last name,
+  date, sleep start time, sleep end time, and sleep amount
+  num_records: the number of sleep records retrieved
+Returns: nothing
+*/
 void longest_sleep_times( SleepData sleep[], int num_records ) {
   int top = 0;
   int min_index, i;
@@ -231,6 +291,14 @@ void longest_sleep_times( SleepData sleep[], int num_records ) {
 
 }
 
+/*
+shortest_sleep_times: sort the sleep records by shortest sleep times
+Parameters:
+  sleep: an array of structures containing first name, last name,
+  date, sleep start time, sleep end time, and sleep amount
+  num_records: the number of sleep records retrieved
+Returns: nothing
+*/
 void shortest_sleep_times( SleepData sleep[], int num_records ) {
   int top = 0;
   int min_index, i;

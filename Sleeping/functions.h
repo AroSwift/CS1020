@@ -38,9 +38,9 @@ struct SleepData {
 
 /*
 get_file_name: gets file name from user
-Parameters
-  filename: an array characters
-Returns: whether or not an error occured opening file
+Parameters:
+  filename: an array of characters
+Returns: whether or not an error occured opening the file
 */
 bool get_file_name( char filename[] ) {
   bool file_errors = false;
@@ -136,7 +136,7 @@ void read_file( SleepData sleep[], int& row ) {
 }
 
 /*
-set_sleep_amount: sets the amount of time slept by end time minus start time
+set_sleep_amount: sets the amount of time slept to be end time - start time
 Parameters: none
 Returns: nothing
 */
@@ -168,7 +168,7 @@ string Time::format_time() {
 }
 
 /*
-format_date: formats date into MM-DD-YEAR
+format_date: formats date into MM-DD-YYYY
 Parameters: none
 Returns: a string of the formatted date
 */
@@ -184,7 +184,7 @@ string Date::format_date() {
 }
 
 /*
-swap_sleep_data: swaps two given SleepData structure
+swap_sleep_data: swaps two given SleepData structures
 Parameters:
   x: a SleepData structure
   y: a SleepData structure

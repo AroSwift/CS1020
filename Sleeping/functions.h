@@ -1,3 +1,9 @@
+/*
+Name: Aaron Barlow
+Date: 1/31/2016
+Description: Allow users to read in and manipulate sleeping statistics
+*/
+
 #pragma once
 #include <iostream>
 #include <fstream>
@@ -152,7 +158,7 @@ void SleepData::set_sleep_amount() {
 }
 
 /*
-format_time: ensures validity of time and then formats time into HH:MM
+format_time: ensures validity of time and then formats time into 24 hour HH:MM
 Parameters: none
 Returns: a string of the formatted time or invalid time if impossible time
 */
@@ -172,7 +178,7 @@ string Time::format_time() {
     return "Invalid time";
   }
 
-  // Return HH:MM format if valid time
+  // Return 24 hour HH:MM format if valid time
   return str_hour + ":" + str_minute;
 }
 

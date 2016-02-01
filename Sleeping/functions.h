@@ -67,7 +67,7 @@ void read_file( SleepData sleep[], int& row ) {
   bool file_errors;
   ifstream input;
 
-  do {
+  do { // Find a file that exists
     file_errors = get_file_name( filename );
   } while( file_errors );
 
@@ -135,10 +135,11 @@ void SleepData::set_sleep_amount() {
 string Time::format_time() {
   string str_hour = to_string(hour), str_minute = to_string(minute);
 
-  // Append a zero before dates if necessary to ensure date validity
+  // Append a zero before times if necessary to ensure date validity
   if( hour < 10 ) str_hour = "0" + str_hour;
   if( minute < 10 ) str_minute = "0" + str_minute;
 
+  // Return HH:MM format
   return str_hour + ":" + str_minute;
 }
 
@@ -149,6 +150,7 @@ string Date::format_date() {
   if( month < 10 ) str_month = "0" + str_month;
   if( day < 10 ) str_day = "0" + str_day;
 
+  // Return MM-DD-YYYY format
   return str_month + "-" + str_day + "-" + to_string(year);
 }
 
@@ -192,7 +194,7 @@ void search_by_name( SleepData sleep[], int num_records ) {
 
 void display_sleep_times( SleepData sleep[], int num_records ) {
   for( int row = 0; row < num_records; row++ ) {
-    // Print start date, end date, and sleep amount
+    // Print date and sleep amount
     cout << sleep[row].date.format_date();
     cout << setw(15) << right << sleep[row].amount.format_time() << endl;
   }

@@ -152,34 +152,56 @@ void SleepData::set_sleep_amount() {
 }
 
 /*
-format_time: formats time into HH:MM
+format_time: ensures validity of time and then formats time into HH:MM
 Parameters: none
-Returns: a string of the formatted time
+Returns: a string of the formatted time or invalid time if impossible time
 */
 string Time::format_time() {
   string str_hour = to_string(hour), str_minute = to_string(minute);
 
   // Append a zero before times if necessary to ensure date validity
-  if( hour < 10 ) str_hour = "0" + str_hour;
-  if( minute < 10 ) str_minute = "0" + str_minute;
+  if( hour < 10 ) {
+    str_hour = "0" + str_hour;
+  } else if( hour > 24 ) {
+    return "Invalid time";
+  }
 
-  // Return HH:MM format
+  if( minute < 10 ) {
+    str_minute = "0" + str_minute;
+  } else if( minute >= 60 ) {
+    return "Invalid time";
+  }
+
+  // Return HH:MM format if valid time
   return str_hour + ":" + str_minute;
 }
 
 /*
-format_date: formats date into MM-DD-YYYY
+format_date: ensures validity of date and formats date into MM-DD-YYYY
 Parameters: none
-Returns: a string of the formatted date
+Returns: a string of the formatted date or invalid date if impossible date
 */
 string Date::format_date() {
   string str_month = to_string(month), str_day = to_string(day);
 
-  // Append a zero before dates if necessary to ensure date validity
-  if( month < 10 ) str_month = "0" + str_month;
-  if( day < 10 ) str_day = "0" + str_day;
+  if( month > 12 || month < 1 ) {
+    // Date is invalid if month is more than 12 months or less than 1 month
+    return "Invalid date";
+  } else if( month < 10 ) {
+    // Append a zero before dates if necessary to ensure date validity
+    str_month = "0" + str_month;
+  }
 
-  // Return MM-DD-YYYY format
+  if( day > 31 || day < 1 ) {
+    // Date is invalid if day is more than 31 days or less than 1 day
+    return "Invalid date";
+
+  } else if( day < 10 ) {
+    // Append a zero before dates if necessary to ensure date validity
+    str_day = "0" + str_day;
+  }
+
+  // Return MM-DD-YYYY format if valid date
   return str_month + "-" + str_day + "-" + to_string(year);
 }
 

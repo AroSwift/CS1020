@@ -4,13 +4,10 @@
 int main() {
   bool exit = false;
 
-
-
-
   // Display a menu
   do {
 
-    // Get user choice
+    // Give user choices
     cout << "Main Menu" << endl
     << "----------------------------------------" << endl
     << "1.) Search" << endl
@@ -24,19 +21,19 @@ int main() {
     // Associate choice with an action
     switch(choice) {
       case '1': // Search contacts
-        search();
+        search_contacts();
         break;
 
       case '2': // List all contacts
-        list_all();
+        list_all_contacts();
         break;
 
       case '3': // Show first contact
-        first_contact();
+        display_first_contact();
         break;
 
       case '4': // Show last contact
-        last_contact();
+        display_last_contact();
         break;
 
       case '5': // Exit program
@@ -53,12 +50,6 @@ int main() {
 
   return 0;
 }
-
-
-
-
-
-
 
 
 // Menu

@@ -2,18 +2,18 @@
 #include <iostream>
 using namespace std;
 
-struct Person {
- string name;
- Person *next;
+struct Node {
+ void data;
+ Node *next;
 };
 
-void insertFirst(Person **first, string name);
-void insertLast(Person **first, string name);
-Person *findLast(Person *first);
-void traverse(Person *first);
-void remove(Person *nodeToRemove, Person **first);
-void removeFirst(Person **first);
-void removeLast(Person **first);
+void insertFirst(Node **first, void *data);
+void insertLast(Node **first, void *data);
+Node *findLast(Node *first);
+void traverse(Node *first);
+void remove(Node *nodeToRemove, Node **first);
+void removeFirst(Node **first);
+void removeLast(Node **first, void *data);
 
 
 //  ONLY PROTYPES, STRUCTURES, AND CONSTANTS

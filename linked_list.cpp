@@ -3,49 +3,48 @@
 #include "linked_list.h"
 
 
-void insertFirst(Person **first, string name) {
-   Person *p = new Person();
-   p->name = name;
+void insertFirst(Node **first, void *data) {
+   Node *p = new Node();
+   p->data = data;
    p->next = NULL;
    if (*first != NULL)
       p->next = *first;
    *first = p;
 }
 
-void insertLast(Person **first, string name) {
+void insertLast(Node **first, void *data) {
    // allocate the node
-   Person *p = new Person();
+   Node *p = new Node();
    // initialize the node fields
-   p->name = name;
+   p->data = data;
    p->next = NULL;
 
    // if empty list
    if (*first == NULL)
       *first = p;
    else { // not empty list
-      Person *last = findLast(*first);
+      Node *last = findLast(*first);
       last->next = p;
    }
 }
 
-Person *findLast(Person *first) {
+Node *findLast(Node *first) {
    if (first == NULL)
    return(NULL);
    // traverse list until NULL
-   Person *node = first;
+   Node *node = first;
    while(node->next != NULL)
       node = node->next;
    return(node);
 }
 
-void traverse(Person *first) {
-   while(first != NULL) {
-      cout << first->name << endl;
-      first = first->next;
-   }
+void get_next(Node *current_node) {
+  if( current_node != NULL ) {
+    return( current_node->next );
+  }
 }
 
-void remove(Person *nodeToRemove, Person **first) {
+void remove(Node *nodeToRemove, Node **first) {
   if (*first == NULL)
     return;
   if (*first == nodeToRemove) {
@@ -53,8 +52,8 @@ void remove(Person *nodeToRemove, Person **first) {
     delete nodeToRemove;
   }
   else {
-    Person *before = *first;
-    Person *current = *first;
+    Node *before = *first;
+    Node *current = *first;
     while(current != nodeToRemove) {
       if (current == NULL)
         break;
@@ -68,18 +67,18 @@ void remove(Person *nodeToRemove, Person **first) {
   }
 }
 
-void removeFirst(Person **first) {
+void removeFirst(Node **first) {
   remove(*first,first);
 }
 
-void removeLast(Person **first) {
+void removeLast(Node **first) {
   remove(findLast(*first), first);
 }
 
-Person *search(string name) {
+Node *search(void *data) {
 }
 
-Person *get() {
+Node *get() {
 }
 
 void set() {

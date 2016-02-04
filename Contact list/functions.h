@@ -4,23 +4,27 @@
 #include <cstdlib>
 using namespace std;
 
-struct Contacts {
+struct Contact {
   string first_name;
   string last_name;
   string phone_number;
-  Contacts *prev;
-  Contacts *next;
+  Contact *prev;
+  Contact *next;
 };
 
 
-void read_file( Contacts contact[] );
+void read_file( Contact contact[] );
+
+void traverse( Contact *first );
+void insert_first( Contact **first );
+
 void search_contacts();
 void list_all_contacts();
 void display_first_contact();
 void display_last_contact();
 
 
-void read_file( Contacts contact[] ) {
+void read_file( Contact contact[] ) {
   ifstream input;
   input.open("contacts.dat");
 
@@ -37,7 +41,7 @@ void read_file( Contacts contact[] ) {
   }
 
   // instantiate and dynamically allocate
-  Contacts* contact = new Contact[];
+  Contact* contact = new Contact[];
 
   // Read file data into an array of structures
   while( !input.eof() ) {
@@ -52,6 +56,21 @@ void read_file( Contacts contact[] ) {
   input.close();
 
 }
+
+void insert_first( Contact **first ) {
+  Contact *c = new Contact();
+  c->first_name = first_name;
+  c->last_name = last_name;
+  c->phone_number = phone_number;
+  c->next = NULL;
+
+  if (*first != NULL) {
+    c->next = *first;
+  }
+
+  *first = c;
+}
+
 
 
 void search_contacts() {

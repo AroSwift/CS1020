@@ -49,13 +49,13 @@ void insertLast(Person **first, string name) {
 }
 
 Person *findLast(Person *first) {
- if (first == NULL)
- return(NULL);
- // traverse list until NULL
- Person *node = first;
- while(node->next != NULL)
-    node = node->next;
- return(node);
+  if (first == NULL)
+    return(NULL);
+  // traverse list until NULL
+   Person *node = first;
+   while(node->next != NULL)
+      node = node->next;
+      return(node);
 }
 void traverse(Person *first) {
   while(first != NULL) {
@@ -90,6 +90,17 @@ void remove(Person *nodeToRemove, Person **first) {
 }
 
 
-void remove_first() {
+void remove_first( Person **first ) {
+  remove( *first, first );
+}
 
+void remove_last( Person **first ) {
+  // Person *last = findLast(*first);
+  // remove(*last);
+  remove(findLast(*first,));
+}
+
+void set( Person *node, string name ) {
+  Person *p = new Person;
+  p->name = name;
 }

@@ -1,21 +1,95 @@
 #include <iostream>
+#include <cstddef>
+
 using namespace std;
 
 struct Person {
  string name;
+ Person *next;
 };
 
+void insertFirst(Person **first, string name);
+void insertLast(Person **first, string name);
+Person *findLast(Person *first);
+void traverse(Person *first);
+
 int main() {
-  Person *p = new Person();
+ string names[] = {"David", "Pam", "Karen"};
+ Person *first = NULL;
 
-  for( int i = 0; i < 3; i++ ) {
-    cout << "Enter name: ";
-    cin >> p->[i]name;
+ for(int i = 0; i < 3; i++) {
+ insertLast(&first, names[i]);
+ }
+ traverse(first);
+}
+
+void insertFirst(Person **first, string name) {
+ Person *p = new Person();
+ p->name = name;
+ p->next = NULL;
+ if (*first != NULL)
+    p->next = *first;
+ *first = p;
+}
+
+void insertLast(Person **first, string name) {
+ // allocate the node
+ Person *p = new Person();
+ // initialize the node fields
+ p->name = name;
+ p->next = NULL;
+
+ // if empty list
+ if (*first == NULL)
+    *first = p;
+ else { // not empty list
+    Person *last = findLast(*first);
+    last->next = p;
+ }
+}
+
+Person *findLast(Person *first) {
+ if (first == NULL)
+ return(NULL);
+ // traverse list until NULL
+ Person *node = first;
+ while(node->next != NULL)
+    node = node->next;
+ return(node);
+}
+void traverse(Person *first) {
+  while(first != NULL) {
+    cout << first->name << endl;
+    first = first->next;
   }
+}
 
-  for( int i = 0; i < 3; i++ ) {
-    cout << "Name: " << p->[i]name << endl;
-  }
+void remove(Person *nodeToRemove, Person **first) {
+  if (*first == NULL)
+    return;
+  if (*first == nodeToRemove) {
+    *first = nodeToRemove->next;
+    delete nodeToRemove;
+  } else {
+    Person *before = *first;
+    Person *current = *first;
 
-  return 0;
+    while(current != nodeToRemove) {
+
+      if (current == NULL)
+        break;
+        before = current;
+        current = current->next;
+      }
+
+      if (current == nodeToRemove) {
+        before->next = current->next;
+        delete current;
+      }
+    }
+}
+
+
+void remove_first() {
+
 }

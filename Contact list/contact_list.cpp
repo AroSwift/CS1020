@@ -3,6 +3,7 @@
 
 int main() {
   bool exit = false;
+  char choice;
 
   // Display a menu
   do {

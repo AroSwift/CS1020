@@ -7,6 +7,7 @@
 #include "functions.h"
 using namespace std;
 
+
 int main() {
   bool exit = false;
   char choice;
@@ -17,6 +18,12 @@ int main() {
 
   // Read a file into an array of contact structures
   read_file( contact );
+
+  for( int i = 0; i < num_records; i++ ) {
+    cout << contact->first_name << endl;
+    cout << contact->last_name << endl;
+    cout << contact->phone_number << endl;
+  }
 
   // Display a menu
   do {
@@ -106,11 +113,9 @@ void read_file( Contact contact[] ) {
 
   // Read file data into an array of structures
   while( !input.eof() ) {
-
     input >> contact->first_name;
     input >> contact->last_name;
     input >> contact->phone_number;
-
   }
 
   // Close file

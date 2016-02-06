@@ -14,6 +14,7 @@ struct Contact {
 
 
 int get_number_records();
+string lower_case( string value );
 void read_file( Contact contact[] );
 
 void traverse( Contact *first );

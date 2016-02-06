@@ -2,7 +2,6 @@
 #include <fstream>
 #include <string>
 #include <cstring>
-#include <cstddef>
 #include <cstdlib>
 #include <iomanip>
 #include "functions.h"
@@ -24,7 +23,7 @@ int main() {
 
     // Give user choices
     cout << "Main Menu" << endl
-    << "----------------------------------------" << endl
+    << "------------------" << endl
     << "1.) Search" << endl
     << "2.) List all" << endl
     << "3.) Show first contact" << endl
@@ -40,15 +39,15 @@ int main() {
         break;
 
       case '2': // List all contacts
-        list_all_contacts();
+        list_all_contacts( contact, num_records );
         break;
 
       case '3': // Show first contact
-        display_first_contact();
+        display_first_contact( contact, num_records );
         break;
 
       case '4': // Show last contact
-        display_last_contact();
+        display_last_contact( contact, num_records );
         break;
 
       case '5': // Exit program
@@ -165,15 +164,15 @@ void search_contacts( Contact contact[], int num_records ) {
 
 }
 
-void list_all_contacts() {
+void list_all_contacts( Contact contact[], int num_records ) {
 
 }
 
-void display_first_contact() {
+void display_first_contact( Contact contact[], int num_records ) {
 
 }
 
-void display_last_contact() {
+void display_last_contact( Contact contact[], int num_records ) {
 
 }
 

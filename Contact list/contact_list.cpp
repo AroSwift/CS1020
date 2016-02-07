@@ -20,9 +20,9 @@ int main() {
   read_file( contact );
 
   for( int i = 0; i < num_records; i++ ) {
-    cout << contact->first_name << endl;
-    cout << contact->last_name << endl;
-    cout << contact->phone_number << endl;
+    cout << contact[i].first_name << endl;
+    cout << contact[i].last_name << endl;
+    cout << contact[i].phone_number << endl;
   }
 
   // Display a menu
@@ -112,10 +112,12 @@ void read_file( Contact contact[] ) {
   }
 
   // Read file data into an array of structures
+  int i = 0;
   while( !input.eof() ) {
-    input >> contact->first_name;
-    input >> contact->last_name;
-    input >> contact->phone_number;
+    input >> contact[i].first_name;
+    input >> contact[i].last_name;
+    input >> contact[i].phone_number;
+    i++;
   }
 
   // Close file

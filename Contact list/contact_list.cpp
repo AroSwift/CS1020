@@ -172,7 +172,15 @@ void search_contacts( Contact contact[], int num_records ) {
 }
 
 void list_all_contacts( Contact contact[], int num_records ) {
+  cout << "First Name           Last Name            Phone Number" << endl;
+  cout << "------------------------------------------------------" << endl;
 
+  for( int row = 0; row < num_records; row++ ) {
+    // Print first name, last name, and phone number
+    cout << setw(20) << left << contact[row].first_name;
+    cout << setw(20) << left << contact[row].last_name;
+    cout << setw(20) << left << contact[row].phone_number << endl;
+  }
 }
 
 void display_first_contact( Contact contact[], int num_records ) {

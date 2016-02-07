@@ -66,6 +66,9 @@ int main() {
         break;
     }
 
+    // Add a new line to maintain neat layout
+    cout << endl;
+
   } while(!exit);
 
   // Delete dynamically allocated array of contact structures
@@ -145,24 +148,28 @@ void search_contacts( Contact contact[], int num_records ) {
   bool person_found = false;
   string user_input;
 
-  cout << "Enter :";
+  cout << "Enter first or last name: ";
   cin >> user_input;
 
   // Lowercase user input
   user_input = lower_case(user_input);
 
   for( int row = 0; row < num_records && !person_found; row++ ) {
+    string first_name = lower_case(contact[row].first_name);
+    string last_name  = lower_case(contact[row].last_name);
+
     // Select all instances of first or last name matching given input
-    if( user_input == lower_case(contact[row].first_name) || user_input == lower_case(contact[row].last_name) ) {
+    if( user_input == first_name || user_input == last_name ) {
       person_found = true;
 
-      cout << "First Name    Last Name    Phone Number" << endl;
-      cout << "----------------------------------------" << endl;
+    cout << "First Name                    Last Name                     Phone Number" << endl;
+    cout << "------------------------------------------------------------------------" << endl;
 
-      // Print first name, last name, and phone number
-      cout << contact[row].first_name;
-      cout << setw(15) << right << contact[row].last_name;
-      cout << setw(13) << right << contact[row].phone_number << endl;
+    // Print first name, last name, and phone number
+    cout << setw(30) << left << contact[row].first_name;
+    cout << setw(30) << left << contact[row].last_name;
+    cout << setw(30) << left << contact[row].phone_number << endl;
+
     }
   }
 
@@ -172,14 +179,14 @@ void search_contacts( Contact contact[], int num_records ) {
 }
 
 void list_all_contacts( Contact contact[], int num_records ) {
-  cout << "First Name           Last Name            Phone Number" << endl;
-  cout << "------------------------------------------------------" << endl;
+  cout << "First Name                    Last Name                     Phone Number" << endl;
+  cout << "------------------------------------------------------------------------" << endl;
 
   for( int row = 0; row < num_records; row++ ) {
     // Print first name, last name, and phone number
-    cout << setw(20) << left << contact[row].first_name;
-    cout << setw(20) << left << contact[row].last_name;
-    cout << setw(20) << left << contact[row].phone_number << endl;
+    cout << setw(30) << left << contact[row].first_name;
+    cout << setw(30) << left << contact[row].last_name;
+    cout << setw(30) << left << contact[row].phone_number << endl;
   }
 }
 

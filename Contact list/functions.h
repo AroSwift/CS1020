@@ -13,9 +13,11 @@ struct Contact {
 };
 
 
+void traverse( Contact *contact );
 void read_file( Contact **first );
 string lower_case( string value );
 
+void display_contact( Contact *contact );
 Contact *get_next(Contact *current_node);
 Contact *get_prev(Contact *current_node);
 Contact *new_contact( Contact *prev_node, string first_name, string last_name, string phone_number );

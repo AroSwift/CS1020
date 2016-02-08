@@ -130,24 +130,6 @@ Contact *new_contact( Contact *prev_node, string first_name, string last_name, s
   return c;
 }
 
-Contact *traverse_forward( Contact *first ) {
-  Contact *node = first;
-  while(node->next != NULL) {
-    node = node->next;
-  }
-
-  return(node);
-}
-
-Contact *traverse_backward( Contact *first ) {
-  Contact *node = first;
-  while(node->prev != NULL) {
-    node = node->prev;
-  }
-
-  return(node);
-}
-
 Contact *get_next( Contact *current_node ) {
   if (current_node != NULL) {
     return(current_node->next);
@@ -237,6 +219,41 @@ void display_first_contact( Contact *first ) {
   cout << setw(30) << left << first->first_name;
   cout << setw(30) << left << first->last_name;
   cout << setw(30) << left << first->phone_number << endl;
+
+  traverse( first );
+
+}
+
+void traverse( Contact *contact ) {
+  bool exit = false;
+
+  do {
+    cout << "1. Previous" << setw(5);
+    cout << "2. Next" << setw(5);
+    cout << "3. Exit" << setw(5) << endl;
+    char choice;
+    cin >> choice;
+
+    switch(choice) {
+      case '1':
+        display_contact( get_prev( contact ) );
+        break;
+
+      case '2':
+        display_contact( get_next( contact ) );
+        break;
+
+      case '3':
+        exit = true;
+        break;
+
+      default:
+        cout << "Please enter a valid option." << endl;
+        break;
+    }
+
+  } while(!exit);
+
 }
 
 void display_last_contact( Contact *first ) {
@@ -259,4 +276,14 @@ void display_last_contact( Contact *first ) {
   cout << setw(30) << left << node->last_name;
   cout << setw(30) << left << node->phone_number << endl;
 
+}
+
+void display_contact( Contact *contact ) {
+  cout << "First Name                    Last Name                     Phone Number" << endl;
+  cout << "------------------------------------------------------------------------" << endl;
+
+  // Print first name, last name, and phone number
+  cout << setw(30) << left << contact->first_name;
+  cout << setw(30) << left << contact->last_name;
+  cout << setw(30) << left << contact->phone_number << endl;
 }

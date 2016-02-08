@@ -92,7 +92,9 @@ void read_file() {
     exit(1);
   }
 
-  // Contact *first = NULL;
+  // Set first and previous nodes to null
+  Contact *first_node = NULL;
+  Contact *prev_node  = NULL;
 
   // Read file data into an array of structures
   while( !input.eof() ) {
@@ -101,9 +103,8 @@ void read_file() {
     input >> last_name;
     input >> phone_number;
 
-    // Create new contact
-    Contact *contact = new Contact;
-    contact = new_contact( first_name, last_name, phone_number );
+    // Create new contact and set new previous node to current node for next iteration
+    Contact *prev_node = new_contact( prev_node, first_name, last_name, phone_number );
 
   }
 
@@ -112,21 +113,33 @@ void read_file() {
 
 }
 
-Contact *new_contact( string first_name, string last_name, string phone_number ) {
+Contact *new_contact( Contact *prev_node, string first_name, string last_name, string phone_number ) {
   Contact *c = new Contact;
   c->first_name   = first_name;
   c->last_name    = last_name;
   c->phone_number = phone_number;
+  c->prev         = prev_node;
   c->next         = NULL;
-
-  // Sort contact alphabetically by first and last name
-  sort_contacts( c );
 
   return c;
 }
 
-void sort_contacts( Contact *contact ) {
-  // contact
+Contact *traverse_forward( Contact *first ) {
+  Contact *node = first;
+  while(node->next != NULL) {
+    node = node->next;
+  }
+
+  return(node);
+}
+
+Contact *traverse_backward( Contact *first ) {
+  Contact *node = first;
+  while(node->prev != NULL) {
+    node = node->prev;
+  }
+
+  return(node);
 }
 
 Contact *get_next( Contact *current_node ) {
@@ -175,21 +188,44 @@ void search_contacts( Contact *first ) {
 }
 
 void list_all_contacts( Contact *first ) {
-  // cout << "First Name                    Last Name                     Phone Number" << endl;
-  // cout << "------------------------------------------------------------------------" << endl;
+  cout << "First Name                    Last Name                     Phone Number" << endl;
+  cout << "------------------------------------------------------------------------" << endl;
 
-  // for( int row = 0; row < num_records; row++ ) {
-  //   // Print first name, last name, and phone number
-  //   cout << setw(30) << left << contact[row].first_name;
-  //   cout << setw(30) << left << contact[row].last_name;
-  //   cout << setw(30) << left << contact[row].phone_number << endl;
-  // }
+  // Set current node to point to head
+  Contact *current_node = first;
+
+  do {
+    current_node = get_next( current_node );
+
+    cout << setw(30) << left << current_node->first_name;
+    cout << setw(30) << left << current_node->last_name;
+    cout << setw(30) << left << current_node->phone_number << endl;
+
+  } while( first != NULL );
+
 }
 
 void display_first_contact( Contact *first ) {
+  cout << "First Name                    Last Name                     Phone Number" << endl;
+  cout << "------------------------------------------------------------------------" << endl;
 
+  cout << setw(30) << left << first->first_name;
+  cout << setw(30) << left << first->last_name;
+  cout << setw(30) << left << first->phone_number << endl;
 }
 
 void display_last_contact( Contact *first ) {
+  Contact *node = first;
+  while(node->next != NULL) {
+    node = node->next;
+  }
+
+  cout << "First Name                    Last Name                     Phone Number" << endl;
+  cout << "------------------------------------------------------------------------" << endl;
+
+  // Print last node's first name, last name, and phone number
+  cout << setw(30) << left << node->first_name;
+  cout << setw(30) << left << node->last_name;
+  cout << setw(30) << left << node->phone_number << endl;
 
 }

@@ -13,14 +13,15 @@ struct Contact {
 };
 
 
-int get_number_records();
+void read_file();
 string lower_case( string value );
-void read_file( Contact contact[] );
+void sort_contacts( Contact *contact );
 
-void traverse( Contact *first );
-void insert_first( Contact **first );
+Contact *get_next(Contact *current_node);
+Contact *get_prev(Contact *current_node);
+Contact *new_contact( string first_name, string last_name, string phone_number );
 
-void search_contacts( Contact contact[], int num_records );
-void list_all_contacts( Contact contact[], int num_records );
-void display_first_contact( Contact contact[], int num_records );
-void display_last_contact( Contact contact[], int num_records );
+void search_contacts( Contact *first );
+void list_all_contacts( Contact *first );
+void display_first_contact( Contact *first );
+void display_last_contact( Contact *first );

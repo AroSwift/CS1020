@@ -9,21 +9,12 @@ using namespace std;
 
 
 int main() {
+  Contact *first = NULL;
   bool exit = false;
   char choice;
 
-  // Instantiate and dynamically allocate an array of contacts
-  int num_records = get_number_records();
-  Contact *contact = new Contact[num_records];
-
   // Read a file into an array of contact structures
-  read_file( contact );
-
-  for( int i = 0; i < num_records; i++ ) {
-    cout << contact[i].first_name << endl;
-    cout << contact[i].last_name << endl;
-    cout << contact[i].phone_number << endl;
-  }
+  read_file();
 
   // Display a menu
   do {
@@ -39,22 +30,25 @@ int main() {
     << "Choice: ";
     cin >> choice;
 
+    // Add a new line to maintain neat layout
+    cout << endl;
+
     // Associate choice with an action
     switch(choice) {
       case '1': // Search contacts
-        search_contacts( contact, num_records );
+        search_contacts( first );
         break;
 
       case '2': // List all contacts
-        list_all_contacts( contact, num_records );
+        list_all_contacts( first );
         break;
 
       case '3': // Show first contact
-        display_first_contact( contact, num_records );
+        display_first_contact( first );
         break;
 
       case '4': // Show last contact
-        display_last_contact( contact, num_records );
+        display_last_contact( first );
         break;
 
       case '5': // Exit program
@@ -71,23 +65,7 @@ int main() {
 
   } while(!exit);
 
-  // Delete dynamically allocated array of contact structures
-  delete[] contact;
-
   return 0;
-}
-
-
-int get_number_records() {
-  string line;
-  int num_lines;
-  ifstream input;
-  input.open(FILE_NAME);
-
-  for (num_lines = 0; getline(input, line); ++num_lines);
-  input.close();
-
-  return num_lines/3;
 }
 
 string lower_case( string value ) {
@@ -99,28 +77,34 @@ string lower_case( string value ) {
   return value;
 }
 
-void read_file( Contact contact[] ) {
+void read_file() {
   ifstream input;
   input.open(FILE_NAME);
 
   // When file could not be found
   if( input.fail() ) {
-    cout << "Input file contacts.dat does not exist." << endl;
+    cout << "Input file " << FILE_NAME << " does not exist." << endl;
     exit(1);
 
   // When file is empty
   } else if( input.peek() == EOF ) {
-    cout << "Input file contacts.dat is empty." << endl;
+    cout << "Input file " << FILE_NAME << " is empty." << endl;
     exit(1);
   }
 
+  // Contact *first = NULL;
+
   // Read file data into an array of structures
-  int i = 0;
   while( !input.eof() ) {
-    input >> contact[i].first_name;
-    input >> contact[i].last_name;
-    input >> contact[i].phone_number;
-    i++;
+    string first_name, last_name, phone_number;
+    input >> first_name;
+    input >> last_name;
+    input >> phone_number;
+
+    // Create new contact
+    Contact *contact = new Contact;
+    contact = new_contact( first_name, last_name, phone_number );
+
   }
 
   // Close file
@@ -128,23 +112,36 @@ void read_file( Contact contact[] ) {
 
 }
 
-void insert_first( Contact **first ) {
-  // Contact *c = new Contact();
-  // c->first_name = first_name;
-  // c->last_name = last_name;
-  // c->phone_number = phone_number;
-  // c->next = NULL;
+Contact *new_contact( string first_name, string last_name, string phone_number ) {
+  Contact *c = new Contact;
+  c->first_name   = first_name;
+  c->last_name    = last_name;
+  c->phone_number = phone_number;
+  c->next         = NULL;
 
-  // if (*first != NULL) {
-  //   c->next = *first;
-  // }
+  // Sort contact alphabetically by first and last name
+  sort_contacts( c );
 
-  // *first = c;
+  return c;
 }
 
+void sort_contacts( Contact contact ) {
+  Contact *c = new Contact;
+}
 
+Contact *get_next( Contact *current_node ) {
+  if (current_node != NULL) {
+    return(current_node->next);
+  }
+}
 
-void search_contacts( Contact contact[], int num_records ) {
+Contact *get_prev( Contact *current_node ) {
+  if (current_node != NULL) {
+    return(current_node->prev);
+  }
+}
+
+void search_contacts( Contact *first ) {
   bool person_found = false;
   string user_input;
 
@@ -178,7 +175,7 @@ void search_contacts( Contact contact[], int num_records ) {
 
 }
 
-void list_all_contacts( Contact contact[], int num_records ) {
+void list_all_contacts( Contact *first ) {
   cout << "First Name                    Last Name                     Phone Number" << endl;
   cout << "------------------------------------------------------------------------" << endl;
 
@@ -190,23 +187,10 @@ void list_all_contacts( Contact contact[], int num_records ) {
   }
 }
 
-void display_first_contact( Contact contact[], int num_records ) {
+void display_first_contact( Contact *first ) {
 
 }
 
-void display_last_contact( Contact contact[], int num_records ) {
+void display_last_contact( Contact *first ) {
 
 }
-
-
-
-
-// Menu
-// Search: search for EVERY  instances
-
-
-
-// 11. show all contact lists
-// previous and next takes to next
-// Don't allow user to go past end or begining
-// I can have multiple .h or .cpp files

@@ -125,8 +125,8 @@ Contact *new_contact( string first_name, string last_name, string phone_number )
   return c;
 }
 
-void sort_contacts( Contact contact ) {
-  Contact *c = new Contact;
+void sort_contacts( Contact *contact ) {
+  // contact
 }
 
 Contact *get_next( Contact *current_node ) {
@@ -142,7 +142,7 @@ Contact *get_prev( Contact *current_node ) {
 }
 
 void search_contacts( Contact *first ) {
-  bool person_found = false;
+  bool contact_found = false;
   string user_input;
 
   cout << "Enter first or last name: ";
@@ -151,40 +151,39 @@ void search_contacts( Contact *first ) {
   // Lowercase user input
   user_input = lower_case(user_input);
 
-  for( int row = 0; row < num_records && !person_found; row++ ) {
-    string first_name = lower_case(contact[row].first_name);
-    string last_name  = lower_case(contact[row].last_name);
+  cout << "First Name                    Last Name                     Phone Number" << endl;
+  cout << "------------------------------------------------------------------------" << endl;
+
+  do {
+    Contact *contact = get_next( first );
+
 
     // Select all instances of first or last name matching given input
-    if( user_input == first_name || user_input == last_name ) {
-      person_found = true;
+    if( user_input == lower_case(contact->first_name) || user_input == lower_case(contact->last_name) ) {
+      contact_found = true;
 
-    cout << "First Name                    Last Name                     Phone Number" << endl;
-    cout << "------------------------------------------------------------------------" << endl;
-
-    // Print first name, last name, and phone number
-    cout << setw(30) << left << contact[row].first_name;
-    cout << setw(30) << left << contact[row].last_name;
-    cout << setw(30) << left << contact[row].phone_number << endl;
-
+      // Print first name, last name, and phone number
+      cout << setw(30) << left << contact->first_name;
+      cout << setw(30) << left << contact->last_name;
+      cout << setw(30) << left << contact->phone_number << endl;
     }
-  }
 
-  if(!person_found) cout << "No person was found." << endl;
+  } while( first != NULL );
 
+  if(!contact_found) cout << "No contact was found." << endl;
 
 }
 
 void list_all_contacts( Contact *first ) {
-  cout << "First Name                    Last Name                     Phone Number" << endl;
-  cout << "------------------------------------------------------------------------" << endl;
+  // cout << "First Name                    Last Name                     Phone Number" << endl;
+  // cout << "------------------------------------------------------------------------" << endl;
 
-  for( int row = 0; row < num_records; row++ ) {
-    // Print first name, last name, and phone number
-    cout << setw(30) << left << contact[row].first_name;
-    cout << setw(30) << left << contact[row].last_name;
-    cout << setw(30) << left << contact[row].phone_number << endl;
-  }
+  // for( int row = 0; row < num_records; row++ ) {
+  //   // Print first name, last name, and phone number
+  //   cout << setw(30) << left << contact[row].first_name;
+  //   cout << setw(30) << left << contact[row].last_name;
+  //   cout << setw(30) << left << contact[row].phone_number << endl;
+  // }
 }
 
 void display_first_contact( Contact *first ) {

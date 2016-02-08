@@ -14,7 +14,7 @@ int main() {
   char choice;
 
   // Read a file into an array of contact structures
-  read_file();
+  read_file( &first );
 
   // Display a menu
   do {
@@ -77,7 +77,7 @@ string lower_case( string value ) {
   return value;
 }
 
-void read_file() {
+void read_file( Contact **first ) {
   ifstream input;
   input.open(FILE_NAME);
 
@@ -92,9 +92,8 @@ void read_file() {
     exit(1);
   }
 
-  // Set first and previous nodes to null
-  Contact *first_node = NULL;
-  Contact *prev_node  = NULL;
+  // Set previous node to point to first which points to null
+  Contact *prev_node  = *first;
 
   // Read file data into an array of structures
   while( !input.eof() ) {
@@ -104,7 +103,11 @@ void read_file() {
     input >> phone_number;
 
     // Create new contact and set new previous node to current node for next iteration
-    Contact *prev_node = new_contact( prev_node, first_name, last_name, phone_number );
+    prev_node = new_contact( prev_node, first_name, last_name, phone_number );
+
+    if( *first == NULL ) {
+      *first = prev_node;
+    }
 
   }
 
@@ -119,7 +122,10 @@ Contact *new_contact( Contact *prev_node, string first_name, string last_name, s
   c->last_name    = last_name;
   c->phone_number = phone_number;
   c->prev         = prev_node;
-  c->next         = NULL;
+
+  if( c->prev != NULL ) {
+    c->prev->next = c;
+  }
 
   return c;
 }
@@ -167,27 +173,36 @@ void search_contacts( Contact *first ) {
   cout << "First Name                    Last Name                     Phone Number" << endl;
   cout << "------------------------------------------------------------------------" << endl;
 
+  Contact *contact;
+
   do {
-    Contact *contact = get_next( first );
+    contact = get_next( first );
 
+    if( contact != NULL ) {
+      // Select all instances of first or last name matching given input
+      if( user_input == lower_case(contact->first_name) || user_input == lower_case(contact->last_name) ) {
+        contact_found = true;
 
-    // Select all instances of first or last name matching given input
-    if( user_input == lower_case(contact->first_name) || user_input == lower_case(contact->last_name) ) {
-      contact_found = true;
-
-      // Print first name, last name, and phone number
-      cout << setw(30) << left << contact->first_name;
-      cout << setw(30) << left << contact->last_name;
-      cout << setw(30) << left << contact->phone_number << endl;
+        // Print first name, last name, and phone number
+        cout << setw(30) << left << contact->first_name;
+        cout << setw(30) << left << contact->last_name;
+        cout << setw(30) << left << contact->phone_number << endl;
+      }
     }
 
-  } while( first != NULL );
+  } while( contact != NULL );
 
   if(!contact_found) cout << "No contact was found." << endl;
 
 }
 
 void list_all_contacts( Contact *first ) {
+  // Return to menu when no records
+  // if( first == NULL ) {
+  //   cout << "There are no contacts.";
+  //   return;
+  // }
+
   cout << "First Name                    Last Name                     Phone Number" << endl;
   cout << "------------------------------------------------------------------------" << endl;
 
@@ -197,15 +212,25 @@ void list_all_contacts( Contact *first ) {
   do {
     current_node = get_next( current_node );
 
-    cout << setw(30) << left << current_node->first_name;
-    cout << setw(30) << left << current_node->last_name;
-    cout << setw(30) << left << current_node->phone_number << endl;
+    if( current_node != NULL ) {
+      cout << setw(30) << left << current_node->first_name;
+      cout << setw(30) << left << current_node->last_name;
+      cout << setw(30) << left << current_node->phone_number << endl;
+    }
 
-  } while( first != NULL );
+  } while( current_node != NULL );
+
+  cout << "random" << endl;
 
 }
 
 void display_first_contact( Contact *first ) {
+  // Return to menu when no records
+  if( first == NULL ) {
+    cout << "There are no contacts.";
+    return;
+  }
+
   cout << "First Name                    Last Name                     Phone Number" << endl;
   cout << "------------------------------------------------------------------------" << endl;
 
@@ -215,6 +240,12 @@ void display_first_contact( Contact *first ) {
 }
 
 void display_last_contact( Contact *first ) {
+  // Return to menu when no records
+  if( first == NULL ) {
+    cout << "There are no contacts.";
+    return;
+  }
+
   Contact *node = first;
   while(node->next != NULL) {
     node = node->next;

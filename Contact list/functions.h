@@ -13,7 +13,7 @@ struct Contact {
 };
 
 
-void read_file();
+void read_file( Contact **first );
 string lower_case( string value );
 
 Contact *get_next(Contact *current_node);

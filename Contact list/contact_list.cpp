@@ -217,12 +217,7 @@ void display_first_contact( Contact *first ) {
     return;
   }
 
-  cout << "First Name                    Last Name                     Phone Number" << endl;
-  cout << "------------------------------------------------------------------------" << endl;
-
-  cout << setw(30) << left << first->first_name;
-  cout << setw(30) << left << first->last_name;
-  cout << setw(30) << left << first->phone_number << endl;
+  display_contact( first );
 
   traverse_menu( first );
 
@@ -244,7 +239,7 @@ void traverse_menu( Contact *contact ) {
         contact = get_prev( contact );
 
         if( contact == NULL ) {
-          cout << "No contact was found.";
+          cout << "No contact was found." << endl;
         } else {
           display_contact( contact );
         }
@@ -254,7 +249,7 @@ void traverse_menu( Contact *contact ) {
         contact = get_next( contact );
 
         if( contact == NULL ) {
-          cout << "No contact was found.";
+          cout << "No contact was found." << endl;
         } else {
           display_contact( contact );
         }
@@ -287,6 +282,8 @@ void display_last_contact( Contact *first ) {
   }
 
   display_contact( first );
+
+  traverse_menu( first );
 
 }
 

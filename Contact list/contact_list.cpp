@@ -133,12 +133,16 @@ Contact *new_contact( Contact *prev_node, string first_name, string last_name, s
 Contact *get_next( Contact *current_node ) {
   if (current_node != NULL) {
     return(current_node->next);
-  }
+  } //else {
+  //   return NULL;
+  // }
 }
 
 Contact *get_prev( Contact *current_node ) {
   if (current_node != NULL) {
     return(current_node->prev);
+  } else {
+    return NULL;
   }
 }
 
@@ -220,27 +224,40 @@ void display_first_contact( Contact *first ) {
   cout << setw(30) << left << first->last_name;
   cout << setw(30) << left << first->phone_number << endl;
 
-  traverse( first );
+  traverse_menu( first );
 
 }
 
-void traverse( Contact *contact ) {
+void traverse_menu( Contact *contact ) {
   bool exit = false;
 
   do {
-    cout << "1. Previous" << setw(5);
-    cout << "2. Next" << setw(5);
-    cout << "3. Exit" << setw(5) << endl;
+    cout << "1. Previous" << endl;
+    cout << right << "2. Next" << endl;
+    cout << right << "3. Exit" << endl;
+    cout << "Choice: ";
     char choice;
     cin >> choice;
 
     switch(choice) {
       case '1':
-        display_contact( get_prev( contact ) );
+        contact = get_prev( contact );
+
+        if( contact == NULL ) {
+          cout << "No contact was found.";
+        } else {
+          display_contact( contact );
+        }
         break;
 
       case '2':
-        display_contact( get_next( contact ) );
+        contact = get_next( contact );
+
+        if( contact == NULL ) {
+          cout << "No contact was found.";
+        } else {
+          display_contact( contact );
+        }
         break;
 
       case '3':
@@ -263,18 +280,13 @@ void display_last_contact( Contact *first ) {
     return;
   }
 
+  // Find last contact
   Contact *node = first;
   while(node->next != NULL) {
     node = node->next;
   }
 
-  cout << "First Name                    Last Name                     Phone Number" << endl;
-  cout << "------------------------------------------------------------------------" << endl;
-
-  // Print last node's first name, last name, and phone number
-  cout << setw(30) << left << node->first_name;
-  cout << setw(30) << left << node->last_name;
-  cout << setw(30) << left << node->phone_number << endl;
+  display_contact( first );
 
 }
 

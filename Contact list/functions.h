@@ -8,12 +8,11 @@ struct Contact {
   string  first_name;
   string  last_name;
   string  phone_number;
-  Contact *prev;
-  Contact *next;
+  Contact *prev, *next;
 };
 
 
-void traverse( Contact *contact );
+void traverse_menu( Contact *contact );
 void read_file( Contact **first );
 string lower_case( string value );
 

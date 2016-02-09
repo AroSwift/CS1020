@@ -184,29 +184,29 @@ void search_contacts( Contact *first ) {
 
 void list_all_contacts( Contact *first ) {
   // Return to menu when no records
-  // if( first == NULL ) {
-  //   cout << "There are no contacts.";
-  //   return;
-  // }
+  if( first == NULL ) {
+    cout << "There are no contacts.";
+    return;
+  }
 
   cout << "First Name                    Last Name                     Phone Number" << endl;
   cout << "------------------------------------------------------------------------" << endl;
 
   // Set current node to point to head
-  Contact *current_node = first;
+  Contact *current_contact = first;
 
   do {
-    current_node = get_next( current_node );
 
-    if( current_node != NULL ) {
-      cout << setw(30) << left << current_node->first_name;
-      cout << setw(30) << left << current_node->last_name;
-      cout << setw(30) << left << current_node->phone_number << endl;
+    if( current_contact != NULL ) {
+      cout << setw(30) << left << current_contact->first_name;
+      cout << setw(30) << left << current_contact->last_name;
+      cout << setw(30) << left << current_contact->phone_number << endl;
     }
 
-  } while( current_node != NULL );
+    // Get next contact
+    current_contact = get_next( current_contact );
 
-  cout << "random" << endl;
+  } while( current_contact != NULL );
 
 }
 

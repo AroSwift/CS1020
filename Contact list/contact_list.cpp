@@ -131,7 +131,7 @@ Contact *new_contact( Contact *prev_node, string first_name, string last_name, s
 }
 
 Contact *get_next( Contact *current_node ) {
-  if (current_node == NULL) {
+  if (current_node != NULL) {
     return(current_node->next);
   } else {
     return NULL;

@@ -159,14 +159,17 @@ void search_contacts( Contact *first ) {
   cout << "First Name                    Last Name                     Phone Number" << endl;
   cout << "------------------------------------------------------------------------" << endl;
 
-  Contact *contact;
+  Contact *contact = first;
 
   do {
-    contact = get_next( first );
+    contact = get_next( contact );
 
     if( contact != NULL ) {
+      string first_name = lower_case(contact->first_name);
+      string last_name  = lower_case(contact->last_name);
+
       // Select all instances of first or last name matching given input
-      if( user_input == lower_case(contact->first_name) || user_input == lower_case(contact->last_name) ) {
+      if( first_name.find(user_input) != string::npos || last_name.find(user_input) != string::npos ) {
         contact_found = true;
 
         // Print first name, last name, and phone number

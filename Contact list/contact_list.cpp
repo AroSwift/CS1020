@@ -13,7 +13,7 @@ int main() {
   bool exit = false;
   char choice;
 
-  // Read a file into an array of contact structures
+  // Read a file into dynamically linked contact structures
   read_file( &first );
 
   // Display a menu
@@ -95,7 +95,7 @@ void read_file( Contact **first ) {
   // Set previous node to point to first which points to null
   Contact *prev_node  = *first;
 
-  // Read file data into an array of structures
+  // Read file data into dynamically allocated structures
   while( !input.eof() ) {
     string first_name, last_name, phone_number;
     input >> first_name;
@@ -131,11 +131,11 @@ Contact *new_contact( Contact *prev_node, string first_name, string last_name, s
 }
 
 Contact *get_next( Contact *current_node ) {
-  if (current_node != NULL) {
+  if (current_node == NULL) {
     return(current_node->next);
-  } //else {
-  //   return NULL;
-  // }
+  } else {
+    return NULL;
+  }
 }
 
 Contact *get_prev( Contact *current_node ) {
@@ -229,7 +229,7 @@ void traverse_menu( Contact *contact ) {
   do {
     cout << "1. Previous" << endl;
     cout << right << "2. Next" << endl;
-    cout << right << "3. Exit" << endl;
+    cout << right << "3. Return to main menu" << endl;
     cout << "Choice: ";
     char choice;
     cin >> choice;

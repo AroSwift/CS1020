@@ -30,25 +30,31 @@ int main() {
     << "Choice: ";
     cin >> choice;
 
-    // Add a new line to maintain neat layout
-    cout << endl;
 
     // Associate choice with an action
     switch(choice) {
       case '1': // Search contacts
+        cout << endl;
         search_contacts( first );
+        cout << endl;
         break;
 
       case '2': // List all contacts
+        cout << endl;
         list_all_contacts( first );
+        cout << endl;
         break;
 
       case '3': // Show first contact
+        cout << endl;
         display_first_contact( first );
+        cout << endl;
         break;
 
       case '4': // Show last contact
+        cout << endl;
         display_last_contact( first );
+        cout << endl;
         break;
 
       case '5': // Exit program
@@ -59,9 +65,6 @@ int main() {
         cout << "Please enter a valid option." << endl;
         break;
     }
-
-    // Add a new line to maintain neat layout
-    cout << endl;
 
   } while(!exit);
 
@@ -159,6 +162,7 @@ void search_contacts( Contact *first ) {
   cout << "First Name                    Last Name                     Phone Number" << endl;
   cout << "------------------------------------------------------------------------" << endl;
 
+  // Set first contact to first
   Contact *contact = first;
 
   do {
@@ -213,21 +217,11 @@ void list_all_contacts( Contact *first ) {
 
 }
 
-void display_first_contact( Contact *first ) {
-  // Return to menu when no records
-  if( first == NULL ) {
-    cout << "There are no contacts.";
-    return;
-  }
-
-  display_contact( first );
-
-  traverse_menu( first );
-
-}
-
 void traverse_menu( Contact *contact ) {
   bool exit = false;
+
+  // Show the first contact given
+  display_contact( contact );
 
   do {
     cout << "1. Previous" << endl;
@@ -277,6 +271,17 @@ void traverse_menu( Contact *contact ) {
 
 }
 
+void display_first_contact( Contact *first ) {
+  // Return to menu when no records
+  if( first == NULL ) {
+    cout << "There are no contacts.";
+    return;
+  }
+
+  traverse_menu( first );
+
+}
+
 void display_last_contact( Contact *first ) {
   // Return to menu when no records
   if( first == NULL ) {
@@ -289,8 +294,6 @@ void display_last_contact( Contact *first ) {
   while(node->next != NULL) {
     node = node->next;
   }
-
-  display_contact( first );
 
   traverse_menu( first );
 
@@ -305,3 +308,4 @@ void display_contact( Contact *contact ) {
   cout << setw(30) << left << contact->last_name;
   cout << setw(30) << left << contact->phone_number << endl;
 }
+

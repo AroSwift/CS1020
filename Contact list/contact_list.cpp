@@ -9,12 +9,13 @@ using namespace std;
 
 
 int main() {
-  Contact *first = NULL;
+  // Set default first and last contact pointers of list
+  Contact *first = NULL, *last = NULL;
   bool exit = false;
   char choice;
 
   // Read a file into dynamically linked contact structures
-  read_file( &first );
+  read_file( &first, &last );
 
   // Display a menu
   do {
@@ -53,7 +54,7 @@ int main() {
 
       case '4': // Show last contact
         cout << endl;
-        display_last_contact( first );
+        display_last_contact( last );
         cout << endl;
         break;
 
@@ -80,7 +81,7 @@ string lower_case( string value ) {
   return value;
 }
 
-void read_file( Contact **first ) {
+void read_file( Contact **first, Contact **last ) {
   ifstream input;
   input.open(FILE_NAME);
 
@@ -96,7 +97,7 @@ void read_file( Contact **first ) {
   }
 
   // Set previous node to point to first which points to null
-  Contact *prev_node  = *first;
+  Contact *prev_node = *first;
 
   // Read file data into dynamically allocated structures
   while( !input.eof() ) {
@@ -113,6 +114,8 @@ void read_file( Contact **first ) {
     }
 
   }
+
+  *last = prev_node;
 
   // Close file
   input.close();

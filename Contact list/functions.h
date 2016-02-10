@@ -13,7 +13,7 @@ struct Contact {
 
 
 void traverse_menu( Contact *contact );
-void read_file( Contact **first );
+void read_file( Contact **first, Contact **last );
 string lower_case( string value );
 
 void display_contact( Contact *contact );

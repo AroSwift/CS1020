@@ -221,12 +221,15 @@ void list_all_contacts( Contact *first ) {
 }
 
 void traverse_menu( Contact *contact ) {
+  Contact *prev_contact, *next_contact;
   bool exit = false;
 
   // Show the first contact given
   display_contact( contact );
 
   do {
+    cout << endl; // Extra endline to maintain a neat layout
+
     cout << "1. Previous" << endl;
     cout << right << "2. Next" << endl;
     cout << right << "3. Return to main menu" << endl;
@@ -234,7 +237,7 @@ void traverse_menu( Contact *contact ) {
     char choice;
     cin >> choice;
 
-    Contact *prev_contact, *next_contact;
+    cout << endl; // Extra endline to maintain a neat layout
 
     switch(choice) {
       case '1':

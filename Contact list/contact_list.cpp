@@ -133,7 +133,7 @@ Contact *new_contact( Contact *prev_node, string first_name, string last_name, s
 Contact *get_next( Contact *current_node ) {
   if (current_node != NULL) {
     return(current_node->next);
-  } else {
+  } else { // No contact was found
     return NULL;
   }
 }
@@ -141,7 +141,7 @@ Contact *get_next( Contact *current_node ) {
 Contact *get_prev( Contact *current_node ) {
   if (current_node != NULL) {
     return(current_node->prev);
-  } else {
+  } else { // No contact was found
     return NULL;
   }
 }
@@ -234,23 +234,29 @@ void traverse_menu( Contact *contact ) {
     char choice;
     cin >> choice;
 
+    Contact *prev_contact, *next_contact;
+
     switch(choice) {
       case '1':
-        contact = get_prev( contact );
+        prev_contact = get_prev( contact );
 
-        if( contact == NULL ) {
+        if( prev_contact == NULL ) {
           cout << "No contact was found." << endl;
-        } else {
+        } else { // Contact was found
+          // Set contact to previous contact for possible reiteration
+          contact = prev_contact;
           display_contact( contact );
         }
         break;
 
       case '2':
-        contact = get_next( contact );
+        next_contact = get_next( contact );
 
-        if( contact == NULL ) {
+        if( next_contact == NULL ) {
           cout << "No contact was found." << endl;
-        } else {
+        } else { // Contact was found
+          // Set contact to next contact for possible reiteration
+          contact = next_contact;
           display_contact( contact );
         }
         break;

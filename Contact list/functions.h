@@ -15,10 +15,11 @@ struct Contact {
 void traverse_menu( Contact *contact );
 void read_file( Contact **first, Contact **last );
 string lower_case( string value );
+Contact *sort_contacts( Contact **first, Contact **last );
 
 void display_contact( Contact *contact );
-Contact *get_next(Contact *current_node);
-Contact *get_prev(Contact *current_node);
+Contact *get_next(Contact *current_contact);
+Contact *get_prev(Contact *current_contact);
 Contact *new_contact( Contact *prev_node, string first_name, string last_name, string phone_number );
 
 void search_contacts( Contact *first );

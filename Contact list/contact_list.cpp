@@ -17,6 +17,9 @@ int main() {
   // Read a file into dynamically linked contact structures
   read_file( &first, &last );
 
+  // Sort the contact alphabetically
+  sort_contacts( &first, &last );
+
   // Display a menu
   do {
 
@@ -136,17 +139,25 @@ Contact *new_contact( Contact *prev_node, string first_name, string last_name, s
   return c;
 }
 
-Contact *get_next( Contact *current_node ) {
-  if (current_node != NULL) {
-    return(current_node->next);
+Contact *sort_contacts( Contact **first, Contact **last ) {
+  Contact *current_contact = *first;
+
+  if( first ) {
+
+  }
+}
+
+Contact *get_next( Contact *current_contact ) {
+  if (current_contact != NULL) {
+    return(current_contact->next);
   } else { // No contact was found
     return NULL;
   }
 }
 
-Contact *get_prev( Contact *current_node ) {
-  if (current_node != NULL) {
-    return(current_node->prev);
+Contact *get_prev( Contact *current_contact ) {
+  if (current_contact != NULL) {
+    return(current_contact->prev);
   } else { // No contact was found
     return NULL;
   }
@@ -296,9 +307,9 @@ void display_last_contact( Contact *first ) {
   }
 
   // Find last contact
-  Contact *node = first;
-  while(node->next != NULL) {
-    node = node->next;
+  Contact *contact = first;
+  while(contact->next != NULL) {
+    contact = contact->next;
   }
 
   traverse_menu( first );

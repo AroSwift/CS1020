@@ -18,7 +18,7 @@ int main() {
   read_file( &first, &last );
 
   // Sort the contact list alphabetically
-  // sort_contacts( &first, &last );
+  sort_contacts( &first, &last );
 
   // Display a menu
   do {
@@ -163,8 +163,13 @@ void sort_contacts( Contact **first, Contact **last ) {
     sorted_contact = false;
     current_contact = *first;
 
+    cout << "---------" << endl;
+    cout << "In loop: " << endl;
+    cout << (*first)->first_name << endl;
+    cout << (*first)->last_name << endl << endl;
 
-    while( current_contact->next != NULL ) {
+
+    while( current_contact->next != *last ) {
 
       string first_name = lower_case(current_contact->first_name);
       string last_name  = lower_case(current_contact->last_name);
@@ -180,7 +185,6 @@ void sort_contacts( Contact **first, Contact **last ) {
       if( (last_name == next_last_name && first_name > next_first_name) || last_name > next_last_name ) {
 
         if( current_contact == *first ) {
-          cout << current_contact->next->first_name << endl;
           *first = current_contact->next;
         }
 
@@ -195,15 +199,15 @@ void sort_contacts( Contact **first, Contact **last ) {
 
       current_contact = get_next( current_contact );
 
+      *last = current_contact;
+
     }
 
     cout << "End: " << endl;
     cout << (*first)->first_name << endl;
     cout << (*first)->last_name << endl << endl;
 
-    if( sorted_contact ) continue_sorting = true;
-
-    cout << "5" << endl;
+    if( !sorted_contact ) continue_sorting = false;
 
   }
 

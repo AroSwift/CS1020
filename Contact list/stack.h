@@ -1,25 +1,33 @@
 #include <iostream>
+#include "stack.h"
+
 using namespace std;
 
 struct Stack {
-  void *my_stack[100];
-  int top;
+  void *myStack[100];
+  int  top;
 };
 
-void init_stack(Stack *S) {
+void initStack(Stack *s);
+void push(Stack s, void *data);
+void *pop(Stack s);
+bool isEmpty(Stack s);
+
+void initStack(Stack *s) {
   s->top = -1;
 }
 
-bool is_empty( Stack *s ) {
-  s->my_stack[s->top] == NULL ? true : false;
+void push(Stack *s, void *data) {
+   s->top++;
+   s->myStack[s->top] = data; // should make a copy here...
 }
 
-void push( Stack *s, void *data ) {
-  s->top++;
-  s->my_stack[s->top] = data;
+void *pop(Stack *s) {
+  void *retVal = s->myStack[s->top];
+  s->top--;
+  return(retVal);
 }
 
-void *pop( Stack *s ) {
-  void *return = s->my_stack[top];
-  s->my_stack.top--;
+bool isEmpty(Stack *s) {
+  return(s->top != -1);
 }

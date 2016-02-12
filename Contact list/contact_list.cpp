@@ -147,20 +147,20 @@ void switch_contacts( Contact **c1, Contact **c2 ) {
 }
 
 void sort_contacts( Contact **first, Contact **last ) {
-  Contact *current_contact = *first;
-  bool sorting = true, nothing_sorted;
-  int times = 0;
+  Contact *current_contact;
+  bool sorting = true, sorted_contact;
 
+  cout << "Beginning: " << endl;
   cout << (*first)->first_name << endl;
   cout << (*first)->last_name << endl << endl;
 
   while( sorting ) {
 
-    nothing_sorted = true;
+    sorted_contact = false;
+    current_contact = *first;
 
-    while( current_contact->next != *last ) {
+    while( current_contact->next != NULL ) {
 
-      if( current_contact->next == NULL ) break;
       string first_name = lower_case(current_contact->first_name);
       string last_name  = lower_case(current_contact->last_name);
 
@@ -173,9 +173,12 @@ void sort_contacts( Contact **first, Contact **last ) {
         cout << current_contact->first_name << endl;
         cout << current_contact->last_name << endl << endl;
 
+        if( current_contact == *first ) {
+          *first = current_contact->next;
+        }
+
         switch_contacts( &current_contact, &current_contact->next );
-        nothing_sorted = false;
-        *first = current_contact;
+        sorted_contact = true;
 
         cout << "After: " << endl;
         cout << current_contact->first_name << endl;
@@ -187,16 +190,12 @@ void sort_contacts( Contact **first, Contact **last ) {
 
     }
 
-    times++;
-    cout << times << endl;
-    cout << "---------" << endl;
-
+    cout << "End: " << endl;
     cout << (*first)->first_name << endl;
     cout << (*first)->last_name << endl << endl;
 
-    if( nothing_sorted ) {
-      sorting = false;
-      current_contact = *first;
+    if( sorted_contact ) {
+      sorting = true;
     }
 
   }

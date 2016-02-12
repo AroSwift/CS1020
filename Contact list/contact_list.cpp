@@ -139,12 +139,52 @@ Contact *new_contact( Contact *prev_node, string first_name, string last_name, s
   return c;
 }
 
-Contact *sort_contacts( Contact **first, Contact **last ) {
-  Contact *current_contact = *first;
+void switch_contacts( Contact *c1, Contact *c2 ) {
+  Contact *temp_prev = c1->prev;
+  Contact *temp_next = c1->next;
 
-  if( first ) {
+  c1->prev = c2->prev;
+  c1->next = c2->next;
+
+  c2->prev = temp_prev;
+  c2->next = temp_next;
+}
+
+void sort_contacts( Contact **first, Contact **last ) {
+  Contact *current_contact = *first;
+  bool sorting = true, nothing_sorted;
+
+  while( sorting ) {
+
+    nothing_sorted = true;
+
+    while( current_contact->next != *last ) {
+
+      if( current_contact->next == NULL ) break;
+      string first_name = lower_case(current_contact->first_name);
+      string last_name  = lower_case(current_contact->last_name);
+
+      string next_first_name = lower_case(current_contact->next->first_name);
+      string next_last_name  = lower_case(current_contact->next->last_name);
+
+      if( last_name > next_last_name ) {
+        switch_contacts( current_contact, current_contact->next );
+        nothing_sorted = false;
+      }
+
+      current_contact = get_next( current_contact );
+
+    }
+
+    if( nothing_sorted ) {
+      sorting = false;
+    }
+
+    // Go to begin of list to sort again
+    if(sorting) current_contact = *first;
 
   }
+
 }
 
 Contact *get_next( Contact *current_contact ) {

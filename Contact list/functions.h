@@ -15,7 +15,7 @@ struct Contact {
 void traverse_menu( Contact *contact );
 void read_file( Contact **first, Contact **last );
 string lower_case( string value );
-Contact *sort_contacts( Contact **first, Contact **last );
+void sort_contacts( Contact **first, Contact **last );
 
 void display_contact( Contact *contact );
 Contact *get_next(Contact *current_contact);

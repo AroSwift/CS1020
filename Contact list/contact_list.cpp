@@ -163,7 +163,7 @@ void sort_contacts( Contact **first, Contact **last ) {
       string next_first_name = lower_case(current_contact->next->first_name);
       string next_last_name  = lower_case(current_contact->next->last_name);
 
-      if( last_name == next_last_name && first_name > next_first_name) {
+      if( last_name == next_last_name && first_name > next_first_name ) {
 
         cout << "Before: " << endl;
         cout << current_contact->first_name << endl;
@@ -195,10 +195,8 @@ void sort_contacts( Contact **first, Contact **last ) {
 
     if( nothing_sorted ) {
       sorting = false;
+      current_contact = *first;
     }
-
-    // Go to begin of list to sort again
-    if(sorting) current_contact = *first;
 
   }
 

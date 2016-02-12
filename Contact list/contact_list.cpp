@@ -1,3 +1,12 @@
+//
+// Name: Aaron Barlow
+// Date: 2/12/2016
+// Description: Read in a file and link the contacts via doubly linked list.
+// Give the user the options to search, list all, show first contact in list,
+// show last contact in list, and exit.
+// With first and last contact, all user to traverse the doubly linked list
+//
+
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -143,7 +152,6 @@ Contact *new_contact( Contact *prev_node, string first_name, string last_name, s
 
 void switch_contacts( Contact **c1, Contact **c2, Contact **first ) {
 
-
   if( (*c1)->prev == NULL ) {
     (*c1)->prev = NULL;
     *first = *c1;
@@ -165,25 +173,18 @@ void switch_contacts( Contact **c1, Contact **c2, Contact **first ) {
   // (*c2)->next = *c1;
   // (*c1)->prev = *c2;
 
-  if( c1 == NULL ) {
-    (*c1)->prev = *c2;
-  }
-
-  if( c2 == NULL ) {
-    (*c2)->next = *c1;
-  }
-
 }
 
 void sort_contacts( Contact **first, Contact **last ) {
   Contact *current_contact = *first;
-  bool sorted_contact;
+  bool sorting_contacts = true;
 
   cout << "First contact in list:" << endl;
   cout << (*first)->first_name << endl;
   cout << (*first)->last_name << endl << endl;
 
-  while( true ) {
+  do {
+    // if( current_contact->next == NULL ) break;
     if( current_contact->next == NULL ) break;
 
     string first_name = lower_case(current_contact->first_name);
@@ -195,6 +196,7 @@ void sort_contacts( Contact **first, Contact **last ) {
     if( last_name >= next_last_name ) {
       if( first_name > next_first_name ) {
 
+
         // if( current_contact == *first ) {
         //   *first = current_contact->next;
         // }
@@ -205,16 +207,11 @@ void sort_contacts( Contact **first, Contact **last ) {
 
     }
 
-    cout << "After: " << endl;
-    cout << current_contact->first_name << endl;
-    cout << current_contact->last_name << endl;
-    cout << "----------------------" << endl;
-
     current_contact = get_next( current_contact );
 
-    // *last = current_contact;
+    *last = current_contact;
 
-  }
+  } while( sorting_contacts );
 
   cout << "First contact in list now: " << endl;
   cout << (*first)->first_name << endl;
@@ -382,21 +379,21 @@ void display_first_contact( Contact *first ) {
 
 }
 
-void display_last_contact( Contact *first ) {
+void display_last_contact( Contact *last ) {
   // Return to menu when no records
-  if( first == NULL ) {
+  if( last == NULL ) {
     cout << "There are no contacts.";
     return;
   }
 
   // Find last contact
-  Contact *contact = first;
+  Contact *contact = last;
   while(contact->next != NULL) {
     contact = contact->next;
   }
 
   // Display traverse menu
-  traverse_menu( first );
+  traverse_menu( last );
 
 }
 

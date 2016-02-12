@@ -167,20 +167,7 @@ void sort_contacts( Contact **first, Contact **last ) {
       string next_first_name = lower_case(current_contact->next->first_name);
       string next_last_name  = lower_case(current_contact->next->last_name);
 
-      // if( last_name == next_last_name && first_name > next_first_name ) {
-
-      //   cout << "Before: " << endl;
-      //   cout << current_contact->first_name << endl;
-      //   cout << current_contact->last_name << endl << endl;
-
-      //   switch_contacts( &current_contact, &current_contact->next );
-
-      //   nothing_sorted = false;
-
-      //   cout << "After: " << endl;
-      //   cout << current_contact->first_name << endl;
-      //   cout << current_contact->last_name << endl << endl;
-      if( last_name > next_last_name ) {
+      if( (last_name == next_last_name && first_name > next_first_name) || last_name > next_last_name ) {
 
         cout << "Before: " << endl;
         cout << current_contact->first_name << endl;
@@ -193,6 +180,7 @@ void sort_contacts( Contact **first, Contact **last ) {
         cout << "After: " << endl;
         cout << current_contact->first_name << endl;
         cout << current_contact->last_name << endl << endl;
+
       }
 
       current_contact = get_next( current_contact );

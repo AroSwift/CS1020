@@ -190,7 +190,7 @@ void sort_contacts( Contact **first, Contact **last ) {
 
     }
 
-    cout << "End: " << endl;
+    cout << "First of list: " << endl;
     cout << (*first)->first_name << endl;
     cout << (*first)->last_name << endl << endl;
 

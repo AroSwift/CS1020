@@ -149,6 +149,10 @@ void switch_contacts( Contact **c1, Contact **c2 ) {
 void sort_contacts( Contact **first, Contact **last ) {
   Contact *current_contact = *first;
   bool sorting = true, nothing_sorted;
+  int times = 0;
+
+  cout << (*first)->first_name << endl;
+  cout << (*first)->last_name << endl << endl;
 
   while( sorting ) {
 
@@ -163,7 +167,20 @@ void sort_contacts( Contact **first, Contact **last ) {
       string next_first_name = lower_case(current_contact->next->first_name);
       string next_last_name  = lower_case(current_contact->next->last_name);
 
-      if( last_name == next_last_name && first_name > next_first_name ) {
+      // if( last_name == next_last_name && first_name > next_first_name ) {
+
+      //   cout << "Before: " << endl;
+      //   cout << current_contact->first_name << endl;
+      //   cout << current_contact->last_name << endl << endl;
+
+      //   switch_contacts( &current_contact, &current_contact->next );
+
+      //   nothing_sorted = false;
+
+      //   cout << "After: " << endl;
+      //   cout << current_contact->first_name << endl;
+      //   cout << current_contact->last_name << endl << endl;
+      if( last_name > next_last_name ) {
 
         cout << "Before: " << endl;
         cout << current_contact->first_name << endl;
@@ -171,18 +188,7 @@ void sort_contacts( Contact **first, Contact **last ) {
 
         switch_contacts( &current_contact, &current_contact->next );
         nothing_sorted = false;
-
-        cout << "After: " << endl;
-        cout << current_contact->first_name << endl;
-        cout << current_contact->last_name << endl << endl;
-      } else if( last_name > next_last_name ) {
-
-        cout << "Before: " << endl;
-        cout << current_contact->first_name << endl;
-        cout << current_contact->last_name << endl << endl;
-
-        switch_contacts( &current_contact, &current_contact->next );
-        nothing_sorted = false;
+        *first = current_contact;
 
         cout << "After: " << endl;
         cout << current_contact->first_name << endl;
@@ -192,6 +198,13 @@ void sort_contacts( Contact **first, Contact **last ) {
       current_contact = get_next( current_contact );
 
     }
+
+    times++;
+    cout << times << endl;
+    cout << "---------" << endl;
+
+    cout << (*first)->first_name << endl;
+    cout << (*first)->last_name << endl << endl;
 
     if( nothing_sorted ) {
       sorting = false;

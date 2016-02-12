@@ -177,41 +177,45 @@ void switch_contacts( Contact **c1, Contact **c2, Contact **first ) {
 
 void sort_contacts( Contact **first, Contact **last ) {
   Contact *current_contact = *first;
-  bool sorting_contacts = true;
+  bool still_sorting;
 
   cout << "First contact in list:" << endl;
   cout << (*first)->first_name << endl;
   cout << (*first)->last_name << endl << endl;
 
   do {
-    // if( current_contact->next == NULL ) break;
-    if( current_contact->next == NULL ) break;
 
-    string first_name = lower_case(current_contact->first_name);
-    string last_name  = lower_case(current_contact->last_name);
+    still_sorting = false;
 
-    string next_first_name = lower_case(current_contact->next->first_name);
-    string next_last_name  = lower_case(current_contact->next->last_name);
+    while( current_contact->next != NULL ) {
 
-    if( last_name >= next_last_name ) {
-      if( first_name > next_first_name ) {
+      string first_name = lower_case(current_contact->first_name);
+      string last_name  = lower_case(current_contact->last_name);
 
+      string next_first_name = lower_case(current_contact->next->first_name);
+      string next_last_name  = lower_case(current_contact->next->last_name);
 
-        // if( current_contact == *first ) {
-        //   *first = current_contact->next;
-        // }
+      if( last_name >= next_last_name ) {
+        if( first_name > next_first_name ) {
+          still_sorting = true;
 
-        switch_contacts( &current_contact, &current_contact->next, first );
+          // if( current_contact == *first ) {
+          //   *first = current_contact->next;
+          // }
+
+          switch_contacts( &current_contact, &current_contact->next, first );
+
+        }
 
       }
 
-    }
+      current_contact = get_next( current_contact );
 
-    current_contact = get_next( current_contact );
+    }
 
     *last = current_contact;
 
-  } while( sorting_contacts );
+  } while( still_sorting );
 
   cout << "First contact in list now: " << endl;
   cout << (*first)->first_name << endl;

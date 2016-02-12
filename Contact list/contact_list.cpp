@@ -139,15 +139,11 @@ Contact *new_contact( Contact *prev_node, string first_name, string last_name, s
   return c;
 }
 
-void switch_contacts( Contact *c1, Contact *c2 ) {
-  Contact *temp_prev = c1->prev;
-  Contact *temp_next = c1->next;
+void switch_contacts( Contact **c1, Contact **c2 ) {
+  Contact *temp = *c1;
 
-  c1->prev = c2->prev;
-  c1->next = c2->next;
-
-  c2->prev = temp_prev;
-  c2->next = temp_next;
+  *c1 = *c2;
+  *c2 = temp;
 }
 
 void sort_contacts( Contact **first, Contact **last ) {
@@ -167,9 +163,30 @@ void sort_contacts( Contact **first, Contact **last ) {
       string next_first_name = lower_case(current_contact->next->first_name);
       string next_last_name  = lower_case(current_contact->next->last_name);
 
-      if( last_name > next_last_name ) {
-        switch_contacts( current_contact, current_contact->next );
+      if( last_name == next_last_name && first_name > next_first_name) {
+
+        cout << "Before: " << endl;
+        cout << current_contact->first_name << endl;
+        cout << current_contact->last_name << endl << endl;
+
+        switch_contacts( &current_contact, &current_contact->next );
         nothing_sorted = false;
+
+        cout << "After: " << endl;
+        cout << current_contact->first_name << endl;
+        cout << current_contact->last_name << endl << endl;
+      } else if( last_name > next_last_name ) {
+
+        cout << "Before: " << endl;
+        cout << current_contact->first_name << endl;
+        cout << current_contact->last_name << endl << endl;
+
+        switch_contacts( &current_contact, &current_contact->next );
+        nothing_sorted = false;
+
+        cout << "After: " << endl;
+        cout << current_contact->first_name << endl;
+        cout << current_contact->last_name << endl << endl;
       }
 
       current_contact = get_next( current_contact );

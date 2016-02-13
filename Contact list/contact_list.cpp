@@ -4,7 +4,7 @@
 // Description: Read in a file and link the contacts via doubly linked list.
 // Give the user the options to search, list all, show first contact in list,
 // show last contact in list, and exit.
-// With first and last contact, all user to traverse the doubly linked list
+// With first and last contact, allow user to traverse the doubly linked list
 //
 
 #include <iostream>
@@ -46,8 +46,8 @@ void main_menu( Contact **first, Contact **last ) {
     << "------------------" << endl
     << "1.) Search" << endl
     << "2.) List all" << endl
-    << "3.) Show first contact" << endl
-    << "4.) Show last contact" << endl
+    << "3.) Show first contact in list" << endl
+    << "4.) Show last contact in list" << endl
     << "5.) Exit" << endl
     << "Choice: ";
     cin >> choice;
@@ -90,15 +90,6 @@ void main_menu( Contact **first, Contact **last ) {
   } while(!exit);
 }
 
-string lower_case( string value ) {
-  // Lowercase each character in a given string
-  for( int i = 0; i < strlen( value.c_str() ); i++ ) {
-    value[i] = tolower( value[i] );
-  }
-
-  return value; // As a lowercased string
-}
-
 void read_file( Contact **first, Contact **last ) {
   ifstream input;
   input.open(FILE_NAME);
@@ -127,7 +118,7 @@ void read_file( Contact **first, Contact **last ) {
     // Create new contact and set new previous node to current node for next iteration
     prev_node = new_contact( prev_node, first_name, last_name, phone_number );
 
-    // When first points to null set first to the first contact in the list
+    // When first points to null set first to point to the first contact in the list
     if( *first == NULL ) *first = prev_node;
 
   }
@@ -149,35 +140,42 @@ Contact *new_contact( Contact *prev_node, string first_name, string last_name, s
   c->prev         = prev_node;
 
   // When contact does not have a previous contact to point to,
-  // Set contact's previous next's pointer to point to current contact
+  // Set the previous contact's nexts contact to point to current contact
   if( c->prev != NULL ) {
     c->prev->next = c;
   }
 
-  return c;
+  return c; // Return the new contact
 }
 
 void sort_contacts( Contact **first, Contact **last ) {
-  Contact *current_contact = *first;
+  Contact *current_contact;
   bool still_sorting;
 
-  do {
+  do { // Until all names are alphabetically ordered by last name and first name
 
+    // Set or reset the state of sorting
     still_sorting = false;
     current_contact = *first;
 
     while( current_contact->next != NULL ) {
 
+      // Lowercase first name and last name of the current contact so they can be compared
       string first_name = lower_case(current_contact->first_name);
       string last_name  = lower_case(current_contact->last_name);
 
+      // Lowercase first name and last name of next contact so they can be compared
       string next_first_name = lower_case(current_contact->next->first_name);
       string next_last_name  = lower_case(current_contact->next->last_name);
 
+      // Last name takes precedence over first name
       if( last_name >= next_last_name ) {
         if( first_name > next_first_name ) {
+
+          // Sorting must continue because contacts are still being sorted
           still_sorting = true;
 
+          // Swap first name, last name, and phone number of current contact
           swap( current_contact->first_name, current_contact->next->first_name );
           swap( current_contact->last_name, current_contact->next->last_name );
           swap( current_contact->phone_number, current_contact->next->phone_number );
@@ -186,6 +184,7 @@ void sort_contacts( Contact **first, Contact **last ) {
 
       }
 
+      // Set the current contact to the next contact
       current_contact = get_next( current_contact );
 
     }
@@ -194,28 +193,15 @@ void sort_contacts( Contact **first, Contact **last ) {
 
 }
 
-Contact *get_next( Contact *current_contact ) {
-  if (current_contact != NULL) {
-    return(current_contact->next);
-  } else { // No contact was found
-    return NULL;
-  }
-}
-
-Contact *get_prev( Contact *current_contact ) {
-  if (current_contact != NULL) {
-    return(current_contact->prev);
-  } else { // No contact was found
-    return NULL;
-  }
-}
-
 void search_contacts( Contact *first ) {
   bool contact_found = false;
   string user_input;
 
+  // Prompt user for first or last name
   cout << "Enter first or last name: ";
   cin >> user_input;
+
+  cout << endl; // Extra endline to maintain a neat layout
 
   // Lowercase user input
   user_input = lower_case(user_input);
@@ -223,11 +209,12 @@ void search_contacts( Contact *first ) {
   cout << "First Name                    Last Name                     Phone Number" << endl;
   cout << "------------------------------------------------------------------------" << endl;
 
-  // Set current contact to first
+  // Set current contact to the first contact in the list
   Contact *current_contact = first;
 
   while( current_contact != NULL ) {
 
+    // Lowercase first and last contact name to equally compare against user input
     string first_name = lower_case(current_contact->first_name);
     string last_name  = lower_case(current_contact->last_name);
 
@@ -247,6 +234,7 @@ void search_contacts( Contact *first ) {
 
   }
 
+  // Inform user if no contact was found
   if(!contact_found) cout << "No contact was found." << endl;
 
 }
@@ -261,10 +249,10 @@ void list_all_contacts( Contact *first ) {
   cout << "First Name                    Last Name                     Phone Number" << endl;
   cout << "------------------------------------------------------------------------" << endl;
 
-  // Set current node to point to head
+  // Set current node to point to first contact in the list
   Contact *current_contact = first;
 
-  do { // Print each contact data
+  do { // Print all contacts
 
     if( current_contact != NULL ) {
       // Print contact first name, last name, and phone number
@@ -309,9 +297,9 @@ void traverse_menu( Contact *current_contact ) {
         } else { // Contact was found
           // Set contact to point to previous contact for possible reiteration
           current_contact = prev_contact;
-          // Print contact first name, last name, and phone number
+           // Print contact first name, last name, and phone number
+          display_contact( current_contact );
         }
-        display_contact( current_contact );
         break;
 
       case '2': // Get next contact (if possible)
@@ -379,4 +367,31 @@ void display_last_contact( Contact *last ) {
   // Display traverse menu
   traverse_menu( last );
 
+}
+
+Contact *get_next( Contact *current_contact ) {
+  if (current_contact != NULL) {
+    // Return next contact
+    return(current_contact->next);
+  } else { // No contact was found
+    return NULL;
+  }
+}
+
+Contact *get_prev( Contact *current_contact ) {
+  if (current_contact != NULL) {
+    // Return previous contact
+    return(current_contact->prev);
+  } else { // No contact was found
+    return NULL;
+  }
+}
+
+string lower_case( string value ) {
+  // Lowercase each character in a given string
+  for( int i = 0; i < strlen( value.c_str() ); i++ ) {
+    value[i] = tolower( value[i] );
+  }
+
+  return value; // As a lowercased string
 }

@@ -13,7 +13,7 @@
 #include <cstring>
 #include <cstdlib>
 #include <iomanip>
-#include "functions.h"
+#include "contact.h"
 using namespace std;
 
 
@@ -183,6 +183,7 @@ void sort_contacts( Contact **first, Contact **last ) {
 
     // Set or reset the state of sorting
     still_sorting = false;
+    // Set current contact to first contact in list
     current_contact = *first;
 
     while( current_contact->next != NULL ) {
@@ -366,7 +367,6 @@ void traverse_menu( Contact *current_contact ) {
         break;
 
       case '3': //Exit traverse menu
-        // Indicate to loop to end and return to main menu
         exit = true;
         break;
 

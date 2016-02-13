@@ -169,18 +169,25 @@ void sort_contacts( Contact **first, Contact **last ) {
       string next_last_name  = lower_case(current_contact->next->last_name);
 
       // Last name takes precedence over first name
-      if( last_name > next_last_name ) {
-        // if( first_name > next_first_name ) {
+      // In cases of same last names, look to first name
+      if( last_name == next_last_name && first_name > next_first_name ) {
+        // Sorting must continue because contacts are still being sorted
+        still_sorting = true;
 
-          // Sorting must continue because contacts are still being sorted
-          still_sorting = true;
+        // Swap first name, last name, and phone number of current contact
+        swap( current_contact->first_name, current_contact->next->first_name );
+        swap( current_contact->last_name, current_contact->next->last_name );
+        swap( current_contact->phone_number, current_contact->next->phone_number );
 
-          // Swap first name, last name, and phone number of current contact
-          swap( current_contact->first_name, current_contact->next->first_name );
-          swap( current_contact->last_name, current_contact->next->last_name );
-          swap( current_contact->phone_number, current_contact->next->phone_number );
+      // Swap when current contact last name is closer to beginning of alphebet than next contact
+      } else if( last_name > next_last_name ) {
+        // Sorting must continue because contacts are still being sorted
+        still_sorting = true;
 
-        // }
+        // Swap first name, last name, and phone number of current contact
+        swap( current_contact->first_name, current_contact->next->first_name );
+        swap( current_contact->last_name, current_contact->next->last_name );
+        swap( current_contact->phone_number, current_contact->next->phone_number );
 
       }
 

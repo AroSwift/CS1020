@@ -280,12 +280,12 @@ void list_all_contacts( Contact *first ) {
 
 }
 
-void traverse_menu( Contact *contact ) {
+void traverse_menu( Contact *current_contact ) {
   Contact *prev_contact, *next_contact;
   bool exit = false;
 
   // Print the first contact given
-  display_contact( contact );
+  display_contact( current_contact );
 
   do {
     cout << endl; // Extra endline to maintain a neat layout
@@ -302,28 +302,28 @@ void traverse_menu( Contact *contact ) {
     // Associate choice with an action
     switch(choice) {
       case '1': // Get previous contact (if possible)
-        prev_contact = get_prev( contact );
+        prev_contact = get_prev( current_contact );
 
         if( prev_contact == NULL ) {
           cout << "No contact was found." << endl;
         } else { // Contact was found
           // Set contact to point to previous contact for possible reiteration
-          contact = prev_contact;
+          current_contact = prev_contact;
           // Print contact first name, last name, and phone number
         }
-        display_contact( contact );
+        display_contact( current_contact );
         break;
 
       case '2': // Get next contact (if possible)
-        next_contact = get_next( contact );
+        next_contact = get_next( current_contact );
 
         if( next_contact == NULL ) {
           cout << "No contact was found." << endl;
         } else { // Contact was found
           // Set contact to point to next contact for possible reiteration
-          contact = next_contact;
+          current_contact = next_contact;
           // Print contact first name, last name, and phone number
-          display_contact( contact );
+          display_contact( current_contact );
         }
         break;
 
@@ -358,6 +358,7 @@ void display_first_contact( Contact *first ) {
     return;
   }
 
+  // Display traverse menu
   traverse_menu( first );
 
 }

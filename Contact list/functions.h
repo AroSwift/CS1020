@@ -21,6 +21,7 @@ struct Contact {
   Contact *prev, *next;
 };
 
+void main_menu( Contact **first, Contact **last );
 void read_file( Contact **first, Contact **last );
 string lower_case( string value );
 

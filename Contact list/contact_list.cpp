@@ -18,16 +18,25 @@ using namespace std;
 
 
 int main() {
-  // Set default first and last contact pointers of list
+  // Set default end points of a doubly linked list
   Contact *first = NULL, *last = NULL;
-  bool exit = false;
-  char choice;
 
   // Read a file into dynamically linked contact structures
   read_file( &first, &last );
 
-  // Sort the contact list alphabetically
+  // Alphabetically sort the contact list
   sort_contacts( &first, &last );
+
+  // Display the main menu
+  main_menu( &first, &last );
+
+  return 0;
+}
+
+
+void main_menu( Contact **first, Contact **last ) {
+  bool exit = false;
+  char choice;
 
   // Display a menu
   do {
@@ -47,25 +56,25 @@ int main() {
     switch(choice) {
       case '1': // Search contacts
         cout << endl;
-        search_contacts( first );
+        search_contacts( *first );
         cout << endl;
         break;
 
       case '2': // List all contacts
         cout << endl;
-        list_all_contacts( first );
+        list_all_contacts( *first );
         cout << endl;
         break;
 
       case '3': // Show first contact
         cout << endl;
-        display_first_contact( first );
+        display_first_contact( *first );
         cout << endl;
         break;
 
       case '4': // Show last contact
         cout << endl;
-        display_last_contact( last );
+        display_last_contact( *last );
         cout << endl;
         break;
 
@@ -79,8 +88,6 @@ int main() {
     }
 
   } while(!exit);
-
-  return 0;
 }
 
 string lower_case( string value ) {
@@ -89,7 +96,7 @@ string lower_case( string value ) {
     value[i] = tolower( value[i] );
   }
 
-  return value;
+  return value; // As a lowercased string
 }
 
 void read_file( Contact **first, Contact **last ) {
@@ -334,6 +341,16 @@ void traverse_menu( Contact *contact ) {
 
 }
 
+void display_contact( Contact *contact ) {
+  cout << "First Name                    Last Name                     Phone Number" << endl;
+  cout << "------------------------------------------------------------------------" << endl;
+
+  // Print first name, last name, and phone number
+  cout << setw(30) << left << contact->first_name;
+  cout << setw(30) << left << contact->last_name;
+  cout << setw(30) << left << contact->phone_number << endl;
+}
+
 void display_first_contact( Contact *first ) {
   // Return to menu when no records
   if( first == NULL ) {
@@ -362,14 +379,3 @@ void display_last_contact( Contact *last ) {
   traverse_menu( last );
 
 }
-
-void display_contact( Contact *contact ) {
-  cout << "First Name                    Last Name                     Phone Number" << endl;
-  cout << "------------------------------------------------------------------------" << endl;
-
-  // Print first name, last name, and phone number
-  cout << setw(30) << left << contact->first_name;
-  cout << setw(30) << left << contact->last_name;
-  cout << setw(30) << left << contact->phone_number << endl;
-}
-

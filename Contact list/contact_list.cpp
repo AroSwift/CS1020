@@ -150,23 +150,6 @@ Contact *new_contact( Contact *prev_node, string first_name, string last_name, s
   return c;
 }
 
-void switch_contacts( Contact **c1, Contact **c2, Contact **first ) {
-
-  if( (*c1)->prev == NULL ) {
-    (*c1)->prev = NULL;
-    *first = *c1;
-  } else {
-    (*c1)->prev->next = *c2;
-  }
-
-  (*c2)->next->prev = *c1;
-  (*c1)->next = (*c2)->next;
-  (*c2)->prev = (*c1)->prev;
-  (*c2)->next = *c1;
-  (*c1)->prev = *c2;
-
-}
-
 void sort_contacts( Contact **first, Contact **last ) {
   Contact *current_contact = *first;
   bool still_sorting;
@@ -188,14 +171,9 @@ void sort_contacts( Contact **first, Contact **last ) {
         if( first_name > next_first_name ) {
           still_sorting = true;
 
-          // if( current_contact == *first ) {
-          //   *first = current_contact->next;
-          // }
-
           swap( current_contact->first_name, current_contact->next->first_name );
           swap( current_contact->last_name, current_contact->next->last_name );
           swap( current_contact->phone_number, current_contact->next->phone_number );
-          // switch_contacts( &current_contact, &current_contact->next, first );
 
         }
 
@@ -243,20 +221,18 @@ void search_contacts( Contact *first ) {
 
   while( current_contact != NULL ) {
 
-    if( current_contact != NULL ) {
-      string first_name = lower_case(current_contact->first_name);
-      string last_name  = lower_case(current_contact->last_name);
+    string first_name = lower_case(current_contact->first_name);
+    string last_name  = lower_case(current_contact->last_name);
 
-      // Select all instances of first or last name matching given input
-      // Check if user input matches first name or last name of contact
-      if( first_name.find(user_input) != string::npos || last_name.find(user_input) != string::npos ) {
-        contact_found = true;
+    // Select all instances of first or last name matching given input
+    // Check if user input matches first name or last name of contact
+    if( first_name.find(user_input) != string::npos || last_name.find(user_input) != string::npos ) {
+      contact_found = true;
 
-        // Print contact first name, last name, and phone number
-        cout << setw(30) << left << current_contact->first_name;
-        cout << setw(30) << left << current_contact->last_name;
-        cout << setw(30) << left << current_contact->phone_number << endl;
-      }
+      // Print contact first name, last name, and phone number
+      cout << setw(30) << left << current_contact->first_name;
+      cout << setw(30) << left << current_contact->last_name;
+      cout << setw(30) << left << current_contact->phone_number << endl;
     }
 
     // Find next contact for possible reiteration
@@ -327,8 +303,8 @@ void traverse_menu( Contact *contact ) {
           // Set contact to point to previous contact for possible reiteration
           contact = prev_contact;
           // Print contact first name, last name, and phone number
-          display_contact( contact );
         }
+        display_contact( contact );
         break;
 
       case '2': // Get next contact (if possible)

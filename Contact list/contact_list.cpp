@@ -165,27 +165,16 @@ void switch_contacts( Contact **c1, Contact **c2, Contact **first ) {
   (*c2)->next = *c1;
   (*c1)->prev = *c2;
 
-
-  // (*c1)->prev->next = *c2;
-  // (*c2)->next->prev = *c1;
-  // (*c1)->next = (*c2)->next;
-  // (*c2)->prev = (*c1)->prev;
-  // (*c2)->next = *c1;
-  // (*c1)->prev = *c2;
-
 }
 
 void sort_contacts( Contact **first, Contact **last ) {
   Contact *current_contact = *first;
   bool still_sorting;
 
-  cout << "First contact in list:" << endl;
-  cout << (*first)->first_name << endl;
-  cout << (*first)->last_name << endl << endl;
-
   do {
 
     still_sorting = false;
+    current_contact = *first;
 
     while( current_contact->next != NULL ) {
 
@@ -203,7 +192,10 @@ void sort_contacts( Contact **first, Contact **last ) {
           //   *first = current_contact->next;
           // }
 
-          switch_contacts( &current_contact, &current_contact->next, first );
+          swap( current_contact->first_name, current_contact->next->first_name );
+          swap( current_contact->last_name, current_contact->next->last_name );
+          swap( current_contact->phone_number, current_contact->next->phone_number );
+          // switch_contacts( &current_contact, &current_contact->next, first );
 
         }
 
@@ -213,13 +205,7 @@ void sort_contacts( Contact **first, Contact **last ) {
 
     }
 
-    *last = current_contact;
-
   } while( still_sorting );
-
-  cout << "First contact in list now: " << endl;
-  cout << (*first)->first_name << endl;
-  cout << (*first)->last_name << endl << endl;
 
 }
 

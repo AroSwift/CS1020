@@ -169,8 +169,8 @@ void sort_contacts( Contact **first, Contact **last ) {
       string next_last_name  = lower_case(current_contact->next->last_name);
 
       // Last name takes precedence over first name
-      if( last_name >= next_last_name ) {
-        if( first_name > next_first_name ) {
+      if( last_name > next_last_name ) {
+        // if( first_name > next_first_name ) {
 
           // Sorting must continue because contacts are still being sorted
           still_sorting = true;
@@ -180,7 +180,7 @@ void sort_contacts( Contact **first, Contact **last ) {
           swap( current_contact->last_name, current_contact->next->last_name );
           swap( current_contact->phone_number, current_contact->next->phone_number );
 
-        }
+        // }
 
       }
 

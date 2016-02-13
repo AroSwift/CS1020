@@ -23,7 +23,7 @@ struct Contact {
 
 void traverse_menu( Contact *current_contact );
 void main_menu( Contact **first, Contact **last );
-void read_file( Contact **first, Contact **last );
+void load_data( Contact **first, Contact **last );
 string lower_case( string value );
 
 void sort_contacts( Contact **first, Contact **last );

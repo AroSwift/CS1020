@@ -22,7 +22,7 @@ int main() {
   Contact *first = NULL, *last = NULL;
 
   // Read a file into dynamically linked contact structures
-  read_file( &first, &last );
+  load_data( &first, &last );
 
   // Alphabetically sort the contact list
   sort_contacts( &first, &last );
@@ -34,6 +34,12 @@ int main() {
 }
 
 
+//
+// main_menu
+// Present a menu with options that
+// correspond to functions. Continue to
+// display menu until user decides to exit.
+//
 void main_menu( Contact **first, Contact **last ) {
   bool exit = false;
   char choice;
@@ -90,7 +96,16 @@ void main_menu( Contact **first, Contact **last ) {
   } while(!exit);
 }
 
-void read_file( Contact **first, Contact **last ) {
+//
+// load_data
+// Read contact data from contacts.dat file and put it in a
+// dynamically allocated doubly-linked list.
+// Data of file is formattted as follows (each on a seperate line):
+//    FirstName
+//    LastNmae
+//    PhoneNumber
+//
+void load_data( Contact **first, Contact **last ) {
   ifstream input;
   input.open(FILE_NAME);
 
@@ -131,6 +146,12 @@ void read_file( Contact **first, Contact **last ) {
 
 }
 
+//
+// new_contact
+// Dynamically allocates memory for Contact and
+// Sets attributes of contact to the given values.
+// Return the new contact.
+//
 Contact *new_contact( Contact *prev_node, string first_name, string last_name, string phone_number ) {
   // Instantiate a new instance of Contact and dynamically allocate it
   Contact *c = new Contact;
@@ -148,6 +169,12 @@ Contact *new_contact( Contact *prev_node, string first_name, string last_name, s
   return c; // Return the new contact
 }
 
+//
+// sort_contacts
+// Alphebetically orders all contacts in the list
+// By last name and first name. Last name takes
+// Precedence over first name.
+//
 void sort_contacts( Contact **first, Contact **last ) {
   Contact *current_contact;
   bool still_sorting;
@@ -200,6 +227,12 @@ void sort_contacts( Contact **first, Contact **last ) {
 
 }
 
+//
+// search_contacts
+// Allow the user to search for contacts
+// By contact's first or last names and
+// Display all matches.
+//
 void search_contacts( Contact *first ) {
   bool contact_found = false;
   string user_input;
@@ -246,6 +279,10 @@ void search_contacts( Contact *first ) {
 
 }
 
+//
+// list_all_contacts
+// Displays all the contacts in the list.
+//
 void list_all_contacts( Contact *first ) {
   // Return to menu when no records
   if( first == NULL ) {
@@ -275,6 +312,12 @@ void list_all_contacts( Contact *first ) {
 
 }
 
+//
+// traverse_menu
+// Presents a menu to the user which allows the
+// User to go to the next or previous contact until
+// The user chooses to return to the main menu.
+//
 void traverse_menu( Contact *current_contact ) {
   Contact *prev_contact, *next_contact;
   bool exit = false;
@@ -336,6 +379,10 @@ void traverse_menu( Contact *current_contact ) {
 
 }
 
+//
+// display_contact
+// Displays a given contact from the list.
+//
 void display_contact( Contact *contact ) {
   cout << "First Name                    Last Name                     Phone Number" << endl;
   cout << "------------------------------------------------------------------------" << endl;
@@ -346,6 +393,10 @@ void display_contact( Contact *contact ) {
   cout << setw(30) << left << contact->phone_number << endl;
 }
 
+//
+// display_first_contact
+// Displays the first contact in the list.
+//
 void display_first_contact( Contact *first ) {
   // Return to menu when no records
   if( first == NULL ) {
@@ -358,6 +409,10 @@ void display_first_contact( Contact *first ) {
 
 }
 
+//
+// display_last_contact
+// Displays the last contact in the list.
+//
 void display_last_contact( Contact *last ) {
   // Return to menu when no records
   if( last == NULL ) {
@@ -376,6 +431,10 @@ void display_last_contact( Contact *last ) {
 
 }
 
+//
+// get_next
+// Find and return the next contact in the list if it exists.
+//
 Contact *get_next( Contact *current_contact ) {
   if (current_contact != NULL) {
     // Return next contact
@@ -385,6 +444,10 @@ Contact *get_next( Contact *current_contact ) {
   }
 }
 
+//
+// get_prev
+// Find and return the previous contact in the list if it exists.
+//
 Contact *get_prev( Contact *current_contact ) {
   if (current_contact != NULL) {
     // Return previous contact
@@ -394,6 +457,11 @@ Contact *get_prev( Contact *current_contact ) {
   }
 }
 
+//
+// lower_case
+// Lowercases all characters in a given string.
+// Returns the lowercased string.
+//
 string lower_case( string value ) {
   // Lowercase each character in a given string
   for( int i = 0; i < strlen( value.c_str() ); i++ ) {

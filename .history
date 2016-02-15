@@ -1,0 +1,178 @@
+#+1453765141
+cat .bashrc
+#+1453765498
+g++ hello.cpp
+#+1453765513
+run a.out
+#+1453765563
+vi hello.cpp
+#+1453766544
+rm hello.cpp
+#+1453767149
+cat .kshrc
+#+1453768134
+vi .kshrc
+#+1453926986
+vim sleep.txt
+#+1453927909
+g++ sleeping_statistics.cpp
+#+1453928574
+remove a.out
+#+1453928579
+remove ./a.out
+#+1453928590
+sleeping
+#+1453937982
+g++ test_env.cpp
+#+1453937983
+a.out
+#+1453938038
+move test_env.cpp ../
+#+1453938042
+mv test_env.cpp ../
+#+1453939655
+vi test_env.cpp
+#+1453944005
+g++ test_env.cpp -o test
+#+1453945263
+./sleeping
+#+1454130972
+cd ./
+#+1454168908
+cat functions.h
+#+1454177412
+cd root
+#+1454177425
+cd ./home
+#+1454177428
+cd ../home
+#+1454177431
+cd home
+#+1454177489
+pwd
+#+1454177513
+cd ../
+#+1454177888
+g++ sleeping_statistics.cpp -o sleeping
+#+1454258765
+cd Slee
+#+1454260591
+g++ sleeping_statistics.cpp -o sleep -std=c++11]
+#+1454277659
+hey
+#+1454277684
+mesg hey, just doing homework
+#+1454277723
+write hey, just doing homework
+#+1454277801
+wall -n hey just doing homework
+#+1454278090
+wall hey just doing homework
+#+1454278111
+vi 4
+#+1454283420
+2
+#+1454284968
+vi
+#+1454286527
+vi random
+#+1454289391
+cd Sleeping/
+#+1454291540
+g++ sleeping_statistics.cpp -o sleep
+#+1454291874
+g++ -h
+#+1454291878
+g++ --help
+#+1454295361
+g++ sleeping_statistics.cpp -o sleep -std=c++11
+#+1454295362
+./sleep
+#+1454368464
+wall Jordan Adkins, you are cluttering my workspace
+#+1454371252
+g++ test
+#+1454371831
+./out
+#+1454372208
+test
+#+1454375565
+./test
+#+1454375700
+g++ test.cpp -o test
+#+1454540218
+loi
+#+1454540219
+lo
+#+1454544701
+./test.cpp
+#+1454546379
+cd
+#+1454546385
+g++ test.cpp
+#+1454546679
+g++ linked_list.cpp -c
+#+1454547944
+LS -AL
+#+1454788386
+g++ contact_list.cppls
+#+1454965390
+3
+#+1454972237
+clr
+#+1454972239
+clear
+#+1455122506
+g++ linked_list.cpp
+#+1455145247
+ls -al
+#+1455152590
+g++ driver.cpp
+#+1455154611
+man g++
+#+1455154700
+g++ contact_list.cpp -wall
+#+1455154726
+g++ contact_list.cpp --Wextra
+#+1455154729
+g++ contact_list.cpp -Wextra
+#+1455154748
+g++ contact_list.cpp pedantic
+#+1455154751
+g++ contact_list.cpp -pedantic
+#+1455154835
+g++ contact_list.cpp -Werror
+#+1455154844
+g++ contact_list.cpp -Wpedantic
+#+1455248110
+g++ contact_list.cpp5
+#+1455248722
+5
+#+1455254947
+users
+#+1455254949
+who
+#+1455280811
+g++ contact_list.cpp -Wall
+#+1455317762
+ls
+#+1455318405
+g++ contact_list.cpp
+#+1455318540
+gdb
+#+1455327387
+4
+#+1455329880
+g++ contact_list.cpp -g
+#+1455329883
+gdb ./a.out
+#+1455329886
+exec '/export/home/students/c1020b/c1020b02/Contact list/./a.out'
+#+1455332250
+cd Contact\ list/
+#+1455334449
+g++ contact.cpp -g
+#+1455334450
+./a.out
+#+1455334541
+logout

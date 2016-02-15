@@ -13,11 +13,13 @@ using namespace std;
 
 
 int main() {
+  Stack s;
+
   int position_x, position_y;
   get_dimensions( position_x, position_y );
 
-  char maze[position_x][position_y];
-  load_maze( position_x, position_y, maze );
+  // char maze[position_x][position_y];
+  // load_maze( position_x, position_y, maze );
 
   return 0;
 }
@@ -68,41 +70,41 @@ void get_dimensions( int& position_x, int& position_y ) {
 
 }
 
-void load_maze( int position_x, int position_y, char maze[][position_y] ) {
-  char filename[MAX_FILE_LENGTH];
-  bool file_errors;
-  ifstream input;
+// void load_maze( int position_x, int position_y, char maze[][position_y] ) {
+//   char filename[MAX_FILE_LENGTH];
+//   bool file_errors;
+//   ifstream input;
 
-  do { // Find a file that exists
-    file_errors = get_file_name( filename );
-  } while( file_errors );
+//   do { // Find a file that exists
+//     file_errors = get_file_name( filename );
+//   } while( file_errors );
 
-  input.open( filename );
-
-
-  for( int row = 0; row < position_x; row++ ) {
-
-    for( int col = 0; col < position_y; col++ ) {
-
-      input >> maze[position_x][position_y];
-
-    }
-    // !input.eof()
-
-  }
+//   input.open( filename );
 
 
-  // Close file
-  input.close();
+//   for( int row = 0; row < position_x; row++ ) {
 
-}
+//     for( int col = 0; col < position_y; col++ ) {
+
+//       input >> maze[position_x][position_y];
+
+//     }
+//     // !input.eof()
+
+//   }
 
 
-void print_maze() {
+//   // Close file
+//   input.close();
 
-}
+// }
 
-bool is_maze_end( int position_x, int position_y ) {
 
-}
+// void print_maze() {
+
+// }
+
+// bool is_maze_end( int position_x, int position_y ) {
+
+// }
 

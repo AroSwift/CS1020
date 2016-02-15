@@ -7,9 +7,11 @@
 
 #pragma once
 #include <iostream>
+#include "stack.c"
 using namespace std;
 
 const int MAX_FILE_LENGTH = 256; // Max file length on linux is 255
+const char WALL_CHARACTER[] = { '|', '_' };
 
 
 void get_dimensions( int& position_x, int& position_y );

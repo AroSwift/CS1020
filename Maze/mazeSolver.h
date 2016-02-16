@@ -14,7 +14,8 @@ const int MAX_FILE_LENGTH = 256; // Max file length on linux is 255
 const char WALL_CHARACTER[] = { '|', '_' };
 
 
-void get_dimensions( int& position_x, int& position_y );
-void load_maze( int position_x, int position_y, char maze[][position_y] );
-void print_maze();
-
+int get_dimensions( ifstream& input, int& rows, int& cols );
+void load_maze( ifstream& input, char *maze, int rows, int cols );
+void get_file( ifstream& input );
+bool is_maze_end( int rows, int cols );
+void print_maze( char *maze, int rows, int cols );

@@ -9,6 +9,7 @@
 #include <fstream>
 #include <iomanip>
 #include <cstdlib>
+#include <memory>
 #include "mazeSolver.h"
 using namespace std;
 
@@ -27,7 +28,7 @@ int main() {
   // Set size of maze as specified by file
   char maze[rows][cols];
   // Load the maze into a 2d demensional array
-  load_maze( input, maze, rows, cols );
+  load_maze( input, (char *)maze, rows, cols );
 
   // Close the file
   input.close();
@@ -79,12 +80,17 @@ int get_dimensions( ifstream& input, int& rows, int& cols ) {
 
 }
 
+// void doIt( char *maze, int cols, int row, int col );
+// OR
+// MAZE[ ( row * cols ) + col ]
+
 void load_maze( ifstream& input, char *maze, int rows, int cols ) {
 
   for( int row = 0; row < rows && !input.eof(); row++ ) {
-    for( int col = 0; col < cols; col++ ) {
+    for( int col = 0; col < cols && !input.eof(); col++ ) {
 
-      input >> maze[row][col];
+      // input >> maze[row][col];
+      input >> maze[( row * col )];
 
     }
   }
@@ -93,7 +99,7 @@ void load_maze( ifstream& input, char *maze, int rows, int cols ) {
 
 void print_maze( char *maze, int rows, int cols ) {
 
-  // for( int row = 0; row < rows && !input.eof(); row++ ) {
+  // for( int row = 0; row < rows; row++ ) {
   //   for( int col = 0; col < cols; col++ ) {
 
   //     // Bad code...

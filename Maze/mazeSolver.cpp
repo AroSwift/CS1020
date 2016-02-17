@@ -9,7 +9,7 @@
 #include <fstream>
 #include <iomanip>
 #include <cstdlib>
-#include <memory>
+#include <cctype>
 #include "mazeSolver.h"
 using namespace std;
 
@@ -30,6 +30,8 @@ int main() {
   // Load the maze into a 2d demensional array
   load_maze( input, (char *)maze, rows, cols );
 
+  print_maze( (char *)maze, rows, cols );
+
   // Close the file
   input.close();
 
@@ -39,7 +41,6 @@ int main() {
 
 void get_file( ifstream& input ) {
   bool file_errors;
-  // ifstream input;
   char filename[MAX_FILE_LENGTH];
 
   do { // Find a file that exists
@@ -61,6 +62,9 @@ void get_file( ifstream& input ) {
       file_errors = true;
     }
 
+    // Reset buffer
+    input.clear();
+
   } while( file_errors );
 
 }
@@ -71,12 +75,10 @@ int get_dimensions( ifstream& input, int& rows, int& cols ) {
   input >> rows;
   input >> cols;
 
-  if( !isdigit(rows) || !isdigit(cols) ) {
-    cout << "The dimensions for the maze are invalid." << endl;
-    exit(1);
-  } else {
-    return rows * cols;
-  }
+  // if( !isdigit(rows) || !isdigit(cols) ) {
+  //   cout << "The dimensions for the maze are invalid." << endl;
+  //   exit(1);
+  // }
 
 }
 
@@ -86,11 +88,12 @@ int get_dimensions( ifstream& input, int& rows, int& cols ) {
 
 void load_maze( ifstream& input, char *maze, int rows, int cols ) {
 
-  for( int row = 0; row < rows && !input.eof(); row++ ) {
-    for( int col = 0; col < cols && !input.eof(); col++ ) {
+  for( int row = 0; row < rows; row++ ) {
+    for( int col = 0; col < cols; col++ ) {
 
-      // input >> maze[row][col];
-      input >> maze[( row * col )];
+      input.ignore();
+      input >> noskipws >> maze[( row * col )];
+      // getline( input, maze[( row * col )], 1 );
 
     }
   }
@@ -99,18 +102,24 @@ void load_maze( ifstream& input, char *maze, int rows, int cols ) {
 
 void print_maze( char *maze, int rows, int cols ) {
 
-  // for( int row = 0; row < rows; row++ ) {
-  //   for( int col = 0; col < cols; col++ ) {
+  for( int row = 0; row < rows; row++ ) {
+    for( int col = 0; col < cols; col++ ) {
 
-  //     // Bad code...
-  //     cout << maze[row][col];
+      // Bad code...
+      cout << maze[( row * col )];
 
-  //   }
-  // }
-
-}
-
-bool is_maze_end( int rows, int cols ) {
+    }
+    cout << endl;
+  }
 
 }
+
+// bool is_wall( *maze, int rows, int cols ) {
+// }
+
+// bool is_path( *maze, int rows, int cols ) {
+// }
+
+// bool is_exit( *maze, int rows, int cols ) {
+// }
 

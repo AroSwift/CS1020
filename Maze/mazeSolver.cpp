@@ -28,7 +28,9 @@ int main() {
   // Set size of maze as specified by file
   char maze[rows][cols];
   // Load the maze into a 2d demensional array
-  load_maze( input, (char *)maze, rows, cols );
+  load_maze( input, (char **)maze, rows, cols );
+
+  // solve_maze( maze, rows, cols );
 
   // print_maze( (char *)maze, rows, cols );
 
@@ -86,18 +88,21 @@ int get_dimensions( ifstream& input, int& rows, int& cols ) {
 // OR
 // MAZE[ ( row * cols ) + col ]
 
-void load_maze( ifstream& input, char *maze, int rows, int cols ) {
+void load_maze( ifstream& input, char **maze, int rows, int cols ) {
 
-  for( int row = 0; row < rows; row++ ) {
-    for( int col = 0; col < cols; col++ ) {
+  for( int row = 0; row < rows && !input.eof(); row++ ) {
+    for( int col = 0; col < cols && !input.eof(); col++ ) {
 
-      input.ignore();
-      input >> noskipws >> maze[( rows * col ) + cols];
-      cout << maze[( rows * col ) + cols];
-      // getline( input, maze[( row * col )], 1 );
+      cout << row << "  -  ";
+      cout << col << endl;
+
+      // input.ignore('\n');
+      // input >> noskipws >> maze[row][col];
+      input.get( maze[row][col] );
+      cout << "Char: " << maze[row][col] << endl;
 
     }
-    cout << endl;
+    cout << "End" << endl;
   }
 
 }

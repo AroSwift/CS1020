@@ -30,7 +30,7 @@ int main() {
   // Load the maze into a 2d demensional array
   load_maze( input, (char *)maze, rows, cols );
 
-  print_maze( (char *)maze, rows, cols );
+  // print_maze( (char *)maze, rows, cols );
 
   // Close the file
   input.close();
@@ -92,11 +92,17 @@ void load_maze( ifstream& input, char *maze, int rows, int cols ) {
     for( int col = 0; col < cols; col++ ) {
 
       input.ignore();
-      input >> noskipws >> maze[( row * col )];
+      input >> noskipws >> maze[( rows * col ) + cols];
+      cout << maze[( rows * col ) + cols];
       // getline( input, maze[( row * col )], 1 );
 
     }
+    cout << endl;
   }
+
+}
+
+void solve_maze( char *maze, int rows, int cols ) {
 
 }
 

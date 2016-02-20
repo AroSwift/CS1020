@@ -24,17 +24,25 @@ int main() {
   // Get the dimensions of the maze
   get_dimensions( input, rows, cols );
 
+  // dynamic allocation
+  // char** maze = new char*[];
+  // for(int i = 0; i < rows; ++i) maze[i] = new char[cols];
 
-  // Set size of maze as specified by file
-  char maze[rows][cols];
-  // Load the maze into a 2d demensional array
-  load_maze( input, (char **)maze, rows, cols );
+  char** maze = new char*[rows];
+  for(int i = 0; i < rows; ++i)
+      maze[i] = new char[cols];
 
-  // solve_maze( maze, rows, cols );
 
-  // print_maze( (char *)maze, rows, cols );
+  // // Set size of maze as specified by file
+  // char maze[rows][cols];
+  // // Load the maze into a 2d demensional array
+  load_maze( input, maze, rows, cols );
 
-  // Close the file
+  // // solve_maze( maze, rows, cols );
+
+  print_maze( maze, rows, cols );
+
+  // // Close the file
   input.close();
 
   return 0;
@@ -94,35 +102,10 @@ void load_maze( ifstream& input, char **maze, int rows, int cols ) {
   input.ignore(1, '\n');
 
   for( int row = 0; row < rows && !input.eof(); row++ ) {
-    // input.ignore();
-    // for( int col = 0; col < cols && !input.eof(); col++ ) {
-
-      // if( input.peek() == '\n' ) {
-      //   input.ignore();
-      // }
-
-      cout << row << endl;
-      // cout << row << "  -  " << col << endl;
-
-      // if( input.peek() == '\n' ) {
-      //   char c;
-      //   input.get(c);
-      //   break;
-      // }
-
-      // input.ignore('\n');
-      // input >> noskipws >> maze[row][col];
-      // char c;
       input.getline( maze[row], cols );
-      // input.ignore(1, '\n');
 
-      // if( c != '\n' ) maze[row][col] = c;
+      cout << row << "  Char: \"" << maze[row] << "\"" << endl;
 
-      cout << "Made it?" << endl;
-      cout << "Char: |" << maze[row] << "|" << endl;
-
-    // }
-    // input.ignore(1, '\n');
   }
 
 }
@@ -131,7 +114,11 @@ void solve_maze( char *maze, int rows, int cols ) {
 
 }
 
-void print_maze( char *maze, int rows, int cols ) {
+void print_maze( char **maze, int rows, int cols ) {
+
+  for( int row = 0; row < rows; row++ ) {
+      cout << maze[row] << endl;
+  }
 
 }
 

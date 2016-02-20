@@ -77,6 +77,7 @@ int get_dimensions( ifstream& input, int& rows, int& cols ) {
   input >> rows;
   input >> cols;
 
+  // input.ignore();
   // if( !isdigit(rows) || !isdigit(cols) ) {
   //   cout << "The dimensions for the maze are invalid." << endl;
   //   exit(1);
@@ -89,20 +90,39 @@ int get_dimensions( ifstream& input, int& rows, int& cols ) {
 // MAZE[ ( row * cols ) + col ]
 
 void load_maze( ifstream& input, char **maze, int rows, int cols ) {
+  // Ignore the newline
+  input.ignore(1, '\n');
 
   for( int row = 0; row < rows && !input.eof(); row++ ) {
-    for( int col = 0; col < cols && !input.eof(); col++ ) {
+    // input.ignore();
+    // for( int col = 0; col < cols && !input.eof(); col++ ) {
 
-      cout << row << "  -  ";
-      cout << col << endl;
+      // if( input.peek() == '\n' ) {
+      //   input.ignore();
+      // }
+
+      cout << row << endl;
+      // cout << row << "  -  " << col << endl;
+
+      // if( input.peek() == '\n' ) {
+      //   char c;
+      //   input.get(c);
+      //   break;
+      // }
 
       // input.ignore('\n');
       // input >> noskipws >> maze[row][col];
-      input.get( maze[row][col] );
-      cout << "Char: " << maze[row][col] << endl;
+      // char c;
+      input.getline( maze[row], cols );
+      // input.ignore(1, '\n');
 
-    }
-    cout << "End" << endl;
+      // if( c != '\n' ) maze[row][col] = c;
+
+      cout << "Made it?" << endl;
+      cout << "Char: |" << maze[row] << "|" << endl;
+
+    // }
+    // input.ignore(1, '\n');
   }
 
 }
@@ -112,16 +132,6 @@ void solve_maze( char *maze, int rows, int cols ) {
 }
 
 void print_maze( char *maze, int rows, int cols ) {
-
-  for( int row = 0; row < rows; row++ ) {
-    for( int col = 0; col < cols; col++ ) {
-
-      // Bad code...
-      cout << maze[( row * col )];
-
-    }
-    cout << endl;
-  }
 
 }
 

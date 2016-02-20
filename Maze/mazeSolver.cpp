@@ -15,7 +15,6 @@ using namespace std;
 
 
 int main() {
-  Stack s;
   ifstream input;
   int rows, cols;
 
@@ -25,24 +24,20 @@ int main() {
   get_dimensions( input, rows, cols );
 
   // dynamic allocation
-  // char** maze = new char*[];
-  // for(int i = 0; i < rows; ++i) maze[i] = new char[cols];
-
   char** maze = new char*[rows];
   for(int i = 0; i < rows; ++i)
       maze[i] = new char[cols];
 
-
-  // // Set size of maze as specified by file
-  // char maze[rows][cols];
-  // // Load the maze into a 2d demensional array
+  // Load the maze into a 2d demensional array
   load_maze( input, maze, rows, cols );
 
-  // // solve_maze( maze, rows, cols );
+  // Attempt to solve maze
+  solve_maze( maze, rows, cols );
 
+  // Print the maze
   print_maze( maze, rows, cols );
 
-  // // Close the file
+  // Close the file
   input.close();
 
   return 0;
@@ -110,7 +105,7 @@ void load_maze( ifstream& input, char **maze, int rows, int cols ) {
 
 }
 
-void solve_maze( char *maze, int rows, int cols ) {
+void solve_maze( char **maze, int rows, int cols ) {
 
 }
 
@@ -119,6 +114,13 @@ void print_maze( char **maze, int rows, int cols ) {
   for( int row = 0; row < rows; row++ ) {
       cout << maze[row] << endl;
   }
+
+  // for( int row = 0; row < rows; row++ ) {
+  //   for( int col = 0; col < cols; col++ ) {
+  //     cout << maze[row][col];
+  //   }
+  //   cout << endl;
+  // }
 
 }
 

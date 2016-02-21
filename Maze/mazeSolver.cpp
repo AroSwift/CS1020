@@ -149,52 +149,62 @@ bool solve_maze( Maze *m ) {
 
   while(!solved) {
     int num_options = 0;
-
-    // Maze adjacent_tiles[] = { p-> }
+    bool switched_location = false;
 
     // When down is possible
     if( m->down_possible() ) {
+      m->maze[m->cords.row][m->cords.col] = '*';
       m->cords.row++;
       push(&current_location, &m->cords);
       num_options++;
+      switched_location = true;
     }
 
     // When right is possible
     if( m->right_possible() ) {
-      m->cords.col++;
-      push(&current_location, &m->cords);
+      if(!switched_location) {
+        m->maze[m->cords.row][m->cords.col] = '*';
+        m->cords.col++;
+        push(&current_location, &m->cords);
+      }
       num_options++;
     }
 
     // When left is possible
     if( m->left_possible() ) {
-      m->cords.col--;
-      push(&current_location, &m->cords);
+      if(!switched_location) {
+        m->maze[m->cords.row][m->cords.col] = '*';
+        m->cords.col--;
+        push(&current_location, &m->cords);
+      }
       num_options++;
     }
 
     // When up is possible
     if( m->up_possible() ) {
-      m->cords.row--;
-      push(&current_location, &m->cords);
+      if(!switched_location) {
+        m->maze[m->cords.row][m->cords.col] = '*';
+        m->cords.row--;
+        push(&current_location, &m->cords);
+      }
       num_options++;
     }
 
-    if( num_options > 1 ) {
-      // When more than one option, push onto the options stack
-      push(&options_location, &m->cords);
+    // if( num_options > 1 ) {
+    //   // When more than one option, push onto the options stack
+    //   push(&options_location, &m->cords);
 
-    // When no options, pop back if possible
-    } else {
-      if( isEmpty(&options_location) ) {
-        // Impossible to solve
-        solved = false;
-        break;
-      } else {
-        Cords *new_cords = (Cords*)pop( &options_location );
-        m->cords = *new_cords;
-      }
-    }
+    // // When no options, pop back if possible
+    // } else {
+    //   if( isEmpty(&options_location) ) {
+    //     // Impossible to solve
+    //     solved = false;
+    //     break;
+    //   } else {
+    //     Cords *new_cords = (Cords*)pop( &options_location );
+    //     m->cords = *new_cords;
+    //   }
+    // }
 
 
     if( m->is_exit() ) solved = true;
@@ -272,10 +282,6 @@ bool Maze::is_exit() {
   // Otherwise, is not maze exit
   return false;
 }
-
-// void Maze::set_position( Stack *s ) {
-//   push(&s, &cords);
-// }
 
 void print_maze( Maze *m) {
   for( int row = 0; row < m->num_rows; row++ ) cout << m->maze[row] << endl;

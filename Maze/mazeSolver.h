@@ -41,8 +41,6 @@ struct Maze {
   char get_left();
   char get_up();
 
-  // void set_position( Stack *s );
-
   bool is_exit();
 };
 

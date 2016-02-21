@@ -1,6 +1,5 @@
 #include <iostream>
 #include "stack.h"
-
 using namespace std;
 
 void initStack(Stack *s) {

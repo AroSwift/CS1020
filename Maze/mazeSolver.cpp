@@ -90,9 +90,9 @@ void get_dimensions( ifstream& input, Maze *m ) {
 
   input >> m->num_rows;
   input >> m->num_cols;
+  input.ignore();
 
-  // input.ignore();
-  // if( !isdigit(rows) || !isdigit(cols) ) {
+  // if( m->num_rows < 0 || m->num_cols < 0 ) {
   //   cout << "The dimensions for the maze are invalid." << endl;
   //   exit(1);
   // }
@@ -275,14 +275,14 @@ void Maze::revert_options( Stack *current, Stack *options ) {
   Cords *options_position = (Cords*)pop( options );
   cords = *options_position;
 
-  cout << "PLEASE TRY!" << endl;
-
-  while( !isEmpty(current) ) {
+  while( true ) {
     Cords *back_once = (Cords*)pop(current);
-
-    if( back_once != options_position ) break;
-    // cords = *back_once;
     maze[back_once->row][back_once->col] = '-';
+
+    if( back_once->row == options_position->row
+      && back_once->col == options_position->col ) {
+      break;
+    }
   }
 
 

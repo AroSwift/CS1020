@@ -8,7 +8,7 @@ void initStack(Stack *s) {
 
 void push(Stack *s, void *data) {
    s->top++;
-   s->myStack[s->top] = data; // should make a copy here...
+   s->myStack[s->top] = data; // Copy data
 }
 
 void *pop(Stack *s) {

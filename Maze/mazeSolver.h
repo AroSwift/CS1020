@@ -26,10 +26,12 @@ struct Maze {
   int num_rows, num_cols;
   int current_row, current_col;
 
-  bool down_possible();
-  bool right_possible();
-  bool left_possible();
-  bool up_possible();
+  Stack current_location, options_location;
+
+  // bool down_possible();
+  // bool right_possible();
+  // bool left_possible();
+  // bool up_possible();
 
   char get_down();
   char get_right();

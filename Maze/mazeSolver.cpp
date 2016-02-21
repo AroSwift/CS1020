@@ -36,7 +36,7 @@ int main() {
   if(solved) {
     print_maze( m );
   } else {
-    cout << "The maze can not be solved.";
+    cout << "The maze can not be solved." << endl;
   }
 
   // Delete dynamically allocated 2d dimensional array
@@ -136,9 +136,8 @@ void load_maze( ifstream& input, Maze *m ) {
 // }
 
 bool solve_maze( Maze *m ) {
-  Stack current_location, options_location;
-  initStack(&current_location);
-  initStack(&options_location);
+  initStack(&m->current_location);
+  initStack(&m->options_location);
   bool solved = false;
 
   // for( int row = START_ROW; row < rows; row++ ) {
@@ -154,30 +153,39 @@ bool solve_maze( Maze *m ) {
 
     // Maze adjacent_tiles[] = { p-> }
 
-    if( m->down_possible() ) {
+    // When down is possible
+    if( m->current_row < m->num_rows ) {
       m->get_down();
       num_options++;
-    } else if( m->right_possible() ) {
+
+    // When right is possible
+    } else if( m->current_col < m->num_cols ) {
       m->get_right();
       num_options++;
-    } else if( m->left_possible() ) {
+
+    // When left is possible
+    } else if( m->current_col != 0 ) {
       m->get_left();
       num_options++;
-    } else if( m->up_possible() ) {
+
+    // When up is possible
+    } else if( m->current_row != 0 ) {
       m->get_up();
       num_options++;
     }
 
     if( num_options > 1 ) {
       // When more than one option, push onto the options stack
-      push(&options_location, m);
-    } else { // no options, pop back
-      if( isEmpty(&options_location) ) {
+      push(&m->options_location, m);
+
+    // When no options, pop back if possible
+    } else {
+      if( isEmpty(&m->options_location) ) {
         // Impossible to solve
         solved = false;
         break;
       } else {
-        pop( &options_location );
+        pop( &m->options_location );
       }
     }
 
@@ -194,19 +202,19 @@ bool solve_maze( Maze *m ) {
   return solved;
 }
 
-bool Maze::down_possible() {
-  return current_row < num_rows ? true : false;
-}
+// bool Maze::down_possible() {
+//   return current_row < num_rows ? true : false;
+// }
 
-bool Maze::right_possible() {
-  return current_col < num_cols ? true : false;
-}
-bool Maze::left_possible() {
-  return current_col != 0 ? true : false;
-}
-bool Maze::up_possible() {
-  return current_row != 0 ? true : false;
-}
+// bool Maze::right_possible() {
+//   return current_col < num_cols ? true : false;
+// }
+// bool Maze::left_possible() {
+//   return current_col != 0 ? true : false;
+// }
+// bool Maze::up_possible() {
+//   return current_row != 0 ? true : false;
+// }
 
 char Maze::get_down() {
  return maze[current_row+1][current_col];

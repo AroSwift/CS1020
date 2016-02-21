@@ -199,10 +199,12 @@ bool solve_maze( Maze *m ) {
       if( isEmpty(&options_location) ) {
         // Impossible to solve
         solved = false;
+        // Exit loop
         break;
       } else {
-        Cords *new_cords = (Cords*)pop( &options_location );
-        m->cords = *new_cords;
+        // Cords *new_cords = (Cords*)pop( &options_location );
+        // m->cords = *new_cords;
+        m->revert_options( &current_location, &options_location );
       }
     }
 
@@ -256,6 +258,37 @@ char Maze::get_up() {
  return maze[cords.row-1][cords.col];
 }
 
+void Maze::revert_options( Stack *current_location, Stack *options_location ) {
+  Cords *options_position = (Cords*)pop( options_location );
+  // m->cords = *options_position;
+
+  while( isEmpty(current_location) ) {
+    Cords *back_once = (Cords*)pop(current_location);
+
+    if( back_once != options_position ) {
+  //     cords = *back_once;
+  //     maze[cords.row][cords.col] = '*';
+  // } else {
+      cords = *back_once;
+      maze[cords.row][cords.col] = '-';
+    }
+
+  }
+
+
+}
+
+bool Maze::is_exit() {
+  if( is_path(maze[cords.row][cords.col]) ) {
+    if( cords.row == num_rows || cords.col == num_cols ) {
+      return true;
+    }
+  }
+
+  // Otherwise, is not maze exit
+  return false;
+}
+
 bool is_wall( char c ) {
   for( int i = 0; WALL[i] != '\0'; i++ ) {
     if(c == WALL[i]) {
@@ -269,17 +302,6 @@ bool is_wall( char c ) {
 
 bool is_path( char c ) {
   return c == PATH ? true : false;
-}
-
-bool Maze::is_exit() {
-  if( is_path(maze[cords.row][cords.col]) ) {
-    if( cords.row == num_rows || cords.col == num_cols ) {
-      return true;
-    }
-  }
-
-  // Otherwise, is not maze exit
-  return false;
 }
 
 void print_maze( Maze *m) {

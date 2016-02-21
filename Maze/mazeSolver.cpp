@@ -128,49 +128,27 @@ bool solve_maze( char **maze, int rows, int cols ) {
   int current_row = START_ROW;
   int current_col = START_COL;
 
-  while(!solved) {
-    int options = 0;
+  maze[current_row][current_col] = '*';
 
+  while(!solved) {
     char down = get_down( maze, rows, current_row, current_col );
     char right = get_right( maze, cols, current_row, current_col );
     char left = get_left( maze, current_row, current_col );
     char up = get_up( maze, current_row, current_col );
 
-
-    // get_options( maze, row, col )
-
-    if( is_path(down) ) {
-      options++;
-    } else if( is_wall(down) ) { // wall
-
-    }
-
-    if( is_path(right) ) {
-      options++;
-    } else if( is_wall(right) ) { // wall
-
-    }
-
-    if( is_path(left) ) {
-      options++;
-    } else if( is_wall(left) ) { // wall
-
-    }
-
-    if( is_path(up) ) {
-      options++;
-    } else if( is_wall(up) ) { // wall
-
-    }
+    int num_options = options( dowm,right, left, up );
 
     // When more than one option, push onto the options stack
-    if(options > 1) {
-      Positions p;
-      p.row = current_row;
-      p.col = current_col;
-      push(options_location, p);
+    if(num_options > 1) {
+      Positions *p;
+      p->row = current_row;
+      p->col = current_col;
+      push(&options_location, p);
     }
 
+    // isEmpty(options_location);
+
+    print_maze( maze, rows, cols );
 
   }
 
@@ -182,20 +160,20 @@ bool solve_maze( char **maze, int rows, int cols ) {
   return solved;
 }
 
-// bool options( char **maze, int row, int col ) {
-//   if( is_path(right) ) {
+int options( char down, char right, char left, char up ) {
+  int num_options;
 
-//     // if(is_exit(right)) {
+  if( is_path(down) ) num_options++;
+  if( is_path(right) ) num_options++;
+  if( is_path(left) ) num_options++;
+  if( is_path(up) ) num_options++;
 
-//     // }
-//   } else if( is_wall(right) ) { // wall
-
-//   }
-// }
-
-bool traverse( char **maze, int row, int col ) {
-
+  return num_options;
 }
+
+// bool traverse( char **maze, int row, int col ) {
+
+// }
 
 char get_down( char **maze, int rows, int row, int col ) {
   if(row < rows) maze[row+1][col];

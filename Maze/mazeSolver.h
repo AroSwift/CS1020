@@ -40,3 +40,4 @@ char get_up( char **maze, int row, int col );
 bool is_wall( char position );
 bool is_path( char position );
 bool is_exit( char position );
+

@@ -31,7 +31,7 @@ void load_maze( ifstream& input, char **maze, int rows, int cols );
 bool solve_maze( char **maze, int rows, int cols );
 void print_maze( char **maze, int rows, int cols );
 
-// void get_options( char **maze, int row, int col );
+int get_num_options( char down, char right, char left, char up );
 char get_down( char **maze, int rows, int row, int col );
 char get_right( char **maze, int cols, int row, int col );
 char get_left( char **maze, int row, int col );

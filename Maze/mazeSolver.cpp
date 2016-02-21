@@ -136,7 +136,7 @@ bool solve_maze( char **maze, int rows, int cols ) {
     char left = get_left( maze, current_row, current_col );
     char up = get_up( maze, current_row, current_col );
 
-    int num_options = options( dowm,right, left, up );
+    int num_options = get_num_options( down,right, left, up );
 
     // When more than one option, push onto the options stack
     if(num_options > 1) {
@@ -160,7 +160,7 @@ bool solve_maze( char **maze, int rows, int cols ) {
   return solved;
 }
 
-int options( char down, char right, char left, char up ) {
+int get_num_options( char down, char right, char left, char up ) {
   int num_options;
 
   if( is_path(down) ) num_options++;

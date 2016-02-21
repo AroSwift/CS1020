@@ -21,27 +21,31 @@ const char PATH = ' ';
 const int START_ROW = 0;
 const int START_COL = 1;
 
+struct Cords {
+  int row, col;
+};
+
 struct Maze {
   char** maze;
   int num_rows, num_cols;
   int current_row, current_col;
+  Cords cords;
 
-  Stack current_location, options_location;
+  bool down_possible();
+  bool right_possible();
+  bool left_possible();
+  bool up_possible();
 
-  // bool down_possible();
-  // bool right_possible();
-  // bool left_possible();
-  // bool up_possible();
-
-  char get_down();
-  char get_right();
-  char get_left();
-  char get_up();
+  char go_down();
+  char go_right();
+  char go_left();
+  char go_up();
 
   bool is_wall();
-  bool is_path();
   bool is_exit();
 };
+
+  bool is_path( char c );
 
 
 void get_file(ifstream& input );

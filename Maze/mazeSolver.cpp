@@ -136,17 +136,20 @@ void load_maze( ifstream& input, Maze *m ) {
 // }
 
 bool solve_maze( Maze *m ) {
-  initStack(&m->current_location);
-  initStack(&m->options_location);
+  Stack current_location, options_location;
+  initStack(&current_location);
+  initStack(&options_location);
   bool solved = false;
+
 
   // for( int row = START_ROW; row < rows; row++ ) {
   //   for( int col = START_COL; col < cols; col++ ) {
 
-  m->current_row = START_ROW;
-  m->current_col = START_COL;
+  m->cords.row = START_ROW;
+  m->cords.col = START_COL;
+  push(&current_location, &m->cords);
 
-  m->maze[m->current_row][m->current_col] = '*';
+  m->maze[m->cords.row][m->cords.col] = '*';
 
   while(!solved) {
     int num_options = 0;
@@ -154,44 +157,47 @@ bool solve_maze( Maze *m ) {
     // Maze adjacent_tiles[] = { p-> }
 
     // When down is possible
-    if( m->current_row < m->num_rows ) {
-      m->get_down();
+    if( m->cords.row < m->num_rows ) {
+      m->go_down();
       num_options++;
+    }
 
     // When right is possible
-    } else if( m->current_col < m->num_cols ) {
-      m->get_right();
+    if( m->cords.col < m->num_cols ) {
+      if(num_options > 0) m->go_right();
       num_options++;
+    }
 
     // When left is possible
-    } else if( m->current_col != 0 ) {
-      m->get_left();
+    if( m->cords.col != 0 ) {
+      if(num_options > 0) m->go_left();
       num_options++;
+    }
 
     // When up is possible
-    } else if( m->current_row != 0 ) {
-      m->get_up();
+    if( m->cords.row != 0 ) {
+      if(num_options > 0) m->go_up();
       num_options++;
     }
 
     if( num_options > 1 ) {
       // When more than one option, push onto the options stack
-      push(&m->options_location, m);
+      push(&options_location, &m->cords);
 
     // When no options, pop back if possible
     } else {
-      if( isEmpty(&m->options_location) ) {
+      if( isEmpty(&options_location) ) {
         // Impossible to solve
         solved = false;
         break;
       } else {
-        pop( &m->options_location );
+        Cords *new_cords = (Cords*)pop( &options_location );
+        m->cords = *new_cords;
       }
     }
 
 
     if( m->is_exit() ) solved = true;
-
 
 
     print_maze( m );
@@ -216,19 +222,19 @@ bool solve_maze( Maze *m ) {
 //   return current_row != 0 ? true : false;
 // }
 
-char Maze::get_down() {
+char Maze::go_down() {
  return maze[current_row+1][current_col];
 }
 
-char Maze::get_right() {
+char Maze::go_right() {
   return maze[current_row][current_col+1];
 }
 
-char Maze::get_left() {
+char Maze::go_left() {
  return maze[current_row][current_col-1];
 }
 
-char Maze::get_up() {
+char Maze::go_up() {
  return maze[current_row-1][current_col];
 }
 
@@ -243,12 +249,12 @@ bool Maze::is_wall() {
   return false;
 }
 
-bool Maze::is_path() {
-  return maze[current_row][current_col] == PATH ? true : false;
+bool is_path( char c ) {
+  return c == PATH ? true : false;
 }
 
 bool Maze::is_exit() {
-  if( is_path() ) {
+  if( is_path(maze[cords.row][cords.col]) ) {
     if( current_row == num_rows || current_col == num_cols ) {
       return true;
     }

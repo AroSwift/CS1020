@@ -28,7 +28,6 @@ struct Cords {
 struct Maze {
   char** maze;
   int num_rows, num_cols;
-  int current_row, current_col;
   Cords cords;
 
   bool down_possible();

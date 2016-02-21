@@ -190,25 +190,24 @@ bool solve_maze( Maze *m ) {
       num_options++;
     }
 
-    // if( num_options > 1 ) {
-    //   // When more than one option, push onto the options stack
-    //   push(&options_location, &m->cords);
+    if( num_options > 1 ) {
+      // When more than one option, push onto the options stack
+      push(&options_location, &m->cords);
 
-    // // When no options, pop back if possible
-    // } else {
-    //   if( isEmpty(&options_location) ) {
-    //     // Impossible to solve
-    //     solved = false;
-    //     break;
-    //   } else {
-    //     Cords *new_cords = (Cords*)pop( &options_location );
-    //     m->cords = *new_cords;
-    //   }
-    // }
+    // When no options, pop back if possible
+    } else if( num_options == 0 ) {
+      if( isEmpty(&options_location) ) {
+        // Impossible to solve
+        solved = false;
+        break;
+      } else {
+        Cords *new_cords = (Cords*)pop( &options_location );
+        m->cords = *new_cords;
+      }
+    }
 
 
     if( m->is_exit() ) solved = true;
-
 
     print_maze( m );
 

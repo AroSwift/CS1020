@@ -104,7 +104,7 @@ void load_maze( ifstream& input, Maze *m ) {
   for( int row = 0; row < m->num_rows; row++ ) {
     input.getline( m->maze[row], m->num_cols );
 
-    // if( input.eof() ) cout << "Given dimensions do not map to the maze." << endl;
+    if( input.eof() ) cout << "Given dimensions do not map to the maze." << endl;
 
   }
 
@@ -199,11 +199,13 @@ bool solve_maze( Maze *m ) {
       if( m->is_exit() ) {
         solved = true;
       } else if( isEmpty(&options_location) ) {
+        cout << "Impossible?" << endl;
         // Impossible to solve
         solved = false;
         // Exit loop
         break;
       } else {
+        cout << "Revering options?" << endl;
         m->revert_options( &current_location, &options_location );
       }
     }
@@ -264,29 +266,27 @@ int Maze::num_options() {
   return options;
 }
 
-void Maze::revert_options( Stack *current_location, Stack *options_location ) {
-  Cords *options_position = (Cords*)pop( options_location );
-  // m->cords = *options_position;
+void Maze::revert_options( Stack *current, Stack *options ) {
+  Cords *options_position = (Cords*)pop( options );
+  cords = *options_position;
 
   cout << "PLEASE TRY!" << endl;
 
-  while( isEmpty(current_location) ) {
-    Cords *back_once = (Cords*)pop(current_location);
+  while( !isEmpty(current) ) {
+    Cords *back_once = (Cords*)pop(current);
 
-    if( back_once != options_position ) {
-      // cords = *back_once;
-      maze[back_once->row][back_once->col] = '-';
-    }
-
+    if( back_once != options_position ) break;
+    // cords = *back_once;
+    maze[back_once->row][back_once->col] = '-';
   }
 
 
 }
 
 bool Maze::is_exit() {
-  cout << cords.row+2 << " -  " << cords.col+2 << endl;
+  cout << cords.row+1 << " -  " << cords.col+1 << endl;
 
-  if( cords.row+2 == num_rows || cords.col+2 == num_cols ) {
+  if( cords.row+1 == num_rows-1 || cords.col+1 == num_cols-1 ) {
     if( maze[cords.row][cords.col] == PATH_TAKEN ) {
       return true;
     }

@@ -18,5 +18,5 @@ void *pop(Stack *s) {
 }
 
 bool isEmpty(Stack *s) {
-  return(s->top != -1);
+  return(s->top == -1);
 }

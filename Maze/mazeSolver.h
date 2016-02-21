@@ -44,7 +44,7 @@ struct Maze {
   char get_up();
 
   int num_options();
-  void revert_options( Stack *current_location, Stack *options_location );
+  void revert_options( Stack *current, Stack *options );
 
   bool is_exit();
 };

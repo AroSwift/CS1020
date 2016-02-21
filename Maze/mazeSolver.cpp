@@ -156,7 +156,6 @@ bool solve_maze( Maze *m ) {
       m->maze[m->cords.row][m->cords.col] = '*';
       m->cords.row++;
       push(&current_location, &m->cords);
-      num_options++;
       switched_location = true;
     }
 
@@ -166,8 +165,8 @@ bool solve_maze( Maze *m ) {
         m->maze[m->cords.row][m->cords.col] = '*';
         m->cords.col++;
         push(&current_location, &m->cords);
+        switched_location = true;
       }
-      num_options++;
     }
 
     // When left is possible
@@ -176,8 +175,8 @@ bool solve_maze( Maze *m ) {
         m->maze[m->cords.row][m->cords.col] = '*';
         m->cords.col--;
         push(&current_location, &m->cords);
+        switched_location = true;
       }
-      num_options++;
     }
 
     // When up is possible
@@ -187,15 +186,14 @@ bool solve_maze( Maze *m ) {
         m->cords.row--;
         push(&current_location, &m->cords);
       }
-      num_options++;
     }
 
-    if( num_options > 1 ) {
+    if( m->num_options() > 1 ) {
       // When more than one option, push onto the options stack
       push(&options_location, &m->cords);
 
     // When no options, pop back if possible
-    } else if( num_options == 0 ) {
+    } else if( m->num_options() == 0 ) {
       if( isEmpty(&options_location) ) {
         // Impossible to solve
         solved = false;
@@ -204,6 +202,7 @@ bool solve_maze( Maze *m ) {
       } else {
         // Cords *new_cords = (Cords*)pop( &options_location );
         // m->cords = *new_cords;
+        cout << endl << endl << endl << "Here" << endl << endl << endl;
         m->revert_options( &current_location, &options_location );
       }
     }
@@ -256,6 +255,17 @@ char Maze::get_left() {
 
 char Maze::get_up() {
  return maze[cords.row-1][cords.col];
+}
+
+int Maze::num_options() {
+  int options = 0;
+
+  if( down_possible() ) options++;
+  if( right_possible() ) options++;
+  if( left_possible() ) options++;
+  if( up_possible() ) options++;
+
+  return options;
 }
 
 void Maze::revert_options( Stack *current_location, Stack *options_location ) {

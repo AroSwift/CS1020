@@ -14,8 +14,11 @@ const int MAX_FILE_LENGTH = 256; // Max file length on linux is 255
 
 // Dashes are areas already attempted and ought to be treated as a wall
 // Asterisks indicate area is backtrace and ough to be treated as a wall
-const char WALL[] = { '|', '_', '-', '*' };
+// const char WALL[] = { '|', '_', '-', '*' };
+const char WALL[] = { '|', '_' };
 const char PATH = ' ';
+const char FAILED_PATH = '-';
+const char PATH_TAKEN = '*';
 
 // Starting point of maze should be 0,1
 const int START_ROW = 0;
@@ -40,6 +43,7 @@ struct Maze {
   char get_left();
   char get_up();
 
+  int num_options();
   void revert_options( Stack *current_location, Stack *options_location );
 
   bool is_exit();

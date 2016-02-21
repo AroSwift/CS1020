@@ -46,16 +46,15 @@ struct Maze {
   int num_options();
   void revert_options( Stack *current_location, Stack *options_location );
 
-  bool is_exit();
+  bool is_exit( Stack *current_location );
 };
 
 
 bool is_wall( char c );
 bool is_path( char c );
 
-
 void get_file(ifstream& input );
-int get_dimensions(ifstream& input, Maze *m);
+void get_dimensions(ifstream& input, Maze *m);
 
 void load_maze(ifstream& input, Maze *m);
 // void validate_maze(Maze *m);

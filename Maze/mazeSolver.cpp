@@ -29,7 +29,9 @@ int main() {
 
   // dynamic allocation
   m->maze = new char*[m->num_rows];
-  for(int i = 0; i < m->num_rows; ++i) m->maze[i] = new char[m->num_cols];
+  for(int i = 0; i < m->num_rows; ++i) {
+    m->maze[i] = new char[m->num_cols];
+  }
 
   // Load the maze into a 2d demensional array
   load_maze( input, m );
@@ -62,7 +64,7 @@ void get_file( ifstream& input ) {
     file_errors = false;
 
     cout << "Enter file name: ";
-    cin.getline( filename, MAX_FILE_LENGTH ); // Max file length on linux is 255
+    cin.getline( filename, MAX_FILE_LENGTH );
 
     input.open( filename );
 
@@ -102,10 +104,12 @@ void load_maze( ifstream& input, Maze *m ) {
   input.ignore(1, '\n');
 
   for( int row = 0; row < m->num_rows; row++ ) {
+    // if( input.eof() ) {
+    //   cout << "Given dimensions do not map to the maze." << endl;
+    //   exit(1);
+    // }
+
     input.getline( m->maze[row], m->num_cols );
-
-    if( input.eof() ) cout << "Given dimensions do not map to the maze." << endl;
-
   }
 
   // Ensure maze is valid
@@ -140,6 +144,7 @@ bool solve_maze( Maze *m ) {
   initStack(&options_location);
   bool solved = false;
 
+  // Set the starting row and col of maze
   m->cords.row = START_ROW;
   m->cords.col = START_COL;
   push(&current_location, &m->cords);
@@ -312,6 +317,8 @@ bool is_path( char c ) {
 }
 
 void print_maze( Maze *m) {
-  for( int row = 0; row < m->num_rows; row++ ) cout << m->maze[row] << endl;
+  for( int row = 0; row < m->num_rows; row++ ) {
+    cout << m->maze[row] << endl;
+  }
 }
 

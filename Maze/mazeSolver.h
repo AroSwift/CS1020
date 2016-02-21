@@ -36,16 +36,19 @@ struct Maze {
   bool left_possible();
   bool up_possible();
 
-  char go_down();
-  char go_right();
-  char go_left();
-  char go_up();
+  char get_down();
+  char get_right();
+  char get_left();
+  char get_up();
 
-  bool is_wall();
+  // void set_position( Stack *s );
+
   bool is_exit();
 };
 
-  bool is_path( char c );
+
+bool is_wall( char c );
+bool is_path( char c );
 
 
 void get_file(ifstream& input );

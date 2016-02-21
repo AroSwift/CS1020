@@ -141,10 +141,6 @@ bool solve_maze( Maze *m ) {
   initStack(&options_location);
   bool solved = false;
 
-
-  // for( int row = START_ROW; row < rows; row++ ) {
-  //   for( int col = START_COL; col < cols; col++ ) {
-
   m->cords.row = START_ROW;
   m->cords.col = START_COL;
   push(&current_location, &m->cords);
@@ -157,23 +153,31 @@ bool solve_maze( Maze *m ) {
     // Maze adjacent_tiles[] = { p-> }
 
     // When down is possible
-    if( m->cords.row < m->num_rows ) {
-      if( m->go_down() ) num_options++;
+    if( m->down_possible() ) {
+      m->cords.row++;
+      push(&current_location, &m->cords);
+      num_options++;
     }
 
     // When right is possible
-    if( m->cords.col < m->num_cols ) {
-      if( num_options > 0 && m->go_right() ) num_options++;
+    if( m->right_possible() ) {
+      m->cords.col++;
+      push(&current_location, &m->cords);
+      num_options++;
     }
 
     // When left is possible
-    if( m->cords.col != 0 ) {
-      if( num_options > 0 && m->go_left() ) num_options++;
+    if( m->left_possible() ) {
+      m->cords.col--;
+      push(&current_location, &m->cords);
+      num_options++;
     }
 
     // When up is possible
-    if( m->cords.row != 0 ) {
-      if(num_options > 0 && m->go_up() ) num_options++;
+    if( m->up_possible() ) {
+      m->cords.row--;
+      push(&current_location, &m->cords);
+      num_options++;
     }
 
     if( num_options > 1 ) {
@@ -204,39 +208,48 @@ bool solve_maze( Maze *m ) {
   return solved;
 }
 
-// bool Maze::down_possible() {
-//   return current_row < num_rows ? true : false;
-// }
-
-// bool Maze::right_possible() {
-//   return current_col < num_cols ? true : false;
-// }
-// bool Maze::left_possible() {
-//   return current_col != 0 ? true : false;
-// }
-// bool Maze::up_possible() {
-//   return current_row != 0 ? true : false;
-// }
-
-char Maze::go_down() {
- return maze[current_row+1][current_col];
+bool Maze::down_possible() {
+  if( cords.row < num_rows && is_path(get_down()) ) return true;
+  // Otherwise, down is not possible
+  return false;
 }
 
-char Maze::go_right() {
-  return maze[current_row][current_col+1];
+bool Maze::right_possible() {
+  if( cords.col < num_cols && is_path(get_right()) ) return true;
+  // Otherwise, right is not possible
+  return false;
+}
+bool Maze::left_possible() {
+  if( cords.col != 0 && is_path(get_left()) ) return true;
+  // Otherwise, left is not possible
+  return false;
 }
 
-char Maze::go_left() {
- return maze[current_row][current_col-1];
+bool Maze::up_possible() {
+  if( cords.row != 0 && is_path(get_up()) ) return true;
+  // Otherwise, down is not possible
+  return false;
 }
 
-char Maze::go_up() {
- return maze[current_row-1][current_col];
+char Maze::get_down() {
+ return maze[cords.row+1][cords.col];
 }
 
-bool Maze::is_wall() {
+char Maze::get_right() {
+  return maze[cords.row][cords.col+1];
+}
+
+char Maze::get_left() {
+ return maze[cords.row][cords.col-1];
+}
+
+char Maze::get_up() {
+ return maze[cords.row-1][cords.col];
+}
+
+bool is_wall( char c ) {
   for( int i = 0; WALL[i] != '\0'; i++ ) {
-    if(maze[current_row][current_col] == WALL[i]) {
+    if(c == WALL[i]) {
       return true;
     }
   }
@@ -251,7 +264,7 @@ bool is_path( char c ) {
 
 bool Maze::is_exit() {
   if( is_path(maze[cords.row][cords.col]) ) {
-    if( current_row == num_rows || current_col == num_cols ) {
+    if( cords.row == num_rows || cords.col == num_cols ) {
       return true;
     }
   }
@@ -259,6 +272,10 @@ bool Maze::is_exit() {
   // Otherwise, is not maze exit
   return false;
 }
+
+// void Maze::set_position( Stack *s ) {
+//   push(&s, &cords);
+// }
 
 void print_maze( Maze *m) {
   for( int row = 0; row < m->num_rows; row++ ) cout << m->maze[row] << endl;

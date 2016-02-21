@@ -32,7 +32,7 @@ struct Maze {
   bool is_wall();
   bool is_path();
   bool is_exit();
-  int get_num_options();
+  int num_options();
 };
 
 

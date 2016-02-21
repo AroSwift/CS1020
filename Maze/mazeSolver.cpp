@@ -17,49 +17,34 @@ using namespace std;
 int main() {
   ifstream input;
   Maze *m = new Maze();
-  bool solved;
 
-  // m->num_rows = 10;
-  // cout << m->num_rows << endl;
-
-  // cout << "Before get file" << endl;
-
-  // // Open file
-  // get_file( input );
-  // // Get the dimensions of the maze
-  // cout << "get dimensions" << endl;
-  // get_dimensions( input, m );
-
-  // cout << "dynamic" << endl;
-
-  int num_rows = 10;
-  int num_cols = 10;
+  // Open file
+  get_file( input );
+  // Get the dimensions of the maze
+  get_dimensions( input, m );
 
   // dynamic allocation
-  m->maze = new char*[num_rows];
-  for(int i = 0; i < num_rows; ++i) m->maze[i] = new char[num_cols];
+  m->maze = new char*[m->num_rows];
+  for(int i = 0; i < m->num_rows; ++i) m->maze[i] = new char[m->num_cols];
 
-  // cout << "Load maze" << endl;
+  // Load the maze into a 2d demensional array
+  load_maze( input, m );
 
-  // // Load the maze into a 2d demensional array
-  // load_maze( input, m );
+  // Attempt to solve maze
+  bool solved = solve_maze( m );
 
-  // // Attempt to solve maze
-  // // solved = solve_maze( maze );
+  if(solved) {
+    print_maze( m );
+  } else {
+    cout << "The maze can not be solved.";
+  }
 
-  // if(solved) {
-  //   // Print the maze if maze was solved
-  //   // print_maze( maze );
-  // } else {
-  //   cout << "The maze can not be solved.";
-  // }
-
-  // // Delete dynamically allocated 2d dimensional array
-  // // for(int row = 0; row < rows; ++row) delete [] maze[row];
-  // // delete [] maze;
+  // Delete dynamically allocated 2d dimensional array
+  for(int row = 0; row < m->num_rows; ++row) delete [] m->maze[row];
+  delete [] m->maze;
 
   // // Close the file
-  // input.close();
+  input.close();
 
   return 0;
 }
@@ -96,14 +81,11 @@ void get_file( ifstream& input ) {
 }
 
 int get_dimensions( ifstream& input, Maze *m ) {
-  bool file_errors;
-
-  cout << "here?" << endl;
 
   input >> m->num_rows;
   input >> m->num_cols;
 
-  cout << m->num_rows << "  " << m->num_cols << endl;
+  // cout << m->num_rows << "  " << m->num_cols << endl;
 
   // input.ignore();
   // if( !isdigit(rows) || !isdigit(cols) ) {
@@ -113,10 +95,6 @@ int get_dimensions( ifstream& input, Maze *m ) {
 
 }
 
-// void doIt( char *maze, int cols, int row, int col );
-// OR
-// MAZE[ ( row * cols ) + col ]
-
 void load_maze( ifstream& input, Maze *m ) {
   // Ignore the newline
   input.ignore(1, '\n');
@@ -125,7 +103,7 @@ void load_maze( ifstream& input, Maze *m ) {
 
     input.getline( m->maze[row], m->num_cols );
 
-    // cout << row << "  Char: \"" << maze[row] << "\"" << endl;
+    cout << row << "  Char: \"" << m->maze[row] << "\"" << endl;
 
     // if( input.eof() ) cout << "Given dimensions do not map to the maze." << endl;
 
@@ -142,9 +120,6 @@ bool solve_maze( Maze *m ) {
   // for( int row = START_ROW; row < rows; row++ ) {
   //   for( int col = START_COL; col < cols; col++ ) {
 
-  // int current_row = START_ROW;
-  // int current_col = START_COL;
-
   m->current_row = START_ROW;
   m->current_col = START_COL;
 
@@ -154,36 +129,38 @@ bool solve_maze( Maze *m ) {
 
     // Maze adjacent_tiles[] = { p-> }
 
-    m->get_down();
-    m->get_right();
-    m->get_left();
-    m->get_up();
+    if( m->get_down() ) {
 
-    // int num_options = get_num_options( down,right, left, up );
+    } else if( m->get_right() ) {
 
-    // When more than one option, push onto the options stack
-    // if(num_options > 1) {
-    //   Maze *p;
-    //   p->current_row = current_row;
-    //   p->current_col = current_col;
-    //   push(&options_location, p);
-    // }
+    } else if( m->get_left() ) {
+
+    } else if( m->get_up() ) {
+
+    } else if( m->num_options() > 1 ) {
+      // When more than one option, push onto the options stack
+      push(&options_location, m);
+    } else { // no options, pop back
+      if( isEmpty(&options_location) ) {
+        solved = false;
+        break;
+      } else {
+        pop( &options_location );
+      }
+    }
+
 
     // isEmpty(options_location);
 
-    // print_maze( maze, rows, cols );
+    print_maze( m );
 
   }
 
-      // push( &current_location, maze[row][col], stack... );
-  //   }
-  // }
-
-  // State of maze being solved
+  // State of maze resolution
   return solved;
 }
 
-int Maze::get_num_options() {
+int Maze::num_options() {
   // int num_options;
 
   // if( is_path(down) ) num_options++;
@@ -195,11 +172,11 @@ int Maze::get_num_options() {
 }
 
 char Maze::get_down() {
-  // if(row < rows) maze[row+1][col];
+  // if(row < num_rows) maze[row+1][col];
 }
 
 char Maze::get_right() {
-  // if(col < cols) maze[row][col+1];
+  // if(col < num_cols) maze[row][col+1];
 }
 
 char Maze::get_left() {
@@ -211,18 +188,18 @@ char Maze::get_up() {
 }
 
 bool Maze::is_wall() {
-  // for( int i = 0; WALL[i] != '\0'; i++ ) {
-  //   if(position == WALL[i]) {
-  //     return true;
-  //   }
-  // }
+  for( int i = 0; WALL[i] != '\0'; i++ ) {
+    if(maze[current_row][current_col] == WALL[i]) {
+      return true;
+    }
+  }
 
-  // // Otherwise, char is not wall
-  // return false;
+  // Otherwise, char is not wall
+  return false;
 }
 
 bool Maze::is_path() {
-  // return position == PATH ? true : false;
+  return maze[current_row][current_col] == PATH ? true : false;
 }
 
 bool Maze::is_exit() {
@@ -236,7 +213,7 @@ bool Maze::is_exit() {
 }
 
 void print_maze( Maze *m) {
-  // for( int row = 0; row < rows; row++ ) cout << maze[row] << endl;
+  for( int row = 0; row < m->num_rows; row++ ) cout << m->maze[row] << endl;
 }
 
 

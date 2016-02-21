@@ -195,33 +195,33 @@ bool solve_maze( Maze *m ) {
 }
 
 bool Maze::down_possible() {
-  return maze->current_row < maze->num_rows ? true : false;
+  return current_row < num_rows ? true : false;
 }
 
 bool Maze::right_possible() {
-  return maze->current_col < maze->num_cols ? true : false;
+  return current_col < num_cols ? true : false;
 }
 bool Maze::left_possible() {
-  return maze->current_col != 0 ? true : false;
+  return current_col != 0 ? true : false;
 }
 bool Maze::up_possible() {
-  return maze->current_row != 0 ? true : false;
+  return current_row != 0 ? true : false;
 }
 
 char Maze::get_down() {
- return maze[row+1][col];
+ return maze[current_row+1][current_col];
 }
 
 char Maze::get_right() {
-  return maze[row][col+1];
+  return maze[current_row][current_col+1];
 }
 
 char Maze::get_left() {
- return maze[row][col-1];
+ return maze[current_row][current_col-1];
 }
 
 char Maze::get_up() {
- return maze[row-1][col];
+ return maze[current_row-1][current_col];
 }
 
 bool Maze::is_wall() {
@@ -240,8 +240,8 @@ bool Maze::is_path() {
 }
 
 bool Maze::is_exit() {
-  if( is_path(maze[current_row][current_col]) ) {
-    if( m->current_row == ->num_rows || m->current_col == m->num_cols ) {
+  if( is_path() ) {
+    if( current_row == num_rows || current_col == num_cols ) {
       return true;
     }
   }

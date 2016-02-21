@@ -13,11 +13,11 @@ using namespace std;
 const int MAX_FILE_LENGTH = 256; // Max file length on linux is 255
 
 // Dashes are areas already attempted and ought to be treated as a wall
-const char WALL[] = { '|', '_', '-' };
+// Asterisks indicate area is backtrace and ough to be treated as a wall
+const char WALL[] = { '|', '_', '-', '*' };
 const char PATH = ' ';
 
-// enum { PATH = ' ', HERE_BEFORE = ',' }
-
+// Starting point of maze should be 0,1
 const int START_ROW = 0;
 const int START_COL = 1;
 

@@ -158,26 +158,22 @@ bool solve_maze( Maze *m ) {
 
     // When down is possible
     if( m->cords.row < m->num_rows ) {
-      m->go_down();
-      num_options++;
+      if( m->go_down() ) num_options++;
     }
 
     // When right is possible
     if( m->cords.col < m->num_cols ) {
-      if(num_options > 0) m->go_right();
-      num_options++;
+      if( num_options > 0 && m->go_right() ) num_options++;
     }
 
     // When left is possible
     if( m->cords.col != 0 ) {
-      if(num_options > 0) m->go_left();
-      num_options++;
+      if( num_options > 0 && m->go_left() ) num_options++;
     }
 
     // When up is possible
     if( m->cords.row != 0 ) {
-      if(num_options > 0) m->go_up();
-      num_options++;
+      if(num_options > 0 && m->go_up() ) num_options++;
     }
 
     if( num_options > 1 ) {

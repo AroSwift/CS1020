@@ -102,10 +102,7 @@ void load_maze( ifstream& input, Maze *m ) {
   input.ignore(1, '\n');
 
   for( int row = 0; row < m->num_rows; row++ ) {
-
     input.getline( m->maze[row], m->num_cols );
-
-    // cout << row << "  Char: \"" << m->maze[row] << "\"" << endl;
 
     // if( input.eof() ) cout << "Given dimensions do not map to the maze." << endl;
 
@@ -153,11 +150,6 @@ bool solve_maze( Maze *m ) {
     int num_options = 0;
     bool switched_location = false;
 
-    if( m->is_exit(&current_location) ) {
-      solved = true;
-      break;
-    }
-
     // When down is possible
     if( m->down_possible() ) {
       m->cords.row++;
@@ -193,11 +185,9 @@ bool solve_maze( Maze *m ) {
       push(&current_location, &m->cords);
     }
 
-    cout << "print maze" << endl;
     print_maze( m );
     cout << endl;
 
-    cout << "Options block" << endl;
     cout << m->num_options() << endl;
     if( m->num_options() > 1 ) {
       // When more than one option, push onto the options stack
@@ -206,9 +196,7 @@ bool solve_maze( Maze *m ) {
 
     // When no options, pop back if possible
     } else if( m->num_options() == 0 ) {
-      cout << "here?" << endl;
-      if( m->is_exit(&current_location) ) {
-        cout << "before exit.." << endl;
+      if( m->is_exit() ) {
         solved = true;
       } else if( isEmpty(&options_location) ) {
         // Impossible to solve
@@ -216,15 +204,9 @@ bool solve_maze( Maze *m ) {
         // Exit loop
         break;
       } else {
-        // Cords *new_cords = (Cords*)pop( &options_location );
-        // m->cords = *new_cords;
-        cout << endl << "Here" << endl;
         m->revert_options( &current_location, &options_location );
       }
     }
-
-    // print_maze( m );
-    // cout << endl;
 
   }
 
@@ -301,29 +283,16 @@ void Maze::revert_options( Stack *current_location, Stack *options_location ) {
 
 }
 
-bool Maze::is_exit( Stack *current_location ) {
-  // Cords *back_once = (Cords*)pop(current_location);
-
+bool Maze::is_exit() {
   cout << cords.row+2 << " -  " << cords.col+2 << endl;
 
   if( cords.row+2 == num_rows || cords.col+2 == num_cols ) {
-    cout << "is end" << endl;
     if( maze[cords.row][cords.col] == PATH_TAKEN ) {
-      cout << "is path" << endl;
       return true;
     }
   }
 
-  // if( maze[back_once->row][back_once->col] == PATH_TAKEN ) {
-  //   cout << back_once->row << " -  " << back_once->col << endl;
-  //   cout << cords.row << " -  " << cords.col << endl;
-  //   if( cords.row == num_rows || cords.col == num_cols ) {
-  //     return true;
-  //   }
-  // }
-
-  // // Otherwise, is not the maze exit
-  // push(current_location, &back_once);
+  // Otherwise, is not the maze exit
   return false;
 }
 

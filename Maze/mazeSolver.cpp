@@ -103,13 +103,37 @@ void load_maze( ifstream& input, Maze *m ) {
 
     input.getline( m->maze[row], m->num_cols );
 
-    cout << row << "  Char: \"" << m->maze[row] << "\"" << endl;
+    // cout << row << "  Char: \"" << m->maze[row] << "\"" << endl;
 
     // if( input.eof() ) cout << "Given dimensions do not map to the maze." << endl;
 
   }
 
+  // Ensure maze is valid
+  // validate_maze(m);
+
 }
+
+// void validate_maze(Maze *m) {
+//   bool error = false;
+
+//   for( int row = 0; row < m->num_rows; row++ ) {
+//     for( int col = 0; col < m->num_cols; col++ ) {
+
+//       for( int i = 0; WALL[i] != '\0'; i++ ) {
+//         if(m->maze[row][col] == WALL[i]) error = true;
+//       }
+
+//       if(m->maze[row][col] != PATH) error = true;
+
+//     }
+//   }
+
+//   if(error) {
+//     cout << "The maze is invalid." << endl;
+//     exit(1);
+//   }
+// }
 
 bool solve_maze( Maze *m ) {
   Stack current_location, options_location;
@@ -126,22 +150,30 @@ bool solve_maze( Maze *m ) {
   m->maze[m->current_row][m->current_col] = '*';
 
   while(!solved) {
+    int num_options = 0;
 
     // Maze adjacent_tiles[] = { p-> }
 
-    if( m->get_down() ) {
+    if( m->down_possible() ) {
+      m->get_down();
+      num_options++;
+    } else if( m->right_possible() ) {
+      m->get_right();
+      num_options++;
+    } else if( m->left_possible() ) {
+      m->get_left();
+      num_options++;
+    } else if( m->up_possible() ) {
+      m->get_up();
+      num_options++;
+    }
 
-    } else if( m->get_right() ) {
-
-    } else if( m->get_left() ) {
-
-    } else if( m->get_up() ) {
-
-    } else if( m->num_options() > 1 ) {
+    if( num_options > 1 ) {
       // When more than one option, push onto the options stack
       push(&options_location, m);
     } else { // no options, pop back
       if( isEmpty(&options_location) ) {
+        // Impossible to solve
         solved = false;
         break;
       } else {
@@ -150,7 +182,9 @@ bool solve_maze( Maze *m ) {
     }
 
 
-    // isEmpty(options_location);
+    if( m->is_exit() ) solved = true;
+
+
 
     print_maze( m );
 
@@ -160,31 +194,34 @@ bool solve_maze( Maze *m ) {
   return solved;
 }
 
-int Maze::num_options() {
-  // int num_options;
+bool Maze::down_possible() {
+  return maze->current_row < maze->num_rows ? true : false;
+}
 
-  // if( is_path(down) ) num_options++;
-  // if( is_path(right) ) num_options++;
-  // if( is_path(left) ) num_options++;
-  // if( is_path(up) ) num_options++;
-
-  // return num_options;
+bool Maze::right_possible() {
+  return maze->current_col < maze->num_cols ? true : false;
+}
+bool Maze::left_possible() {
+  return maze->current_col != 0 ? true : false;
+}
+bool Maze::up_possible() {
+  return maze->current_row != 0 ? true : false;
 }
 
 char Maze::get_down() {
-  // if(row < num_rows) maze[row+1][col];
+ return maze[row+1][col];
 }
 
 char Maze::get_right() {
-  // if(col < num_cols) maze[row][col+1];
+  return maze[row][col+1];
 }
 
 char Maze::get_left() {
-  // if(col != 0) maze[row][col-1];
+ return maze[row][col-1];
 }
 
 char Maze::get_up() {
-  // if(row != 0) maze[row-1][col];
+ return maze[row-1][col];
 }
 
 bool Maze::is_wall() {
@@ -203,17 +240,17 @@ bool Maze::is_path() {
 }
 
 bool Maze::is_exit() {
-  // if( is_path(position) ) {
-  //   // if( row == max_rows || col == max_rows ) {
-  //   //   return true;
-  //   // }
-  //   return true;
-  // }
-  // return false;
+  if( is_path(maze[current_row][current_col]) ) {
+    if( m->current_row == ->num_rows || m->current_col == m->num_cols ) {
+      return true;
+    }
+  }
+
+  // Otherwise, is not maze exit
+  return false;
 }
 
 void print_maze( Maze *m) {
   for( int row = 0; row < m->num_rows; row++ ) cout << m->maze[row] << endl;
 }
-
 

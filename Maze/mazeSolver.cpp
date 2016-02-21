@@ -129,18 +129,48 @@ bool solve_maze( char **maze, int rows, int cols ) {
   int current_col = START_COL;
 
   while(!solved) {
+    int options = 0;
+
     char down = get_down( maze, rows, current_row, current_col );
     char right = get_right( maze, cols, current_row, current_col );
     char left = get_left( maze, current_row, current_col );
     char up = get_up( maze, current_row, current_col );
 
-    if( is_path(right) ) {
-      if(is_exit(right)) {
 
-      }
+    // get_options( maze, row, col )
+
+    if( is_path(down) ) {
+      options++;
+    } else if( is_wall(down) ) { // wall
+
+    }
+
+    if( is_path(right) ) {
+      options++;
     } else if( is_wall(right) ) { // wall
 
     }
+
+    if( is_path(left) ) {
+      options++;
+    } else if( is_wall(left) ) { // wall
+
+    }
+
+    if( is_path(up) ) {
+      options++;
+    } else if( is_wall(up) ) { // wall
+
+    }
+
+    // When more than one option, push onto the options stack
+    if(options > 1) {
+      Positions p;
+      p.row = current_row;
+      p.col = current_col;
+      push(options_location, p);
+    }
+
 
   }
 
@@ -148,12 +178,24 @@ bool solve_maze( char **maze, int rows, int cols ) {
   //   }
   // }
 
+  // State of maze being solved
   return solved;
 }
 
-// int get_options( char **maze, int row, int col ) {
+// bool options( char **maze, int row, int col ) {
+//   if( is_path(right) ) {
 
+//     // if(is_exit(right)) {
+
+//     // }
+//   } else if( is_wall(right) ) { // wall
+
+//   }
 // }
+
+bool traverse( char **maze, int row, int col ) {
+
+}
 
 char get_down( char **maze, int rows, int row, int col ) {
   if(row < rows) maze[row+1][col];

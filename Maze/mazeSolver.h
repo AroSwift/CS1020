@@ -14,8 +14,14 @@ const int MAX_FILE_LENGTH = 256; // Max file length on linux is 255
 const char WALL[] = { '|', '_' };
 const char PATH = ' ';
 
+// enum { PATH = ' ', HERE_BEFORE = ',' }
+
 const int START_ROW = 0;
 const int START_COL = 1;
+
+struct Positions {
+  int row, col;
+};
 
 
 void get_file( ifstream& input );

@@ -46,6 +46,7 @@ struct Maze {
   int num_options();
   void revert_options( Stack *current, Stack *options );
 
+  bool is_edge();
   bool is_exit();
 };
 

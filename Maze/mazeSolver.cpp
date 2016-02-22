@@ -191,34 +191,7 @@ bool solve_maze( Maze *m ) {
         break;
       } else {
         cout << "Reverting..." << endl;
-        // m->revert_options( &current_location, &options_location );
-
-        cout << m->cords.row << " - " << m->cords.col << endl;
-
-        m->maze[m->cords.row][m->cords.col] = '-';
-
-        Cords *options_position = (Cords*)pop( &options_location );
-        m->cords = *options_position;
-
-        while( true ) {
-          Cords *back_once = (Cords*)pop(&current_location);
-          // m->cords = *back_once;
-
-          cout << back_once->row << "  " << back_once->col << endl;
-          m->maze[back_once->row][back_once->col] = '-';
-
-          if( back_once->row == options_position->row
-            && back_once->col == options_position->col ) {
-            cout << "breaking..." << endl;
-            break;
-          }
-
-        }
-
-
-
-
-
+        m->revert_options( &current_location, &options_location );
       }
     }
 
@@ -279,24 +252,25 @@ int Maze::num_options() {
 }
 
 void Maze::revert_options( Stack *current, Stack *options ) {
+  cout << cords.row << " - " << cords.col << endl;
+
+  maze[cords.row][cords.col] = '-';
+
   Cords *options_position = (Cords*)pop( options );
   cords = *options_position;
+  int row = 0;
 
-  while( true ) {
+  while( isEmpty(current) ) {
+    cout << "Row:" << row << endl;
     Cords *back_once = (Cords*)pop(current);
+    // cords = *back_once;
 
-    // cout << "BEFORE:" << endl;
-    // cout << back_once->row << "  :  " << options_position->row << endl;
-    // cout << back_once->col << "  :  " << options_position->col << endl;
-
+    cout << back_once->row << "  " << back_once->col << endl;
     maze[back_once->row][back_once->col] = '-';
-
-    // cout << "AFTER:" << endl;
-    // cout << back_once->row << "  :  " << options_position->row << endl;
-    // cout << back_once->col << "  :  " << options_position->col << endl;
 
     if( back_once->row == options_position->row
       && back_once->col == options_position->col ) {
+      cout << "breaking..." << endl;
       break;
     }
 
@@ -304,13 +278,21 @@ void Maze::revert_options( Stack *current, Stack *options ) {
 
 }
 
+bool Maze::is_edge() {
+  bool row_edge = (cords.row == 0 || cords.row == num_rows);
+  // bool (cords.row >= 0 && cords.row <= num_rows) );
+
+  bool col_edge = (cords.col == 0 || cords.col == num_cols);
+  // bool (cords.col >= 0 && cords.col <= num_cols) );
+
+  return row_edge || col_edge;
+}
+
 bool Maze::is_exit() {
   // is_edge
 
-  if( cords.row+1 == num_rows-1 || cords.col+1 == num_cols-1 ) {
-    if( maze[cords.row][cords.col] == PATH_TAKEN ) {
-      return true;
-    }
+  if( is_edge() && maze[cords.row][cords.col] == PATH_TAKEN ) {
+    return true;
   }
 
   // Otherwise, is not the maze exit

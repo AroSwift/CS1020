@@ -87,28 +87,14 @@ void get_file( ifstream& input ) {
 }
 
 void get_dimensions( ifstream& input, Maze *m ) {
-
   input >> m->num_rows;
   input >> m->num_cols;
   input.ignore();
-
-  // if( m->num_rows < 0 || m->num_cols < 0 ) {
-  //   cout << "The dimensions for the maze are invalid." << endl;
-  //   exit(1);
-  // }
-
 }
 
 void load_maze( ifstream& input, Maze *m ) {
-  // Ignore the newline
-  input.ignore(1, '\n');
 
   for( int row = 0; row < m->num_rows; row++ ) {
-    // if( input.eof() ) {
-    //   cout << "Given dimensions do not map to the maze." << endl;
-    //   exit(1);
-    // }
-
     input.getline( m->maze[row], m->num_cols );
   }
 

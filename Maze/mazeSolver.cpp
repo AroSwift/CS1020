@@ -335,10 +335,7 @@ void Maze::revert_options( Stack *current, Stack *options ) {
     cout << "Cords Row: " << cords.row << endl;
     cout << "Cords Col: " << cords.col << endl;
 
-    bool row_with_options = current_pos->row == options_pos->row || current_pos->row == options_pos->row;
-    bool col_with_options = current_pos->col == options_pos->col || current_pos->col == options_pos->col;
-
-    if( !row_with_options || !col_with_options ) {
+    if( current_pos->row != options_pos->row || current_pos->col != options_pos->col ) {
       maze[current_pos->row][current_pos->col] = '-';
 
       if(current_pos->row > options_pos->row) current_pos->row--;

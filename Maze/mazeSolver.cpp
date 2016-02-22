@@ -57,8 +57,8 @@ int main() {
 // Then attempts to get that file until the file is opened.
 //
 void get_file( ifstream& input ) {
-  bool file_errors;
   char filename[MAX_FILE_LENGTH];
+  bool file_errors;
 
   do { // Find a file that exists
     file_errors = false;
@@ -101,7 +101,6 @@ void get_dimensions( ifstream& input, Maze *m ) {
 // Load the maze into a 2d demensional array of chars
 //
 void load_maze( ifstream& input, Maze *m ) {
-
   for( int row = 0; row < m->num_rows; row++ ) {
     input.getline( m->maze[row], m->num_cols+1 );
   }
@@ -151,6 +150,7 @@ bool solve_maze( Maze *m ) {
   m->cords.col = START_COL;
   push(&current_location, &m->cords);
 
+  // Set the starting point to an asterisk
   m->maze[m->cords.row][m->cords.col] = '*';
 
   while(!solved) {
@@ -182,7 +182,7 @@ bool solve_maze( Maze *m ) {
 
     if(switched_location) {
       m->maze[m->cords.row][m->cords.col] = '*';
-      Cords current_postion = (Cords)(*m).cords;
+      Cords current_postion = m->cords;
       cout << "Current Pos:" << m->cords.row << " - " << m->cords.col << endl;
       push(&current_location, &current_postion);
     }
@@ -199,20 +199,20 @@ bool solve_maze( Maze *m ) {
     // When no options, pop back if possible
     } else if( m->num_options() == 0 ) {
       if( m->is_exit() ) {
-        cout << "In EXIT block?" << endl;
         solved = true;
       } else if( isEmpty(&options_location) ) {
         // Impossible to solve
         solved = false;
-        // Exit loop
+        // So exit loop
         break;
       } else {
         cout << "Reverting..." << endl;
+        // Go back to location of maze that had options
         m->revert_options( &current_location, &options_location );
       }
     }
 
-  }
+  } // end while
 
   // State of maze resolution
   return solved;
@@ -300,7 +300,8 @@ char Maze::get_up() {
 
 //
 // num_options
-// Return the number of possible options to be traversed.
+// Return the number of possible options to be traversed
+// From the current position of the maze.
 //
 int Maze::num_options() {
   int options = 0;

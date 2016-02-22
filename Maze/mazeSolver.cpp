@@ -340,6 +340,8 @@ void Maze::revert_options( Stack *current, Stack *options ) {
 
       if(current_pos->row > options_pos->row) current_pos->row--;
       if(current_pos->col > options_pos->col) current_pos->col--;
+      if(current_pos->row < options_pos->row) current_pos->row++;
+      if(current_pos->col < options_pos->col) current_pos->col++;
 
       cout << "current_pos->Row: " << current_pos->row << endl;
       cout << "current_pos->Col: " << current_pos->col << endl;

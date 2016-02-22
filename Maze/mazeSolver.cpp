@@ -321,28 +321,40 @@ int Maze::num_options() {
 //
 void Maze::revert_options( Stack *current, Stack *options ) {
   cout << cords.row << " - " << cords.col << endl;
+  bool done = false;
 
   // maze[cords.row][cords.col] = '-';
 
-  Cords *options_position = (Cords*)pop( options );
-  cords = *options_position;
+  Cords *options_pos = (Cords*)pop( options );
 
-  cout << "Options Pointer: " << &options_position << endl;
+  cout << "Cords Options Row: " << options_pos->row << endl;
+  cout << "Cords Options Col: " << options_pos->col << endl;
 
-  while( !isEmpty(current) ) {
-    Cords *back_once = (Cords*)pop(current);
-    // cords = *back_once;
+  while(!done) {
+    Cords *current_pos = (Cords*)pop(current);
+    // cords = *current_pos;
 
-    cout << "Back Pointer: " << &back_once << endl;
+    cout << "Cords Row: " << cords.row << endl;
+    cout << "Cords Col: " << cords.col << endl;
 
-    cout << "   Back: " << back_once->row << "  " << back_once->col << endl;
-    cout << "Options: " << options_position->row << "  " << options_position->col << endl;
-    maze[back_once->row][back_once->col] = '-';
+    bool row_with_options = current_pos->row == options_pos->row || current_pos->row == options_pos->row;
+    bool col_with_options = current_pos->col == options_pos->col || current_pos->col == options_pos->col;
 
-    if( back_once->row == options_position->row
-      && back_once->col == options_position->col ) {
-      cout << "breaking..." << endl;
-      break;
+    if( !row_with_options || !col_with_options ) {
+
+      cout << "In here..." << endl;
+
+      maze[current_pos->row][current_pos->col] = '-';
+
+      if(current_pos->row > options_pos->row) current_pos->row--;
+      if(current_pos->col > options_pos->col) current_pos->col--;
+
+      cout << "current_pos->Row: " << current_pos->row << endl;
+      cout << "current_pos->Col: " << current_pos->col << endl;
+
+      pop(current);
+    } else {
+      done = true;
     }
 
   }

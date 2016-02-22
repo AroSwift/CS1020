@@ -321,18 +321,16 @@ int Maze::num_options() {
 //
 void Maze::revert_options( Stack *current, Stack *options ) {
   cout << cords.row << " - " << cords.col << endl;
-  bool done = false;
-
-  // maze[cords.row][cords.col] = '-';
+  bool is_reverted = false;
 
   Cords *options_pos = (Cords*)pop( options );
+  cords = *options_pos;
 
-  cout << "Cords Options Row: " << options_pos->row << endl;
-  cout << "Cords Options Col: " << options_pos->col << endl;
+  cout << "options_pos->row: " << options_pos->row << endl;
+  cout << "options_pos->col: " << options_pos->col << endl;
 
-  while(!done) {
+  while(!is_reverted) {
     Cords *current_pos = (Cords*)pop(current);
-    // cords = *current_pos;
 
     cout << "Cords Row: " << cords.row << endl;
     cout << "Cords Col: " << cords.col << endl;
@@ -341,9 +339,6 @@ void Maze::revert_options( Stack *current, Stack *options ) {
     bool col_with_options = current_pos->col == options_pos->col || current_pos->col == options_pos->col;
 
     if( !row_with_options || !col_with_options ) {
-
-      cout << "In here..." << endl;
-
       maze[current_pos->row][current_pos->col] = '-';
 
       if(current_pos->row > options_pos->row) current_pos->row--;
@@ -352,9 +347,11 @@ void Maze::revert_options( Stack *current, Stack *options ) {
       cout << "current_pos->Row: " << current_pos->row << endl;
       cout << "current_pos->Col: " << current_pos->col << endl;
 
-      pop(current);
+      // Pop back
+      // pop(current);
     } else {
-      done = true;
+      cout << "REVERTED" << endl;
+      is_reverted = true;
     }
 
   }
@@ -377,9 +374,6 @@ bool Maze::is_edge() {
 // Return whether the current position of the maze is the exit.
 //
 bool Maze::is_exit() {
-  cout << "In exit function" << endl;
-  if( is_edge() ) cout << "IS EDGE" << endl;
-
   cout << cords.row << "  " << cords.col << endl;
   if( is_edge() && maze[cords.row][cords.col] == PATH_TAKEN ) {
     return true;

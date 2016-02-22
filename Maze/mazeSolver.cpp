@@ -312,18 +312,17 @@ int Maze::num_options() {
 void Maze::revert_options( Stack *current, Stack *options ) {
   cout << cords.row << " - " << cords.col << endl;
 
-  maze[cords.row][cords.col] = '-';
+  // maze[cords.row][cords.col] = '-';
 
   Cords *options_position = (Cords*)pop( options );
   cords = *options_position;
-  int row = 0;
 
   while( !isEmpty(current) ) {
-    cout << "Row:" << row << endl;
     Cords *back_once = (Cords*)pop(current);
     // cords = *back_once;
 
-    cout << back_once->row << "  " << back_once->col << endl;
+    cout << "   Back: " << back_once->row << "  " << back_once->col << endl;
+    cout << "Options: " << options_position->row << "  " << options_position->col << endl;
     maze[back_once->row][back_once->col] = '-';
 
     if( back_once->row == options_position->row
@@ -333,9 +332,6 @@ void Maze::revert_options( Stack *current, Stack *options ) {
     }
 
   }
-
-  // Cords *back_once = (Cords*)pop(current);
-  // cords = *back_once;
 
 }
 
@@ -358,7 +354,11 @@ bool Maze::is_edge() {
 // Return whether the current position of the maze is the exit.
 //
 bool Maze::is_exit() {
-  if( is_edge() && maze[cords.row][cords.col] == PATH_TAKEN ) {
+  cout << "IS EXIT" << endl;
+  cout << maze[cords.row][cords.col] << endl;
+
+  // if( is_edge() && maze[cords.row][cords.col] == PATH_TAKEN ) {
+  if( is_edge() && is_path(maze[cords.row][cords.col]) ) {
     return true;
   }
 

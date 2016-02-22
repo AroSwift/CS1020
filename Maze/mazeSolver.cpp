@@ -166,7 +166,9 @@ bool solve_maze( Maze *m ) {
 
     if(switched_location) {
       m->maze[m->cords.row][m->cords.col] = '*';
-      push(&current_location, &m->cords);
+      Cords current_postion = m->cords;
+      cout << "Current Pos:" << m->cords.row << " - " << m->cords.col << endl;
+      push(&current_location, &current_postion);
     }
 
     print_maze( m );
@@ -174,7 +176,9 @@ bool solve_maze( Maze *m ) {
 
     if( m->num_options() > 1 ) {
       // When more than one option, push onto the options stack
-      push(&options_location, &m->cords);
+      Cords options_position = m->cords;
+      cout << "Options" << m->cords.row << " - " << m->cords.col << endl;
+      push(&options_location, &options_position);
 
     // When no options, pop back if possible
     } else if( m->num_options() == 0 ) {
@@ -186,8 +190,35 @@ bool solve_maze( Maze *m ) {
         // Exit loop
         break;
       } else {
-        cout << "Revering options?" << endl;
-        m->revert_options( &current_location, &options_location );
+        cout << "Reverting..." << endl;
+        // m->revert_options( &current_location, &options_location );
+
+        cout << m->cords.row << " - " << m->cords.col << endl;
+
+        m->maze[m->cords.row][m->cords.col] = '-';
+
+        Cords *options_position = (Cords*)pop( &options_location );
+        m->cords = *options_position;
+
+        while( true ) {
+          Cords *back_once = (Cords*)pop(&current_location);
+          // m->cords = *back_once;
+
+          cout << back_once->row << "  " << back_once->col << endl;
+          m->maze[back_once->row][back_once->col] = '-';
+
+          if( back_once->row == options_position->row
+            && back_once->col == options_position->col ) {
+            cout << "breaking..." << endl;
+            break;
+          }
+
+        }
+
+
+
+
+
       }
     }
 

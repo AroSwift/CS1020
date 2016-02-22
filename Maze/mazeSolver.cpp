@@ -161,27 +161,21 @@ bool solve_maze( Maze *m ) {
     }
 
     // When right is possible
-    if( m->right_possible() ) {
-      if(!switched_location) {
-        m->cords.col++;
-        switched_location = true;
-      }
+    if( !switched_location && m->right_possible() ) {
+      m->cords.col++;
+      switched_location = true;
     }
 
     // When left is possible
-    if( m->left_possible() ) {
-      if(!switched_location) {
-        m->cords.col--;
-        switched_location = true;
-      }
+    if( !switched_location && m->left_possible() ) {
+      m->cords.col--;
+      switched_location = true;
     }
 
     // When up is possible
-    if( m->up_possible() ) {
-      if(!switched_location) {
-        m->cords.row--;
-        switched_location = true;
-      }
+    if( !switched_location && m->up_possible() ) {
+      m->cords.row--;
+      switched_location = true;
     }
 
     if(switched_location) {

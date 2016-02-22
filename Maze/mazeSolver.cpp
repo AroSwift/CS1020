@@ -89,6 +89,7 @@ void get_file( ifstream& input ) {
 //
 // get_dimensions
 // Get the dimensions of the maze from a file.
+// Dimensions are row then col and on the first line of the file.
 //
 void get_dimensions( ifstream& input, Maze *m ) {
   input >> m->num_rows;
@@ -359,11 +360,14 @@ void Maze::revert_options( Stack *current, Stack *options ) {
 
 //
 // is_edge
-// Return whether the current position is a edge of the maze.
+// Return whether the current position is an edge of the maze.
 //
 bool Maze::is_edge() {
-  bool row_edge = (cords.row == 0 || cords.row == num_rows-1) && (cords.row >= 0 && cords.row <= num_rows-1);
-  bool col_edge = (cords.col == 0 || cords.col == num_cols-1) && (cords.col >= 0 && cords.col <= num_cols-1);
+  bool row_edge = (cords.row == 0 || cords.row == num_rows-1) &&
+    (cords.row >= 0 && cords.row <= num_rows-1);
+
+  bool col_edge = (cords.col == 0 || cords.col == num_cols-1) &&
+    (cords.col >= 0 && cords.col <= num_cols-1);
 
   return row_edge || col_edge;
 }

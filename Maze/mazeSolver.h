@@ -17,7 +17,6 @@ const int MAX_FILE_LENGTH = 256; // Max file length on linux is 255
 // const char WALL[] = { '|', '_', '-', '*' };
 const char WALL[] = { '|', '_' };
 const char PATH = ' ';
-const char FAILED_PATH = '-';
 const char PATH_TAKEN = '*';
 
 // Starting point of maze should be 0,1

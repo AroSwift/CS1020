@@ -24,6 +24,7 @@ const char PATH_TAKEN = '*';
 const int START_ROW = 0;
 const int START_COL = 1;
 
+// Coordinates of maze
 struct Cords {
   int row, col;
 };
@@ -49,7 +50,6 @@ struct Maze {
   bool is_edge();
   bool is_exit();
 };
-
 
 bool is_wall( char c );
 bool is_path( char c );

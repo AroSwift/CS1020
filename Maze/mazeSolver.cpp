@@ -55,7 +55,11 @@ int main() {
   return 0;
 }
 
-
+//
+// get_file
+// Continuously prompts user for a file and
+// Then attempts to get that file until the file is opened.
+//
 void get_file( ifstream& input ) {
   bool file_errors;
   char filename[MAX_FILE_LENGTH];
@@ -86,6 +90,10 @@ void get_file( ifstream& input ) {
 
 }
 
+//
+// get_dimensions
+// Get the dimensions of the maze from a file.
+//
 void get_dimensions( ifstream& input, Maze *m ) {
   input >> m->num_rows;
   input >> m->num_cols;
@@ -124,6 +132,14 @@ void load_maze( ifstream& input, Maze *m ) {
 //   }
 // }
 
+
+//
+// solve_maze
+// Attempts to solve the maze while not solved.
+// It goes down, right, left, and up and push cords onto a stack.
+// When there are multiple options, push those cords onto a seperate stack.
+// When maze is solved or unsolvable, stop attempting to solve maze.
+//
 bool solve_maze( Maze *m ) {
   Stack current_location, options_location;
   initStack(&current_location);
@@ -201,45 +217,82 @@ bool solve_maze( Maze *m ) {
   return solved;
 }
 
+//
+// down_possible
+// Return whether below the maze is possible.
+//
 bool Maze::down_possible() {
   if( cords.row < num_rows && is_path(get_down()) ) return true;
   // Otherwise, down is not possible
   return false;
 }
 
+//
+// right_possible
+// Return whether right of the maze is possible.
+//
 bool Maze::right_possible() {
   if( cords.col < num_cols && is_path(get_right()) ) return true;
   // Otherwise, right is not possible
   return false;
 }
+
+//
+// left_possible
+// Return whether left of the maze is possible.
+//
 bool Maze::left_possible() {
   if( cords.col != 0 && is_path(get_left()) ) return true;
   // Otherwise, left is not possible
   return false;
 }
 
+//
+// up_possible
+// Return whether moving up the maze is possible.
+//
 bool Maze::up_possible() {
   if( cords.row != 0 && is_path(get_up()) ) return true;
   // Otherwise, down is not possible
   return false;
 }
 
+//
+// get_down
+// Return the character that is below the current maze position.
+//
 char Maze::get_down() {
  return maze[cords.row+1][cords.col];
 }
 
+//
+// get_right
+// Return the character that is right of the current maze position.
+//
 char Maze::get_right() {
   return maze[cords.row][cords.col+1];
 }
 
+//
+// get_left
+// Return the character that is left of the current maze position.
+//
 char Maze::get_left() {
  return maze[cords.row][cords.col-1];
 }
 
+//
+// get_up
+// Return the character that is above the current maze position.
+//
 char Maze::get_up() {
  return maze[cords.row-1][cords.col];
 }
 
+//
+// num_options
+// Return the number of possible options to be traversed.
+//
 int Maze::num_options() {
   int options = 0;
 
@@ -251,6 +304,11 @@ int Maze::num_options() {
   return options;
 }
 
+//
+// revert_options
+// Pop back to the last location that options were available.
+// While popping back, set asterisks to dashes
+//
 void Maze::revert_options( Stack *current, Stack *options ) {
   cout << cords.row << " - " << cords.col << endl;
 
@@ -278,6 +336,10 @@ void Maze::revert_options( Stack *current, Stack *options ) {
 
 }
 
+//
+// is_edge
+// Return whether the current position is a edge of the maze.
+//
 bool Maze::is_edge() {
   bool row_edge = (cords.row == 0 || cords.row == num_rows);
   // bool (cords.row >= 0 && cords.row <= num_rows) );
@@ -288,9 +350,11 @@ bool Maze::is_edge() {
   return row_edge || col_edge;
 }
 
+//
+// is_exit
+// Return whether the current position of the maze is the exit.
+//
 bool Maze::is_exit() {
-  // is_edge
-
   if( is_edge() && maze[cords.row][cords.col] == PATH_TAKEN ) {
     return true;
   }
@@ -299,6 +363,10 @@ bool Maze::is_exit() {
   return false;
 }
 
+//
+// is_wall
+// Return whether the given character is a wall.
+//
 bool is_wall( char c ) {
   for( int i = 0; WALL[i] != '\0'; i++ ) {
     if(c == WALL[i]) {
@@ -310,10 +378,18 @@ bool is_wall( char c ) {
   return false;
 }
 
+//
+// is_path
+// Return whether the given character is a path.
+//
 bool is_path( char c ) {
   return c == PATH ? true : false;
 }
 
+//
+// print_maze
+// Print completed maze.
+//
 void print_maze( Maze *m) {
   for( int row = 0; row < m->num_rows; row++ ) {
     cout << m->maze[row] << endl;

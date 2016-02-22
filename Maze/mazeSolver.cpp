@@ -307,7 +307,7 @@ int Maze::num_options() {
 //
 // revert_options
 // Pop back to the last location that options were available.
-// While popping back, set asterisks to dashes
+// While popping back, set asterisks to dashes.
 //
 void Maze::revert_options( Stack *current, Stack *options ) {
   cout << cords.row << " - " << cords.col << endl;
@@ -318,7 +318,7 @@ void Maze::revert_options( Stack *current, Stack *options ) {
   cords = *options_position;
   int row = 0;
 
-  while( isEmpty(current) ) {
+  while( !isEmpty(current) ) {
     cout << "Row:" << row << endl;
     Cords *back_once = (Cords*)pop(current);
     // cords = *back_once;
@@ -333,6 +333,9 @@ void Maze::revert_options( Stack *current, Stack *options ) {
     }
 
   }
+
+  // Cords *back_once = (Cords*)pop(current);
+  // cords = *back_once;
 
 }
 

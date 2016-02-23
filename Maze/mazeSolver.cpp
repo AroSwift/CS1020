@@ -148,7 +148,11 @@ bool solve_maze( Maze *m ) {
   // Set the starting row and col of maze
   m->cords.row = START_ROW;
   m->cords.col = START_COL;
-  push(&current_location, &m->cords);
+  Cords* start_position = new Cords();
+  start_position->row = START_ROW;
+  start_position->col = START_COL;
+  void* sp = start_position;
+  push(&current_location, sp);
 
   // Set the starting point to an asterisk
   m->maze[m->cords.row][m->cords.col] = '*';
@@ -182,9 +186,13 @@ bool solve_maze( Maze *m ) {
 
     if(switched_location) {
       m->maze[m->cords.row][m->cords.col] = '*';
-      Cords current_postion = m->cords;
+      // Cords current_postion = m->cords;
+      Cords* current_postion = new Cords();
+      current_postion->row = m->cords.row;
+      current_postion->col = m->cords.col;
+      void* cp = current_postion;
       cout << "Current Pos:" << m->cords.row << " - " << m->cords.col << endl;
-      push(&current_location, &current_postion);
+      push(&current_location, cp);
     }
 
     print_maze( m );
@@ -192,9 +200,13 @@ bool solve_maze( Maze *m ) {
 
     if( m->num_options() > 1 ) {
       // When more than one option, push onto the options stack
-      Cords options_position = m->cords;
+      // Cords options_position = m->cords;
+      Cords* options_position = new Cords();
+      options_position->row = m->cords.row;
+      options_position->col = m->cords.col;
+      void* op = options_position;
       cout << "Options" << m->cords.row << " - " << m->cords.col << endl;
-      push(&options_location, &options_position);
+      push(&options_location, op);
 
     // When no options, pop back if possible
     } else if( m->num_options() == 0 ) {
@@ -223,7 +235,7 @@ bool solve_maze( Maze *m ) {
 // Return whether below the maze is possible.
 //
 bool Maze::down_possible() {
-  if( cords.row != num_rows && cords.row != num_rows && is_path(get_down()) ) {
+  if( cords.row != num_rows && cords.col != num_rows && is_path(get_down()) ) {
     return true;
   } else {
     return false;
@@ -326,22 +338,27 @@ void Maze::revert_options( Stack *current, Stack *options ) {
   Cords *options_pos = (Cords*)pop( options );
   cords = *options_pos;
 
+
+  cout << "Cords Row: " << cords.row << endl;
+  cout << "Cords Col: " << cords.col << endl;
+
+
   cout << "options_pos->row: " << options_pos->row << endl;
   cout << "options_pos->col: " << options_pos->col << endl;
 
+  cout << endl;
+
   while(!is_reverted) {
     Cords *current_pos = (Cords*)pop(current);
-
-    cout << "Cords Row: " << cords.row << endl;
-    cout << "Cords Col: " << cords.col << endl;
+    // cords = *current_pos;
 
     if( current_pos->row != options_pos->row || current_pos->col != options_pos->col ) {
       maze[current_pos->row][current_pos->col] = '-';
 
-      if(current_pos->row > options_pos->row) current_pos->row--;
-      if(current_pos->col > options_pos->col) current_pos->col--;
-      if(current_pos->row < options_pos->row) current_pos->row++;
-      if(current_pos->col < options_pos->col) current_pos->col++;
+      // if(current_pos->row > options_pos->row) current_pos->row--;
+      // if(current_pos->col > options_pos->col) current_pos->col--;
+      // if(current_pos->row < options_pos->row) current_pos->row++;
+      // if(current_pos->col < options_pos->col) current_pos->col++;
 
       cout << "current_pos->Row: " << current_pos->row << endl;
       cout << "current_pos->Col: " << current_pos->col << endl;

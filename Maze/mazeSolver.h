@@ -1,7 +1,7 @@
 //
 // Name: Aaron Barlow
-// Date: 2/22/2016
-// Description: Read in a given file and attempt to solve the maze.
+// Date: 2/23/2016
+// Description: Read in a given file with a maze and attempt to solve it.
 //
 
 #pragma once
@@ -16,7 +16,7 @@ const char PATH = ' ';
 // The astrick indicates a path used to complete maze
 const char PATH_TAKEN = '*';
 
-// Starting point of maze should be 0,1
+// Starting point of maze should be [0,1]
 const int START_ROW = 0;
 const int START_COL = 1;
 

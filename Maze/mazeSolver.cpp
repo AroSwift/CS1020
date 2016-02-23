@@ -1,7 +1,7 @@
 //
 // Name: Aaron Barlow
-// Date: 2/22/2016
-// Description: Read in a given file and attempt to solve the maze.
+// Date: 2/23/2016
+// Description: Read in a given file with a maze and attempt to solve it.
 //
 
 #include <iostream>
@@ -22,7 +22,7 @@ int main() {
   // Get the dimensions of the maze
   get_dimensions( input, m );
 
-  // Dynamically allocate 2d array of chars
+  // Dynamically allocate a 2d array of chars
   m->maze = new char*[m->num_rows+1];
   for(int i = 0; i < m->num_rows+1; ++i) {
     m->maze[i] = new char[m->num_cols+1];
@@ -47,7 +47,7 @@ int main() {
   // Delete dynamically allocated 2d array
   for(int row = 0; row < m->num_rows+1; ++row) delete [] m->maze[row];
   delete [] m->maze;
-  // After deleting all instantiations, delete maze
+  // Delete the maze after deleting all instantiations
   delete m;
 
   return 0;
@@ -65,6 +65,7 @@ void get_file( ifstream& input ) {
   do { // Find a file that exists
     file_errors = false;
 
+    // Prompt for file and read it in
     cout << "Enter file name: ";
     cin.getline( filename, MAX_FILE_LENGTH );
 
@@ -94,7 +95,7 @@ void get_dimensions( ifstream& input, Maze *m ) {
   input >> m->num_rows;
   input >> m->num_cols;
 
-  // Ignore new line
+  // Ignore new line to go to the beginning of maze
   input.ignore(1, '\n');
 }
 
@@ -128,41 +129,46 @@ bool solve_maze( Maze *m ) {
   start_position->row = m->cords.row = START_ROW;
   start_position->col = m->cords.col = START_COL;
   void* sp = start_position;
+  // Push starting point onto stack
   push(&current_location, sp);
 
   // Set the starting point to an asterisk
   m->maze[m->cords.row][m->cords.col] = '*';
 
+  // Continue to attempt to solve the maze until
+   // there are no possible moves or the maze is unsolvable
   while(!solved) {
     bool switched_location = false;
 
-    // When down is possible
+    // Go down when possible
     if( m->down_possible() ) {
       m->cords.row++;
       switched_location = true;
     }
 
-    // When right is possible
+    // Go right when possible and not already moved
     if( !switched_location && m->right_possible() ) {
       m->cords.col++;
       switched_location = true;
     }
 
-    // When left is possible
+    // Go left when possible and not already moved
     if( !switched_location && m->left_possible() ) {
       m->cords.col--;
       switched_location = true;
     }
 
-    // When up is possible
+    // Go up when possible and not already moved
     if( !switched_location && m->up_possible() ) {
       m->cords.row--;
       switched_location = true;
     }
 
     if(switched_location) {
+      // Set the current position to an astrick because it is a possible path
       m->maze[m->cords.row][m->cords.col] = '*';
-      // Cords current_postion = m->cords;
+
+      // Push the current position of the maze of the maze onto the stack
       Cords* current_postion = new Cords();
       current_postion->row = m->cords.row;
       current_postion->col = m->cords.col;
@@ -171,30 +177,31 @@ bool solve_maze( Maze *m ) {
     }
 
     if( m->num_options() > 1 ) {
-      // When more than one option, push onto the options stack
-      // Cords options_position = m->cords;
+      // Push onto the options stack when there is more than one option
       Cords* options_position = new Cords();
       options_position->row = m->cords.row;
       options_position->col = m->cords.col;
       void* op = options_position;
       push(&options_location, op);
 
-    // When no options, pop back if possible
+    // When no options
     } else if( m->num_options() == 0 ) {
       if( m->is_exit() ) {
+        // Maze is solved
         solved = true;
+        // If there are no options
       } else if( isEmpty(&options_location) ) {
-        // Impossible to solve
+        // It is impossible to solve the maze
         solved = false;
         // So exit loop
         break;
-      } else { // Option stack is not empty, pop back to that position
-        // Go back to location of maze that had options
+      } else { // Option stack is not empty
+        // Go back to the location of maze that had options
         m->revert_options( &current_location, &options_location );
       }
     }
 
-  } // end while
+  } // end while loop
 
   // State of maze resolution
   return solved;
@@ -202,45 +209,65 @@ bool solve_maze( Maze *m ) {
 
 //
 // down_possible
-// Return whether below the maze is possible.
+// Return whether going below the maze
+// From the current position is possible.
 //
 bool Maze::down_possible() {
+  // Is moving the current position of the row down by 1 possible?
   bool valid_row = cords.row+1 >= 0 && cords.row+1 <= num_rows;
+  // Is moving the current position of the column possible?
   bool valid_col = cords.col >= 0 && cords.col <= num_cols;
 
+  // When going down is possible and the character of that
+  // possition is a possible path return true otherwise false
   return valid_row && valid_col && is_path(get_down()) ? true : false;
 }
 
 //
 // right_possible
-// Return whether right of the maze is possible.
+// Return whether goign right of the maze
+// From the current position is possible.
 //
 bool Maze::right_possible() {
+  // Is moving the current position of the row possible?
   bool valid_row = cords.row >= 0 && cords.row <= num_rows;
+  // Is moving the current position of the column right by 1 possible?
   bool valid_col = cords.col+1 >= 0 && cords.col+1 <= num_cols;
 
+  // When going right is possible and the character of that
+  // possition is a possible path return true otherwise false
   return valid_row && valid_col && is_path(get_right()) ? true : false;
 }
 
 //
 // left_possible
-// Return whether left of the maze is possible.
+// Return whether going left of the maze
+// From the current position is possible.
 //
 bool Maze::left_possible() {
+  // Is moving the current position of the row possible?
   bool valid_row = cords.row >= 0 && cords.row <= num_rows;
+  // Is moving the current position of the column left by 1 possible?
   bool valid_col = cords.col-1 >= 0 && cords.col-1 <= num_cols;
 
+  // When going left is possible and the character of that
+  // possition is a possible path return true otherwise false
   return valid_row && valid_col && is_path(get_left()) ? true : false;
 }
 
 //
 // up_possible
-// Return whether moving up the maze is possible.
+// Return whether moving up the maze
+// From the current position is possible.
 //
 bool Maze::up_possible() {
+  // Is moving the current position of the row  up by 1 possible?
   bool valid_row = cords.row-1 >= 0 && cords.row-1 <= num_rows;
+  // Is moving the current position of the column possible?
   bool valid_col = cords.col >= 0 && cords.col <= num_cols;
 
+  // When going up is possible and the character of that
+  // possition is a possible path return true otherwise false
   return valid_row && valid_col && is_path(get_up()) ? true : false;
 }
 
@@ -289,6 +316,7 @@ int Maze::num_options() {
   if( left_possible() ) options++;
   if( up_possible() ) options++;
 
+  // Return the number of possible paths that can be taken
   return options;
 }
 
@@ -300,25 +328,32 @@ int Maze::num_options() {
 void Maze::revert_options( Stack *current, Stack *options ) {
   bool is_reverted = false;
 
+  // Get the position where more than one option exists
   Cords *options_pos = (Cords*)pop( options );
 
+  // Continue to pop back current position until that position is option position
   while(!is_reverted) {
+    // Get the new current position
     Cords *current_pos = (Cords*)pop(current);
+    // Set the current position to the new cords
     cords = *current_pos;
 
+    // Set the asterisks to dashes when current position is not option position
     if( current_pos->row != options_pos->row || current_pos->col != options_pos->col ) {
       maze[current_pos->row][current_pos->col] = '-';
     } else {
+      // The the current position now is the option position
       is_reverted = true;
     }
 
   }
 
-  Cords* another_try = new Cords();
-  another_try->row = cords.row;
-  another_try->col = cords.col;
-  void* at = another_try;
-  push(current, at);
+  // Push back onto stack to set the new current position
+  Cords* new_current_pos = new Cords();
+  new_current_pos->row = cords.row;
+  new_current_pos->col = cords.col;
+  void* ncp = new_current_pos;
+  push(current, ncp);
 
 }
 
@@ -327,12 +362,15 @@ void Maze::revert_options( Stack *current, Stack *options ) {
 // Return whether the current position is an edge of the maze.
 //
 bool Maze::is_edge() {
+  // Is the current row the edge?
   bool row_edge = (cords.row == 0 || cords.row == num_rows-1) &&
     (cords.row >= 0 && cords.row <= num_rows-1);
 
+  // Is the current col the edge?
   bool col_edge = (cords.col == 0 || cords.col == num_cols-2) &&
     (cords.col >= 0 && cords.col <= num_cols-2);
 
+  // If the current col or row is at the edge then return true otherwise false
   return row_edge || col_edge;
 }
 
@@ -341,12 +379,12 @@ bool Maze::is_edge() {
 // Return whether the current position of the maze is the exit.
 //
 bool Maze::is_exit() {
+  // Current position is exit when at an edge and set to an asterisk
   if( is_edge() && maze[cords.row][cords.col] == PATH_TAKEN ) {
     return true;
+  } else {
+    return false;
   }
-
-  // Otherwise, is not the maze exit
-  return false;
 }
 
 //

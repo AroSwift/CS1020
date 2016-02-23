@@ -1,6 +1,6 @@
 //
 // Name: Aaron Barlow
-// Date: 2/21/2016
+// Date: 2/22/2016
 // Description: Read in a given file and attempt to solve the maze.
 //
 
@@ -11,22 +11,21 @@ using namespace std;
 
 const int MAX_FILE_LENGTH = 256; // Max file length on linux is 255
 
-// Dashes are areas already attempted and ought to be treated as a wall
-// Asterisks indicate area is backtrace and ough to be treated as a wall
-// const char WALL[] = { '|', '_', '-', '*' };
-const char WALL[] = { '|', '_' };
+// A path is a space
 const char PATH = ' ';
+// The astrick indicates a path used to complete maze
 const char PATH_TAKEN = '*';
 
 // Starting point of maze should be 0,1
 const int START_ROW = 0;
 const int START_COL = 1;
 
-// Coordinates of maze
+// Coordinates of maze position
 struct Cords {
   int row, col;
 };
 
+// Structure for maze
 struct Maze {
   char** maze;
   int num_rows, num_cols;
@@ -49,13 +48,11 @@ struct Maze {
   bool is_exit();
 };
 
-bool is_wall( char c );
-bool is_path( char c );
-
 void get_file(ifstream& input );
 void get_dimensions(ifstream& input, Maze *m);
 
 void load_maze(ifstream& input, Maze *m);
-// void validate_maze(Maze *m);
 bool solve_maze(Maze *m);
 void print_maze(Maze *m);
+
+bool is_path( char c );

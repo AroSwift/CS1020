@@ -1,6 +1,6 @@
 //
 // Name: Aaron Barlow
-// Date: 2/21/2016
+// Date: 2/22/2016
 // Description: Read in a given file and attempt to solve the maze.
 //
 
@@ -28,24 +28,25 @@ int main() {
     m->maze[i] = new char[m->num_cols+1];
   }
 
-  // Load the maze into a 2d demensional array of chars
+  // Load the maze into a 2d array of chars
   load_maze( input, m );
+
+  // Close the file
+  input.close();
 
   // Attempt to solve maze
   bool solved = solve_maze( m );
 
+  // Display state of maze solvability
   if(solved) {
     print_maze( m );
   } else {
     cout << "The maze can not be solved." << endl;
   }
 
-  // Delete dynamically allocated 2d dimensional array
+  // Delete dynamically allocated 2d array
   for(int row = 0; row < m->num_rows; ++row) delete [] m->maze[row];
   delete [] m->maze;
-
-  // // Close the file
-  input.close();
 
   return 0;
 }
@@ -78,9 +79,6 @@ void get_file( ifstream& input ) {
       file_errors = true;
     }
 
-    // Reset buffer
-    input.clear();
-
   } while( file_errors );
 
 }
@@ -93,7 +91,9 @@ void get_file( ifstream& input ) {
 void get_dimensions( ifstream& input, Maze *m ) {
   input >> m->num_rows;
   input >> m->num_cols;
-  input.ignore();
+
+  // Ignore new line
+  input.ignore(1, '\n');
 }
 
 //
@@ -271,7 +271,7 @@ bool Maze::up_possible() {
 // Return the character that is below the current maze position.
 //
 char Maze::get_down() {
- return maze[cords.row+1][cords.col];
+  return maze[cords.row+1][cords.col];
 }
 
 //
@@ -287,7 +287,7 @@ char Maze::get_right() {
 // Return the character that is left of the current maze position.
 //
 char Maze::get_left() {
- return maze[cords.row][cords.col-1];
+  return maze[cords.row][cords.col-1];
 }
 
 //
@@ -295,13 +295,13 @@ char Maze::get_left() {
 // Return the character that is above the current maze position.
 //
 char Maze::get_up() {
- return maze[cords.row-1][cords.col];
+  return maze[cords.row-1][cords.col];
 }
 
 //
 // num_options
-// Return the number of possible options to be traversed
-// From the current position of the maze.
+// Return the number of possible options that can be
+// traversed from the current position of the maze.
 //
 int Maze::num_options() {
   int options = 0;
@@ -386,21 +386,6 @@ bool Maze::is_exit() {
 }
 
 //
-// is_wall
-// Return whether the given character is a wall.
-//
-bool is_wall( char c ) {
-  for( int i = 0; WALL[i] != '\0'; i++ ) {
-    if(c == WALL[i]) {
-      return true;
-    }
-  }
-
-  // Otherwise, char is not wall
-  return false;
-}
-
-//
 // is_path
 // Return whether the given character is a path.
 //
@@ -413,6 +398,7 @@ bool is_path( char c ) {
 // Print completed maze.
 //
 void print_maze( Maze *m) {
+  // Iterate through 2d array and print out by row
   for( int row = 0; row < m->num_rows; row++ ) {
     cout << m->maze[row] << endl;
   }

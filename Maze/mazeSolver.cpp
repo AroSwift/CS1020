@@ -122,8 +122,6 @@ bool solve_maze( Maze *m ) {
   bool solved = false;
 
   // Set the starting row and col of maze
-  // m->cords.row = START_ROW;
-  // m->cords.col = START_COL;
   Cords* start_position = new Cords();
   start_position->row = m->cords.row = START_ROW;
   start_position->col = m->cords.col = START_COL;
@@ -210,11 +208,10 @@ bool solve_maze( Maze *m ) {
 // Return whether below the maze is possible.
 //
 bool Maze::down_possible() {
-  if( cords.row != num_rows && cords.col != num_rows && is_path(get_down()) ) {
-    return true;
-  } else {
-    return false;
-  }
+  bool valid_row = cords.row+1 >= 0 && cords.row+1 <= num_rows-1;
+  bool valid_col = cords.col >= 0 && cords.col <= num_cols-1;
+
+  return valid_row && valid_col && is_path(get_down()) ? true : false;
 }
 
 //
@@ -222,11 +219,10 @@ bool Maze::down_possible() {
 // Return whether right of the maze is possible.
 //
 bool Maze::right_possible() {
-  if( cords.col != num_cols && cords.col != num_cols && is_path(get_right()) ) {
-    return true;
-  } else {
-    return false;
-  }
+  bool valid_row = cords.row >= 0 && cords.row <= num_rows-1;
+  bool valid_col = cords.col+1 >= 0 && cords.col+1 <= num_cols-1;
+
+  return valid_row && valid_col && is_path(get_right()) ? true : false;
 }
 
 //
@@ -234,11 +230,10 @@ bool Maze::right_possible() {
 // Return whether left of the maze is possible.
 //
 bool Maze::left_possible() {
-  if( cords.col != num_cols && cords.col != num_cols && is_path(get_left()) ) {
-    return true;
-  } else {
-    return false;
-  }
+  bool valid_row = cords.row >= 0 && cords.row <= num_rows-1;
+  bool valid_col = cords.col-1 >= 0 && cords.col-1 <= num_cols-1;
+
+  return valid_row && valid_col && is_path(get_left()) ? true : false;
 }
 
 //
@@ -246,11 +241,10 @@ bool Maze::left_possible() {
 // Return whether moving up the maze is possible.
 //
 bool Maze::up_possible() {
-  if( cords.row != num_rows && cords.row != num_rows && is_path(get_up()) ) {
-    return true;
-  } else {
-    return false;
-  }
+  bool valid_row = cords.row-1 >= 0 && cords.row-1 <= num_rows-1;
+  bool valid_col = cords.col >= 0 && cords.col <= num_cols-1;
+
+  return valid_row && valid_col && is_path(get_up()) ? true : false;
 }
 
 //
@@ -361,6 +355,7 @@ bool Maze::is_edge() {
 //
 bool Maze::is_exit() {
   cout << cords.row << "  " << cords.col << endl;
+  if(is_edge()) cout << "AT EDGE" << endl;
   if( is_edge() && maze[cords.row][cords.col] == PATH_TAKEN ) {
     return true;
   }

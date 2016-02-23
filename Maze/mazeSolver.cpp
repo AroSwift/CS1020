@@ -170,9 +170,6 @@ bool solve_maze( Maze *m ) {
       push(&current_location, cp);
     }
 
-    // print_maze( m );
-    // cout << endl;
-
     if( m->num_options() > 1 ) {
       // When more than one option, push onto the options stack
       // Cords options_position = m->cords;
@@ -301,20 +298,9 @@ int Maze::num_options() {
 // While popping back, set asterisks to dashes.
 //
 void Maze::revert_options( Stack *current, Stack *options ) {
-  cout << cords.row << " - " << cords.col << endl;
   bool is_reverted = false;
 
-  maze[cords.row][cords.col] = '-';
-
   Cords *options_pos = (Cords*)pop( options );
-  // cords = *options_pos;
-
-  cout << "Cords Row: " << cords.row << endl;
-  cout << "Cords Col: " << cords.col << endl;
-
-  cout << "options_pos->row: " << options_pos->row << endl;
-  cout << "options_pos->col: " << options_pos->col << endl;
-  cout << endl;
 
   while(!is_reverted) {
     Cords *current_pos = (Cords*)pop(current);
@@ -322,12 +308,7 @@ void Maze::revert_options( Stack *current, Stack *options ) {
 
     if( current_pos->row != options_pos->row || current_pos->col != options_pos->col ) {
       maze[current_pos->row][current_pos->col] = '-';
-
-      cout << "current_pos->Row: " << current_pos->row << endl;
-      cout << "current_pos->Col: " << current_pos->col << endl;
-
     } else {
-      cout << "REVERTED" << endl;
       is_reverted = true;
     }
 
@@ -360,7 +341,6 @@ bool Maze::is_edge() {
 // Return whether the current position of the maze is the exit.
 //
 bool Maze::is_exit() {
-  cout << cords.row << "  " << cords.col << endl;
   if( is_edge() && maze[cords.row][cords.col] == PATH_TAKEN ) {
     return true;
   }

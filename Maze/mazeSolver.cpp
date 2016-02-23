@@ -1,8 +1,7 @@
 //
 // Name: Aaron Barlow
 // Date: 2/21/2016
-// Description: Read in a given file
-// in order to attempt to solve a maze.
+// Description: Read in a given file and attempt to solve the maze.
 //
 
 #include <iostream>
@@ -224,7 +223,7 @@ bool solve_maze( Maze *m ) {
 // Return whether below the maze is possible.
 //
 bool Maze::down_possible() {
-  if( cords.row < num_rows && cords.row != num_rows && is_path(get_down()) ) {
+  if( cords.row != num_rows && cords.row != num_rows && is_path(get_down()) ) {
     return true;
   } else {
     return false;
@@ -236,7 +235,7 @@ bool Maze::down_possible() {
 // Return whether right of the maze is possible.
 //
 bool Maze::right_possible() {
-  if( cords.col < num_cols && cords.col != num_cols && is_path(get_right()) ) {
+  if( cords.col != num_cols && cords.col != num_cols && is_path(get_right()) ) {
     return true;
   } else {
     return false;
@@ -248,7 +247,7 @@ bool Maze::right_possible() {
 // Return whether left of the maze is possible.
 //
 bool Maze::left_possible() {
-  if( cords.col != 0 && cords.col != num_cols && is_path(get_left()) ) {
+  if( cords.col != num_cols && cords.col != num_cols && is_path(get_left()) ) {
     return true;
   } else {
     return false;
@@ -260,7 +259,7 @@ bool Maze::left_possible() {
 // Return whether moving up the maze is possible.
 //
 bool Maze::up_possible() {
-  if( cords.row != 0 && cords.row != num_rows && is_path(get_up()) ) {
+  if( cords.row != num_rows && cords.row != num_rows && is_path(get_up()) ) {
     return true;
   } else {
     return false;

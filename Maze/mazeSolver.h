@@ -1,8 +1,7 @@
 //
 // Name: Aaron Barlow
 // Date: 2/21/2016
-// Description: Read in a given file
-// in order to attempt to solve a maze.
+// Description: Read in a given file and attempt to solve the maze.
 //
 
 #pragma once

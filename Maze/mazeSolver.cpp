@@ -47,6 +47,8 @@ int main() {
   // Delete dynamically allocated 2d array
   for(int row = 0; row < m->num_rows; ++row) delete [] m->maze[row];
   delete [] m->maze;
+  // After deleting all instantiations, delete maze
+  delete m;
 
   return 0;
 }
@@ -104,33 +106,7 @@ void load_maze( ifstream& input, Maze *m ) {
   for( int row = 0; row < m->num_rows; row++ ) {
     input.getline( m->maze[row], m->num_cols+1 );
   }
-
-  // Ensure maze is valid
-  // validate_maze(m);
-
 }
-
-// void validate_maze(Maze *m) {
-//   bool error = false;
-
-//   for( int row = 0; row < m->num_rows; row++ ) {
-//     for( int col = 0; col < m->num_cols; col++ ) {
-
-//       for( int i = 0; WALL[i] != '\0'; i++ ) {
-//         if(m->maze[row][col] == WALL[i]) error = true;
-//       }
-
-//       if(m->maze[row][col] != PATH) error = true;
-
-//     }
-//   }
-
-//   if(error) {
-//     cout << "The maze is invalid." << endl;
-//     exit(1);
-//   }
-// }
-
 
 //
 // solve_maze
@@ -217,8 +193,7 @@ bool solve_maze( Maze *m ) {
         solved = false;
         // So exit loop
         break;
-      } else {
-        cout << "Reverting..." << endl;
+      } else { // Option stack is not empty, pop back to that position
         // Go back to location of maze that had options
         m->revert_options( &current_location, &options_location );
       }
@@ -337,8 +312,7 @@ void Maze::revert_options( Stack *current, Stack *options ) {
 
   maze[cords.row][cords.col] = '-';
 
-  Cords *options_pos = new Cords();
-  options_pos = (Cords*)pop( options );
+  Cords *options_pos = (Cords*)pop( options );
   // cords = *options_pos;
 
   cout << "Cords Row: " << cords.row << endl;
@@ -349,8 +323,7 @@ void Maze::revert_options( Stack *current, Stack *options ) {
   cout << endl;
 
   while(!is_reverted) {
-    Cords *current_pos = new Cords();
-    current_pos = (Cords*)pop(current);
+    Cords *current_pos = (Cords*)pop(current);
     cords = *current_pos;
 
     if( current_pos->row != options_pos->row || current_pos->col != options_pos->col ) {

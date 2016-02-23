@@ -1,7 +1,8 @@
 #pragma once
 
 struct Stack {
-   void *myStack[100];
+  // Ensure stack is large enough to handle sizable mazes
+   void *myStack[1000];
    int top;
 };
 

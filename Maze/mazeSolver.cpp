@@ -103,7 +103,9 @@ void get_dimensions( ifstream& input, Maze *m ) {
 // Load the maze into a 2d demensional array of chars
 //
 void load_maze( ifstream& input, Maze *m ) {
+  // Read in file row by row
   for( int row = 0; row < m->num_rows; row++ ) {
+    // Ensure null character is accounted for in file
     input.getline( m->maze[row], m->num_cols+1 );
   }
 }
@@ -165,12 +167,11 @@ bool solve_maze( Maze *m ) {
       current_postion->row = m->cords.row;
       current_postion->col = m->cords.col;
       void* cp = current_postion;
-      cout << "Current Pos:" << m->cords.row << " - " << m->cords.col << endl;
       push(&current_location, cp);
     }
 
-    print_maze( m );
-    cout << endl;
+    // print_maze( m );
+    // cout << endl;
 
     if( m->num_options() > 1 ) {
       // When more than one option, push onto the options stack
@@ -179,7 +180,6 @@ bool solve_maze( Maze *m ) {
       options_position->row = m->cords.row;
       options_position->col = m->cords.col;
       void* op = options_position;
-      cout << "Options" << m->cords.row << " - " << m->cords.col << endl;
       push(&options_location, op);
 
     // When no options, pop back if possible
@@ -349,8 +349,8 @@ bool Maze::is_edge() {
   bool row_edge = (cords.row == 0 || cords.row == num_rows-1) &&
     (cords.row >= 0 && cords.row <= num_rows-1);
 
-  bool col_edge = (cords.col == 0 || cords.col == num_cols-1) &&
-    (cords.col >= 0 && cords.col <= num_cols-1);
+  bool col_edge = (cords.col == 0 || cords.col == num_cols-2) &&
+    (cords.col >= 0 && cords.col <= num_cols-2);
 
   return row_edge || col_edge;
 }
@@ -361,7 +361,6 @@ bool Maze::is_edge() {
 //
 bool Maze::is_exit() {
   cout << cords.row << "  " << cords.col << endl;
-  if(is_edge()) cout << "AT EDGE" << endl;
   if( is_edge() && maze[cords.row][cords.col] == PATH_TAKEN ) {
     return true;
   }

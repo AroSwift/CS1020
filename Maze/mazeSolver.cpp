@@ -333,6 +333,12 @@ void Maze::revert_options( Stack *current, Stack *options ) {
 
   }
 
+  Cords* another_try = new Cords();
+  another_try->row = cords.row;
+  another_try->col = cords.col;
+  void* at = another_try;
+  push(current, at);
+
 }
 
 //

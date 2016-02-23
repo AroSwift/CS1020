@@ -45,7 +45,7 @@ int main() {
   }
 
   // Delete dynamically allocated 2d array
-  for(int row = 0; row < m->num_rows; ++row) delete [] m->maze[row];
+  for(int row = 0; row < m->num_rows+1; ++row) delete [] m->maze[row];
   delete [] m->maze;
   // After deleting all instantiations, delete maze
   delete m;
@@ -208,8 +208,8 @@ bool solve_maze( Maze *m ) {
 // Return whether below the maze is possible.
 //
 bool Maze::down_possible() {
-  bool valid_row = cords.row+1 >= 0 && cords.row+1 <= num_rows-1;
-  bool valid_col = cords.col >= 0 && cords.col <= num_cols-1;
+  bool valid_row = cords.row+1 >= 0 && cords.row+1 <= num_rows;
+  bool valid_col = cords.col >= 0 && cords.col <= num_cols;
 
   return valid_row && valid_col && is_path(get_down()) ? true : false;
 }
@@ -219,8 +219,8 @@ bool Maze::down_possible() {
 // Return whether right of the maze is possible.
 //
 bool Maze::right_possible() {
-  bool valid_row = cords.row >= 0 && cords.row <= num_rows-1;
-  bool valid_col = cords.col+1 >= 0 && cords.col+1 <= num_cols-1;
+  bool valid_row = cords.row >= 0 && cords.row <= num_rows;
+  bool valid_col = cords.col+1 >= 0 && cords.col+1 <= num_cols;
 
   return valid_row && valid_col && is_path(get_right()) ? true : false;
 }
@@ -230,8 +230,8 @@ bool Maze::right_possible() {
 // Return whether left of the maze is possible.
 //
 bool Maze::left_possible() {
-  bool valid_row = cords.row >= 0 && cords.row <= num_rows-1;
-  bool valid_col = cords.col-1 >= 0 && cords.col-1 <= num_cols-1;
+  bool valid_row = cords.row >= 0 && cords.row <= num_rows;
+  bool valid_col = cords.col-1 >= 0 && cords.col-1 <= num_cols;
 
   return valid_row && valid_col && is_path(get_left()) ? true : false;
 }
@@ -241,8 +241,8 @@ bool Maze::left_possible() {
 // Return whether moving up the maze is possible.
 //
 bool Maze::up_possible() {
-  bool valid_row = cords.row-1 >= 0 && cords.row-1 <= num_rows-1;
-  bool valid_col = cords.col >= 0 && cords.col <= num_cols-1;
+  bool valid_row = cords.row-1 >= 0 && cords.row-1 <= num_rows;
+  bool valid_col = cords.col >= 0 && cords.col <= num_cols;
 
   return valid_row && valid_col && is_path(get_up()) ? true : false;
 }

@@ -1,17 +1,16 @@
 
-
 Queue *newQueue() {
-  // Insert data at end of queue
-  Node *rear;
+  Queue *q = new Queue();
+  q->rear = q->front = NULL;
+  q->node->next = q->node->prev = NULL;
+  return q;
 }
 
-
 void insert(Queue *q, void *data) {
-  Queue *q = new Queue();
   q->data = data;
 
-  if( q-> )
-  q->next =
+  if( q->front = NULL )
+    q->next =
 
 
 
@@ -31,9 +30,21 @@ void insert(Queue *q, void *data) {
 
 
 void *remove(Queue *q) {
-  if( q-> )
+  if( q->front != NULL ) {
+    // Make front node the next node
+    q->front = q->front->next;
+  }
+
+  // If the queue will be empty after the removal
+  if( q->front == q->rear ) {
+    delete q->node; // Deallocate the current node
+  }
 }
 
+
+void removeAll(Queue *q) {
+
+}
 
 
 

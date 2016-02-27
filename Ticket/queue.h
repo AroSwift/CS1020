@@ -1,12 +1,19 @@
 #pragma once
+//
+// queue.h
+// Written by: Aaron Barlow
+// 02/28/2016
+//
+// Header file for queue code.
+//
 
 struct Node {
   Node *next;
+  void *data;
 };
 
 struct Queue {
   Node *front, *rear;
-  void *data;
 };
 
 

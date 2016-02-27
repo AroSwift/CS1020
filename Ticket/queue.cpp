@@ -1,31 +1,67 @@
+//
+// queue.cpp
+// Written by: Aaron Barlow
+// 02/28/2016
+//
+// General queue code library that allow the intialization, insertion,
+// removal of last element in queue, and removal of all elements in queue.
+//
 
+#include <cstdlib>
+#include "queue.h"
+
+// FIFO
 Queue *newQueue() {
   Queue *q = new Queue();
   q->rear = q->front = NULL;
   return q;
 }
 
+// Insert in the front
 void insert(Queue *q, void *data) {
-  q->data = data;
-  q->next = NULL;
+    Node *new_node = new Node();
+    new_node->data = data;
+    new_node->next = NULL;
 
-  if( front == NULL ) {
-    q->front = q->rear = q;
+  // First element in queue
+  if( q->front == NULL ) {
+    q->front = q->rear = new_node;
+    // rear->next = NULL;
+
+  // Another element already in queue
   } else {
-    q->rear->next = q;
-    q->rear = q;
+    q->rear->next = new_node;
+    q->rear = new_node;
+    q->rear->next = NULL;
   }
 
-  q->rear->next = NULL;
+  // q->rear->next = NULL;
+
+
+
+
+  // np = new node;
+  // np->data = x;
+  // np->next = NULL;
+  // if(front == NULL)
+  // {
+  //   front = rear = np;
+  //   rear->next = NULL;
+  // }
+  // else
+  // {
+  //   rear->next = np;
+  //   rear = np;
+  //   rear->next = NULL;
+  // }
 }
 
-
+// Remove from the back
 void *remove(Queue *q) {
   void *old_front = q->front;
 
   // Make front node the next node
   if( q->front != NULL ) {
-    void *old_front = q->front;
     // Queue old_front = q->front;
 
     // Make new front the next element in queue
@@ -44,7 +80,26 @@ void removeAll(Queue *q) {
 
 }
 
+struct Random {
+  int i;
+};
 
+
+int main() {
+  Random r;
+  r.i = 5;
+
+  Queue *q = newQueue();
+  insert( q, (void *)&r );
+
+  Random r2;
+  r2.i = 7;
+
+  insert( q, &r2 );
+  Random *out = remove( q );
+  std::cout << out.i;
+
+}
 
 
 

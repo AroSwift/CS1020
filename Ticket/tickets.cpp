@@ -1,9 +1,20 @@
+//
+// tickets.cpp
+// Written by: Aaron Barlow
+// 02/28/2016
+//
+// Simulated ticket processing system that will read in orders,
+// process the orders, and then put the orders in a queue
+// as the orders are recieved.
+//
+
 #include <iostream>
 #include <thread>
 using namespace std;
 
 int main() {
   bool tickets_available = true
+  Queue ticket_queue = newQueue();
 
   while(tickets_available) {
     sleep(SLEEP_TIME);
@@ -17,7 +28,7 @@ int main() {
 }
 
 
-void Ticket::get_tickets() {
+void Ticket::get_orders() {
   ifstream input;
 
   // Read in file
@@ -34,10 +45,50 @@ void Ticket::get_tickets() {
     exit(1);
   }
 
+
+  // ticktime first-name last-name number-of-tickets
+  while( !input.eof() ) {
+
+    // Get sleep start time from HH:MM format
+    string hours, minutes, seconds;
+    getline( input, hours, ':' );
+    getline( input, minutes );
+    getline( input, seconds );
+
+    string first_name, last_name, num_tickets;
+    getline( input, first_name );
+    getline( input, last_name );
+    getline( input, num_tickets );
+
+    // Convert strings to integers for date
+    sleep[row].date.month = stoi(month);
+    sleep[row].date.day = stoi(day);
+    sleep[row].date.year = stoi(year);
+
+    // Convert strings to integers for start time
+    sleep[row].start_time.hour = stoi(start_hour);
+    sleep[row].start_time.minute = stoi(start_minute);
+
+    // Convert strings to integers for end time
+    sleep[row].end_time.hour = stoi(end_hour);
+    sleep[row].end_time.minute = stoi(end_minute);
+
+    // sleep[row].set_sleep_amount();
+
+  }
+
+
+  input.close();
+
 }
 
-void Ticket::print_tickets() {
+void Ticket::print_orders(  ) {
+  // if( q->front == NULL || q->rear == NULL) do stuff
 
+  do {
+    cout << ticket << endl;
+
+  } while(ticket->next != NULL);
 }
 
 

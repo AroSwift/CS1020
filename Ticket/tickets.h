@@ -1,9 +1,12 @@
 #pragma once
+#include <chrono>
+#include "queue.c"
 
 const FILE_NAME char[] = "tickets.dat";
 const int NUM_TICKETS_AVAILABLE = 100;
 // Number of seconds multiplied to get milliseconds
-const int SLEEP_TIME = 10 * 1000;
+// const int SLEEP_TIME = 10 * 1000;
+const int SLEEP_TIME = chrono(10);
 
 class Ticket {
   public:
@@ -17,7 +20,6 @@ class Ticket {
     string last_name;
     int num_tickets;
     int confirmation_order;
-
 };
 
 // 1. sort data before pushing

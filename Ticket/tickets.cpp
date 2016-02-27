@@ -1,5 +1,6 @@
 #include <iostream>
-using namepsace std;
+#include <thread>
+using namespace std;
 
 int main() {
   bool tickets_available = true
@@ -8,6 +9,8 @@ int main() {
     sleep(SLEEP_TIME);
     // Then get tickets
     // Process tickets
+    // If ticket time is equal to
+    //  or less than current time, set that in queue
   }
 
   return 0;
@@ -36,3 +39,5 @@ void Ticket::get_tickets() {
 void Ticket::print_tickets() {
 
 }
+
+

@@ -2,43 +2,41 @@
 Queue *newQueue() {
   Queue *q = new Queue();
   q->rear = q->front = NULL;
-  q->node->next = q->node->prev = NULL;
   return q;
 }
 
 void insert(Queue *q, void *data) {
   q->data = data;
+  q->next = NULL;
 
-  if( q->front = NULL )
-    q->next =
+  if( front == NULL ) {
+    q->front = q->rear = q;
+  } else {
+    q->rear->next = q;
+    q->rear = q;
+  }
 
-
-
-
-  // Node *p = new Node();
-  // p->data = data;
-  // p->next = p->prev = NULL;
-  // if (*last != NULL) {
-  //   p->prev = *last;
-  // (*last)->next = p;
-  // }
-  // *last = p;
-  // if (*first == NULL)
-  //   *first = p;
-  // }
+  q->rear->next = NULL;
 }
 
 
 void *remove(Queue *q) {
+  void *old_front = q->front;
+
+  // Make front node the next node
   if( q->front != NULL ) {
-    // Make front node the next node
+    void *old_front = q->front;
+    // Queue old_front = q->front;
+
+    // Make new front the next element in queue
     q->front = q->front->next;
+
+    // Deallocate the old front queue
+    delete old_front;
   }
 
-  // If the queue will be empty after the removal
-  if( q->front == q->rear ) {
-    delete q->node; // Deallocate the current node
-  }
+  // Return pointer to null or to queue removed
+  return old_front;
 }
 
 

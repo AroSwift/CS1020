@@ -1,7 +1,7 @@
 #pragma once
 
 struct Node {
-  Node *next, *prev;
+  Node *next;
 };
 
 struct Queue {

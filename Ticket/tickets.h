@@ -8,7 +8,7 @@
 //
 
 #include <chrono>
-#include "queue.c"
+// #include "queue.c"
 
 const FILE_NAME char[] = "tickets.dat";
 const int NUM_TICKETS_AVAILABLE = 100;
@@ -27,7 +27,7 @@ class Order {
     string first_name;
     string last_name;
     int num_tickets;
-    int confirmation_order;
+    // int confirmation_order;
 };
 
 // 1. sort data before pushing

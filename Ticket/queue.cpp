@@ -8,7 +8,9 @@
 //
 
 #include <cstdlib>
+#include <iostream>
 #include "queue.h"
+using namespace std;
 
 // FIFO
 Queue *newQueue() {
@@ -59,6 +61,8 @@ void insert(Queue *q, void *data) {
 // Remove from the back
 void *remove(Queue *q) {
   void *old_front = q->front;
+  Node *removed_element = new Node();
+  removed_element = q->front;
 
   // Make front node the next node
   if( q->front != NULL ) {
@@ -68,11 +72,11 @@ void *remove(Queue *q) {
     q->front = q->front->next;
 
     // Deallocate the old front queue
-    delete old_front;
+    // delete &old_front;
   }
 
   // Return pointer to null or to queue removed
-  return old_front;
+  return removed_element;
 }
 
 
@@ -81,39 +85,25 @@ void removeAll(Queue *q) {
 }
 
 struct Random {
-  int i;
+  int num;
 };
 
 
 int main() {
-  Random r;
-  r.i = 5;
+  Random *r;
+  r->num = 5;
 
   Queue *q = newQueue();
-  insert( q, (void *)&r );
+  insert( q, r );
 
-  Random r2;
-  r2.i = 7;
+  Random *r2;
+  r2->num = 7;
 
   insert( q, &r2 );
-  Random *out = remove( q );
-  std::cout << out.i;
+  Random *out = (Random*)remove( q );
+  cout << out->num;
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

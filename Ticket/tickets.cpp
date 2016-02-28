@@ -10,11 +10,13 @@
 
 #include <iostream>
 #include <thread>
+#include "tickets.h"
 using namespace std;
 
 int main() {
   bool tickets_available = true
-  Queue ticket_queue = newQueue();
+  Queue order_queue = newQueue();
+  Order o = new Order();
 
   while(tickets_available) {
     sleep(SLEEP_TIME);
@@ -28,7 +30,7 @@ int main() {
 }
 
 
-void Ticket::get_orders() {
+void Order::get_orders() {
   ifstream input;
 
   // Read in file
@@ -61,9 +63,9 @@ void Ticket::get_orders() {
     getline( input, num_tickets );
 
     // Convert strings to integers for date
-    sleep[row].date.month = stoi(month);
-    sleep[row].date.day = stoi(day);
-    sleep[row].date.year = stoi(year);
+    sleep[row].date.month = stoi(hours);
+    sleep[row].date.day = stoi(minutes);
+    sleep[row].date.year = stoi(seconds);
 
     // Convert strings to integers for start time
     sleep[row].start_time.hour = stoi(start_hour);
@@ -82,13 +84,13 @@ void Ticket::get_orders() {
 
 }
 
-void Ticket::print_orders(  ) {
+void Order::print_orders(  ) {
   // if( q->front == NULL || q->rear == NULL) do stuff
 
   do {
-    cout << ticket << endl;
+    cout << order << endl;
 
-  } while(ticket->next != NULL);
+  } while(order->next != NULL);
 }
 
 

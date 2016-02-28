@@ -16,9 +16,12 @@ using namespace std;
 int main() {
   bool tickets_available = true
   Queue order_queue = newQueue();
-  Order o = new Order();
+  Order order = new Order();
 
   while(tickets_available) {
+    order.get_orders();
+    order.print_orders();
+
     sleep(SLEEP_TIME);
     // Then get tickets
     // Process tickets
@@ -54,12 +57,14 @@ void Order::get_orders() {
     // Get sleep start time from HH:MM format
     string hours, minutes, seconds;
     getline( input, hours, ':' );
-    getline( input, minutes );
+    getline( input, minutes, ':' );
     getline( input, seconds );
 
-    string first_name, last_name, num_tickets;
+    string first_name, last_name;
     getline( input, first_name );
     getline( input, last_name );
+
+
     getline( input, num_tickets );
 
     // Convert strings to integers for date
@@ -67,13 +72,6 @@ void Order::get_orders() {
     sleep[row].date.day = stoi(minutes);
     sleep[row].date.year = stoi(seconds);
 
-    // Convert strings to integers for start time
-    sleep[row].start_time.hour = stoi(start_hour);
-    sleep[row].start_time.minute = stoi(start_minute);
-
-    // Convert strings to integers for end time
-    sleep[row].end_time.hour = stoi(end_hour);
-    sleep[row].end_time.minute = stoi(end_minute);
 
     // sleep[row].set_sleep_amount();
 

@@ -8,6 +8,7 @@
 //
 
 #include <chrono>
+#include <time.h>
 // #include "queue.c"
 
 const FILE_NAME char[] = "tickets.dat";
@@ -23,6 +24,8 @@ class Order {
     void print_orders();
   private:
     // class objects
+    // tm is time
+    tm tick_time;
     int confirmation_number;
     string first_name;
     string last_name;

@@ -15,7 +15,7 @@ using namespace std;
 // FIFO
 Queue *newQueue() {
   Queue *q = new Queue();
-  q->rear = q->front = NULL;
+  q->last = q->first = NULL;
   return q;
 }
 
@@ -26,18 +26,18 @@ void insert(Queue *q, void *data) {
     new_node->next = NULL;
 
   // First element in queue
-  if( q->front == NULL ) {
-    q->front = q->rear = new_node;
-    // rear->next = NULL;
+  if( q->first == NULL ) {
+    q->first = q->last = new_node;
+    // last->next = NULL;
 
   // Another element already in queue
   } else {
-    q->rear->next = new_node;
-    q->rear = new_node;
-    q->rear->next = NULL;
+    q->last->next = new_node;
+    q->last = new_node;
+    q->last->next = NULL;
   }
 
-  // q->rear->next = NULL;
+  // q->last->next = NULL;
 
 
 
@@ -47,29 +47,29 @@ void insert(Queue *q, void *data) {
   // np->next = NULL;
   // if(front == NULL)
   // {
-  //   front = rear = np;
-  //   rear->next = NULL;
+  //   front = last = np;
+  //   last->next = NULL;
   // }
   // else
   // {
-  //   rear->next = np;
-  //   rear = np;
-  //   rear->next = NULL;
+  //   last->next = np;
+  //   last = np;
+  //   last->next = NULL;
   // }
 }
 
 // Remove from the back
 void *remove(Queue *q) {
-  void *old_front = q->front;
+  void *old_front = q->first;
   Node *removed_element = new Node();
-  removed_element = q->front;
+  removed_element = q->first;
 
   // Make front node the next node
-  if( q->front != NULL ) {
+  if( q->first != NULL ) {
     // Queue old_front = q->front;
 
     // Make new front the next element in queue
-    q->front = q->front->next;
+    q->first = q->first->next;
 
     // Deallocate the old front queue
     // delete &old_front;
@@ -80,9 +80,9 @@ void *remove(Queue *q) {
 }
 
 
-void removeAll(Queue *q) {
+// void removeAll(Queue *q) {
 
-}
+// }
 
 struct Random {
   int num;
@@ -90,32 +90,20 @@ struct Random {
 
 
 int main() {
-  Random *r;
+  Random *r = new Random();
   r->num = 5;
 
   Queue *q = newQueue();
   insert( q, r );
 
-  Random *r2;
+  Random *r2 = new Random();
   r2->num = 7;
 
-  insert( q, &r2 );
+  insert( q, r2 );
   Random *out = (Random*)remove( q );
-  cout << out->num;
+  cout << out->num << endl;
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

@@ -13,11 +13,11 @@ struct Node {
 };
 
 struct Queue {
-  Node *front, *rear;
+  Node *first, *last;
 };
 
 
 Queue *newQueue();
 void insert(Queue *q, void *data);
 void *remove(Queue *q);
-void removeAll(Queue *q);
+// void removeAll(Queue *q);

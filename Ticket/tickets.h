@@ -11,7 +11,7 @@
 #include <time.h>
 // #include "queue.c"
 
-const FILE_NAME char[] = "tickets.dat";
+const char FILE_NAME[] = "tickets.dat";
 const int NUM_TICKETS_AVAILABLE = 100;
 // Number of seconds multiplied to get milliseconds
 // const int SLEEP_TIME = 10 * 1000;
@@ -24,13 +24,12 @@ class Order {
     void print_orders();
   private:
     // class objects
-    // tm is time
-    tm tick_time;
+    // tm tick_time;
+    int tick_time;
     int confirmation_number;
     string first_name;
     string last_name;
     int num_tickets;
-    // int confirmation_order;
 };
 
 // 1. sort data before pushing
@@ -41,3 +40,5 @@ class Order {
 // If all tickets sold
   // Remove all from queue
   // Print each persons ticket
+
+

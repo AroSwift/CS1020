@@ -9,18 +9,22 @@
 //
 
 #include <iostream>
+#include <fstream>
+#include <iomanip>
+#include <string>
+#include <cstdlib>
 #include <thread>
 #include "tickets.h"
 using namespace std;
 
 int main() {
-  bool tickets_available = true
-  Queue order_queue = newQueue();
-  Order order = new Order();
+  bool tickets_available = true;
+  Queue *order_queue = newQueue();
+  Order *order = new Order();
 
   while(tickets_available) {
-    order.get_orders();
-    order.print_orders();
+    order->get_orders();
+    order->print_orders();
 
     sleep(SLEEP_TIME);
     // Then get tickets
@@ -54,26 +58,16 @@ void Order::get_orders() {
   // ticktime first-name last-name number-of-tickets
   while( !input.eof() ) {
 
-    // Get sleep start time from HH:MM format
-    string hours, minutes, seconds;
-    getline( input, hours, ':' );
-    getline( input, minutes, ':' );
+    string seconds;
     getline( input, seconds );
-
-    string first_name, last_name;
     getline( input, first_name );
     getline( input, last_name );
 
+    string tickets;
+    getline( input, tickets );
 
-    getline( input, num_tickets );
-
-    // Convert strings to integers for date
-    sleep[row].date.month = stoi(hours);
-    sleep[row].date.day = stoi(minutes);
-    sleep[row].date.year = stoi(seconds);
-
-
-    // sleep[row].set_sleep_amount();
+    tick_time = atoi( seconds.c_str() );
+    num_tickets = atoi( tickets.c_str() );
 
   }
 

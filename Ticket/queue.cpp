@@ -19,6 +19,17 @@ Queue *newQueue() {
   return q;
 }
 
+
+// void insertFirst(Node **first, void *data) {
+//    Node *p = new Node();
+//    p->data = data;
+//    p->next = NULL;
+//    if (*first != NULL)
+//       p->next = *first;
+//    *first = p;
+// }
+
+
 // Insert in the front
 void insert(Queue *q, void *data) {
     Node *new_node = new Node();
@@ -26,49 +37,29 @@ void insert(Queue *q, void *data) {
     new_node->next = NULL;
 
   // First element in queue
-  if( q->first == NULL ) {
+  if( q->first == NULL && q->last == NULL ) {
     q->first = q->last = new_node;
-    // last->next = NULL;
-
-  // Another element already in queue
-  } else {
-    q->last->next = new_node;
-    q->last = new_node;
-    q->last->next = NULL;
+  } else { // Elements already exist in queue
+    new_node->next = q->first->next;
+    q->first = new_node;
   }
 
-  // q->last->next = NULL;
-
-
-
-
-  // np = new node;
-  // np->data = x;
-  // np->next = NULL;
-  // if(front == NULL)
-  // {
-  //   front = last = np;
-  //   last->next = NULL;
-  // }
-  // else
-  // {
-  //   last->next = np;
-  //   last = np;
-  //   last->next = NULL;
-  // }
 }
 
 // Remove from the back
 void *remove(Queue *q) {
-  void *old_front = q->first;
+  void *old_last = q->first;
   Node *removed_element = new Node();
   removed_element = q->first;
 
+  // while(q->last != q->first && ) {
+
+  // }
+
   // Make front node the next node
-  if( q->first != NULL ) {
+  if( q->last != NULL ) {
     // Queue old_front = q->front;
 
-    // Make new front the next element in queue
     q->first = q->first->next;
 
     // Deallocate the old front queue

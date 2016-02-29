@@ -8,7 +8,7 @@
 //
 
 struct Node {
-  Node *next;
+  Node *next, *prev;
   void *data;
 };
 

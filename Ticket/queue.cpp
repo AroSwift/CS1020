@@ -57,25 +57,25 @@ void removeAll(Queue *q) {
   while(q->first != NULL) remove(q);
 }
 
-struct Random {
-  int num;
-};
+// struct Random {
+//   int num;
+// };
 
 
-int main() {
-  Queue *q = newQueue();
+// int main() {
+//   Queue *q = newQueue();
 
-  Random *r = new Random();
-  r->num = 5;
-  insert( q, r );
+//   Random *r = new Random();
+//   r->num = 5;
+//   insert( q, r );
 
-  Random *r2 = new Random();
-  r2->num = 7;
-  insert( q, r2 );
+//   Random *r2 = new Random();
+//   r2->num = 7;
+//   insert( q, r2 );
 
-  Random *out = (Random*)remove( q );
-  cout << out->num << endl;
+//   // Random *out = (Random*)remove( q );
+//   // cout << out->num << endl;
 
-}
+// }
 
 

@@ -7,15 +7,15 @@
 // Header file for ticket processing program.
 //
 
-#include <chrono>
-#include <time.h>
-// #include "queue.c"
+#include <string>
+// #include "queue.o"
+using namespace std;
 
 const char FILE_NAME[] = "tickets.dat";
 const int NUM_TICKETS_AVAILABLE = 100;
 // Number of seconds multiplied to get milliseconds
 // const int SLEEP_TIME = 10 * 1000;
-const int SLEEP_TIME = chrono(10);
+const int SLEEP_TIME = 10 * 1000;
 
 class Order {
   public:

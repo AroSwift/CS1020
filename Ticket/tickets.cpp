@@ -13,7 +13,8 @@
 #include <iomanip>
 #include <string>
 #include <cstdlib>
-#include <thread>
+#include <unistd.h>
+#include <time.h>
 #include "tickets.h"
 using namespace std;
 
@@ -45,12 +46,12 @@ void Order::get_orders() {
 
   // When file could not be found
   if( input.fail() ) {
-    cout << "Input file " << filename << " does not exist. \n";
+    cout << "Input file " << FILE_NAME << " does not exist. \n";
     exit(1);
 
   // When file is empty
   } else if( input.peek() == EOF ) {
-    cout << "Input file " << filename << " is empty. \n";
+    cout << "Input file " << FILE_NAME << " is empty. \n";
     exit(1);
   }
 

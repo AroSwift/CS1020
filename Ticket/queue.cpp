@@ -41,9 +41,14 @@ void insert(Queue *q, void *data) {
 void *remove(Queue *q) {
   if(q->first == NULL) return NULL;
   void *removed_node = q->first;
-
-  q->first = q->first->next;
   q->first->prev = NULL;
+
+  if(q->first->next == NULL) {
+    q->first = NULL;
+  } else {
+    q->first = q->first->next;
+  }
+
   return removed_node;
 }
 

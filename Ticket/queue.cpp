@@ -16,9 +16,6 @@ using namespace std;
 Queue *newQueue() {
   Queue *q = new Queue();
   q->last = q->first = NULL;
-
-  cout << "here are we?" << endl;
-
   return q;
 }
 
@@ -29,15 +26,14 @@ void insert(Queue *q, void *data) {
     new_node->data = data;
     new_node->next = new_node->prev = NULL;
 
-    if(q->first != NULL) {
-      new_node->next = q->first;
-      q->first->next = new_node;
+    if(q->last != NULL) {
+      new_node->prev = q->last;
+      q->last->next = new_node;
+    } else {
+      q->first = new_node;
     }
 
-   cout << "insert we do?" << endl;
-
-    q->first = new_node;
-    // if(q->last == NULL) q->last = new_node;
+    q->last = new_node;
 }
 
 
@@ -62,16 +58,16 @@ struct Random {
 
 
 int main() {
+  Queue *q = newQueue();
+
   Random *r = new Random();
   r->num = 5;
-
-  Queue *q = newQueue();
   insert( q, r );
 
   Random *r2 = new Random();
   r2->num = 7;
-
   insert( q, r2 );
+
   Random *out = (Random*)remove( q );
   cout << out->num << endl;
 

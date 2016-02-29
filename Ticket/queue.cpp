@@ -7,8 +7,8 @@
 // removal of last element in queue, and removal of all elements in queue.
 //
 
-#include <cstdlib>
 #include <iostream>
+#include <cstdlib>
 #include "queue.h"
 using namespace std;
 
@@ -16,6 +16,9 @@ using namespace std;
 Queue *newQueue() {
   Queue *q = new Queue();
   q->last = q->first = NULL;
+
+  cout << "here are we?" << endl;
+
   return q;
 }
 
@@ -31,6 +34,8 @@ void insert(Queue *q, void *data) {
       q->first->next = new_node;
     }
 
+   cout << "insert we do?" << endl;
+
     q->first = new_node;
     // if(q->last == NULL) q->last = new_node;
 }
@@ -38,21 +43,18 @@ void insert(Queue *q, void *data) {
 
 // Remove from the front node
 void *remove(Queue *q) {
-  void *removed_node = new Node();
-  removed_node = &q->first;
   if(q->first == NULL) return NULL;
+  void *removed_node = q->first;
 
   q->first = q->first->next;
   q->first->prev = NULL;
-
   return removed_node;
-
 }
 
 
-// void removeAll(Queue *q) {
-
-// }
+void removeAll(Queue *q) {
+  while(q->first != NULL) remove(q);
+}
 
 struct Random {
   int num;

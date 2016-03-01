@@ -8,7 +8,6 @@
 //
 
 #include <string>
-// #include "queue.o"
 using namespace std;
 
 const char FILE_NAME[] = "tickets.dat";

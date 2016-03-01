@@ -80,10 +80,10 @@ void Order::get_orders() {
 void Order::print_orders(  ) {
   // if( q->front == NULL || q->rear == NULL) do stuff
 
-  do {
-    cout << order << endl;
+  // do {
+  //   cout << order << endl;
 
-  } while(order->next != NULL);
+  // } while(order->next != NULL);
 }
 
 

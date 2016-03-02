@@ -18,6 +18,7 @@ const int SLEEP_TIME = 10;
 struct Order {
   Queue *queue;
   time_t starting_time;
+  time_t current_time;
   time_t tick_time;
   int confirmation_number;
   int num_tickets;
@@ -31,7 +32,7 @@ struct Order {
   void sold_out();
 };
 
-void validate_file( ifstream& input );
+void get_file( ifstream& input );
 
 // 1. sort data before pushing
 // 2. put onto queue

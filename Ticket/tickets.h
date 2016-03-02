@@ -32,6 +32,9 @@ class Order {
     int num_tickets;
 };
 
+
+void validate_file( ifstream& input );
+
 // 1. sort data before pushing
 // 2. put onto queue
 // 3. Deal with data

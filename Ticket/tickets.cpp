@@ -32,15 +32,17 @@ int main() {
     // Process tickets
     // If ticket time is equal to
     //  or less than current time, set that in queue
+
+    if( order->num_tickets > NUM_TICKETS_AVAILABLE ) tickets_available = false;
+
   }
 
   return 0;
 }
 
 
-void Order::get_orders() {
-  ifstream input;
 
+void validate_file( ifstream& input ) {
   // Read in file
   input.open(FILE_NAME);
 
@@ -54,7 +56,10 @@ void Order::get_orders() {
     cout << "Input file " << FILE_NAME << " is empty. \n";
     exit(1);
   }
+}
 
+void Order::get_orders() {
+  ifstream input;
 
   // ticktime first-name last-name number-of-tickets
   while( !input.eof() ) {

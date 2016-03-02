@@ -52,7 +52,7 @@ void *remove(Queue *q) {
   return removed_node;
 }
 
-bool is_empty(Queue *q) {
+bool queue_empty(Queue *q) {
   return q->last == NULL ? true : false;
 }
 

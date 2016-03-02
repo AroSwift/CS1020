@@ -28,6 +28,7 @@ struct Order {
   void get_orders();
   void process_orders();
   void print_orders();
+  void sold_out();
 };
 
 void validate_file( ifstream& input );

@@ -21,7 +21,7 @@ int main() {
 
   cout << "MAIN?!!!" << endl;
 
-  bool tickets_available = true;
+  bool all_tickets_processed = false;
   Order *order = new Order();
   order->queue = newQueue();
 
@@ -30,7 +30,7 @@ int main() {
 
   cout << "Tickets available" << endl;
 
-  while(tickets_available) {
+  while(!all_tickets_processed) {
     cout << "in while" << endl;
     order->get_orders();
 
@@ -38,6 +38,10 @@ int main() {
     //  or less than current time, set that in queue
 
     order->process_orders();
+
+    if( order->num_tickets == NUM_TICKETS_AVAILABLE && !queue_empty( order->queue ) ) {
+      order->sold_out();
+    }
 
   }
 
@@ -105,7 +109,7 @@ void Order::process_orders() {
 
   cout << "Process orders "<< endl;
 
-  if( is_empty(queue) ) return;
+  if( queue_empty(queue) ) return;
 
   // Emulate processing the order
   tick_time += SLEEP_TIME;
@@ -127,15 +131,6 @@ void Order::process_orders() {
 }
 
 void Order::print_orders() {
-  // if( q->front == NULL || q->rear == NULL) do stuff
-
-  // do {
-  //   cout << order << endl;
-
-  // } while(order->next != NULL);
-
-  // convert time_t to localtime
-
   cout << "Print orders" << endl;
 
   Order *processed_order = (Order*)queue->last;
@@ -150,6 +145,17 @@ void Order::print_orders() {
 
 
   cout << " : " << endl;
-
 }
+
+void Order::sold_out() {
+  Order *unprocessed_order = (Order*)queue->last;
+
+  cout << confirmation_number << ": "
+       << unprocessed_order->last_name << " "
+       << unprocessed_order->first_name << "("
+       << unprocessed_order->num_tickets << ")"
+       << unprocessed_order->num_tickets << endl;
+}
+
+
 

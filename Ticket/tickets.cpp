@@ -20,12 +20,14 @@ using namespace std;
 
 int main() {
   bool tickets_available = true;
-  Queue *order_queue = newQueue();
   Order *order = new Order();
+  Queue *q = newQueue();
+
+  order->current_tick_time = 0;
 
   while(tickets_available) {
-    order->get_orders();
-    order->print_orders();
+    order->get_orders( q );
+    order->print_orders( q );
 
     sleep(SLEEP_TIME);
     // Then get tickets
@@ -58,14 +60,20 @@ void validate_file( ifstream& input ) {
   }
 }
 
-void Order::get_orders() {
+void Order::get_orders( Queue *q ) {
   ifstream input;
+
+  // Open and validate file exists and has content
+  validate_file( input );
 
   // ticktime first-name last-name number-of-tickets
   while( !input.eof() ) {
 
     string seconds;
     getline( input, seconds );
+
+    if( atoi(seconds.c_str()) > current_tick_time ) break;
+
     getline( input, first_name );
     getline( input, last_name );
 
@@ -75,20 +83,24 @@ void Order::get_orders() {
     tick_time = atoi( seconds.c_str() );
     num_tickets = atoi( tickets.c_str() );
 
-  }
+    // insert( q, )
 
+  }
 
   input.close();
 
 }
 
-void Order::print_orders(  ) {
+void Order::print_orders( Queue *q ) {
   // if( q->front == NULL || q->rear == NULL) do stuff
 
   // do {
   //   cout << order << endl;
 
   // } while(order->next != NULL);
+
+  cout << " : " << endl;
+
 }
 
 

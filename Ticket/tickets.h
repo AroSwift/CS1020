@@ -13,23 +13,22 @@ using namespace std;
 
 const char FILE_NAME[] = "tickets.dat";
 const int NUM_TICKETS_AVAILABLE = 100;
+
 // Number of seconds multiplied to get milliseconds
-// const int SLEEP_TIME = 10 * 1000;
 const int SLEEP_TIME = 10 * 1000;
 
-class Order {
-  public:
-    // methods
-    void get_orders();
-    void print_orders();
-  private:
-    // class objects
-    // tm tick_time;
-    int tick_time;
-    int confirmation_number;
-    string first_name;
-    string last_name;
-    int num_tickets;
+
+struct Order {
+  int current_tick_time;
+  int tick_time;
+  int confirmation_number;
+  int num_tickets;
+  string first_name;
+  string last_name;
+
+  // Methods
+  void get_orders( Queue *q );
+  void print_orders( Queue *q );
 };
 
 

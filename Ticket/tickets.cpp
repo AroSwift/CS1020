@@ -98,18 +98,19 @@ void Order::process_orders() {
   if( is_empty(queue) ) return;
 
   // Emulate processing the order
-  current_time += SLEEP_TIME;
+  tick_time += SLEEP_TIME;
 
 
   while( num_tickets < NUM_TICKETS_AVAILABLE ) {
-    Order *queued_order = (Order*)remove( queue );
+    Order *queued_order = (Order*)queue->last;
 
-
-    localtime();
     if( queued_order->tick_time > starting_time ) return;
 
-    for( queued_order->num_tickets; queued_order->num_tickets < NUM_TICKETS_AVAILABLE )
+    for( queued_order->num_tickets;
+      queued_order->num_tickets < NUM_TICKETS_AVAILABLE; num_tickets++ ) {
+      print_orders();
       confirmation_number++;
+      queue->remove( queue );
     }
   }
 
@@ -124,6 +125,17 @@ void Order::print_orders() {
   // } while(order->next != NULL);
 
   // convert time_t to localtime
+
+  Order *processed_order = (Order*)queue->last;
+
+
+  // Timestamp - Order confirmation-number: last-name, first-name (number-of-tickets) tickets
+  cout << confirmation_number << ": "
+       << processed_order->last_name << " "
+       << processed_order->first_name << "("
+       << processed_order->num_tickets << ")"
+       << processed_order->num_tickets << endl;
+
 
   cout << " : " << endl;
 

@@ -52,8 +52,7 @@ void *remove(Queue *q) {
   return removed_node;
 }
 
-
-// void removeAll(Queue *q) {
-//   while(q->first != NULL) remove(q);
-// }
+bool is_empty(Queue *q) {
+  return q->last == NULL ? true : false;
+}
 

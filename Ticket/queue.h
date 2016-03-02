@@ -20,4 +20,4 @@ struct Queue {
 Queue *newQueue();
 void insert(Queue *q, void *data);
 void *remove(Queue *q);
-// void removeAll(Queue *q);
+bool is_empty( Queue *q );

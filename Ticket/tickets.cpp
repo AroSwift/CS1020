@@ -13,7 +13,7 @@
 #include <iomanip>
 #include <string>
 #include <cstdlib>
-#include <unistd.h>
+// #include <unistd.h>
 #include <time.h>
 #include "tickets.h"
 using namespace std;
@@ -23,20 +23,16 @@ int main() {
   Order *order = new Order();
   order->queue = newQueue();
 
-  order->current_tick_time = 0;
+  order->confirmation_number = 1;
+  order->starting_time = time(0);
 
   while(tickets_available) {
     order->get_orders();
-    // order->print_orders();
 
-    order->process_orders();
-
-    // Then get tickets
-    // Process tickets
     // If ticket time is equal to
     //  or less than current time, set that in queue
 
-    if( order->num_tickets > NUM_TICKETS_AVAILABLE ) tickets_available = false;
+    order->process_orders();
 
   }
 
@@ -76,15 +72,16 @@ void Order::get_orders() {
     string seconds;
     getline( input, seconds );
 
-    if( atoi(seconds.c_str()) > current_tick_time ) break;
+    int tick_time = starting_time + atoi( seconds.c_str() );
+
+    time_t current_time = time(0);
+    if( tick_time >= current_time ) break;
 
     getline( input, first_name );
     getline( input, last_name );
 
     string tickets;
     getline( input, tickets );
-
-    tick_time = atoi( seconds.c_str() );
     num_tickets = atoi( tickets.c_str() );
 
     // Order *o = new Order();
@@ -98,7 +95,23 @@ void Order::get_orders() {
 }
 
 void Order::process_orders() {
-  // if(  ) sleep(SLEEP_TIME);
+  if( is_empty(queue) ) return;
+
+  // Emulate processing the order
+  current_time += SLEEP_TIME;
+
+
+  while( num_tickets < NUM_TICKETS_AVAILABLE ) {
+    Order *queued_order = (Order*)remove( queue );
+
+
+    localtime();
+    if( queued_order->tick_time > starting_time ) return;
+
+    for( queued_order->num_tickets; queued_order->num_tickets < NUM_TICKETS_AVAILABLE )
+      confirmation_number++;
+    }
+  }
 
 }
 
@@ -110,8 +123,9 @@ void Order::print_orders() {
 
   // } while(order->next != NULL);
 
+  // convert time_t to localtime
+
   cout << " : " << endl;
 
 }
-
 

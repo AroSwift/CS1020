@@ -15,13 +15,13 @@ const char FILE_NAME[] = "tickets.dat";
 const int NUM_TICKETS_AVAILABLE = 100;
 
 // Number of seconds multiplied to get milliseconds
-const int SLEEP_TIME = 10 * 1000;
+const int SLEEP_TIME = 10;
 
 
 struct Order {
   Queue *queue;
-  int current_tick_time;
-  int tick_time;
+  time_t starting_time;
+  time_t tick_time;
   int confirmation_number;
   int num_tickets;
   string first_name;
@@ -32,7 +32,6 @@ struct Order {
   void process_orders();
   void print_orders();
 };
-
 
 void validate_file( ifstream& input );
 

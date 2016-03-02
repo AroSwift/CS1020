@@ -29,6 +29,7 @@ struct Order {
 
   // Methods
   void get_orders();
+  void process_orders();
   void print_orders();
 };
 

@@ -27,9 +27,10 @@ int main() {
 
   while(tickets_available) {
     order->get_orders();
-    order->print_orders();
+    // order->print_orders();
 
-    sleep(SLEEP_TIME);
+    order->process_orders();
+
     // Then get tickets
     // Process tickets
     // If ticket time is equal to
@@ -86,11 +87,18 @@ void Order::get_orders() {
     tick_time = atoi( seconds.c_str() );
     num_tickets = atoi( tickets.c_str() );
 
+    // Order *o = new Order();
+    // o = this;
     insert( this->queue, this);
 
   }
 
   input.close();
+
+}
+
+void Order::process_orders() {
+  // if(  ) sleep(SLEEP_TIME);
 
 }
 

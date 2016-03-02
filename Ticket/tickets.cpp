@@ -1,7 +1,7 @@
 //
 // tickets.cpp
 // Written by: Aaron Barlow
-// 02/28/2016
+// 03/2/2016
 //
 // Simulated ticket processing system that will read in orders,
 // process the orders, and then put the orders in a queue
@@ -13,12 +13,14 @@
 #include <iomanip>
 #include <string>
 #include <cstdlib>
-// #include <unistd.h>
 #include <time.h>
 #include "tickets.h"
 using namespace std;
 
 int main() {
+
+  cout << "MAIN?!!!" << endl;
+
   bool tickets_available = true;
   Order *order = new Order();
   order->queue = newQueue();
@@ -26,7 +28,10 @@ int main() {
   order->confirmation_number = 1;
   order->starting_time = time(0);
 
+  cout << "Tickets available" << endl;
+
   while(tickets_available) {
+    cout << "in while" << endl;
     order->get_orders();
 
     // If ticket time is equal to
@@ -63,6 +68,8 @@ void validate_file( ifstream& input ) {
 void Order::get_orders() {
   ifstream input;
 
+  cout << "Get orders" << endl;
+
   // Open and validate file exists as well as contains content
   validate_file( input );
 
@@ -95,6 +102,9 @@ void Order::get_orders() {
 }
 
 void Order::process_orders() {
+
+  cout << "Process orders "<< endl;
+
   if( is_empty(queue) ) return;
 
   // Emulate processing the order
@@ -110,7 +120,7 @@ void Order::process_orders() {
       queued_order->num_tickets < NUM_TICKETS_AVAILABLE; num_tickets++ ) {
       print_orders();
       confirmation_number++;
-      queue->remove( queue );
+      remove( queue );
     }
   }
 
@@ -125,6 +135,8 @@ void Order::print_orders() {
   // } while(order->next != NULL);
 
   // convert time_t to localtime
+
+  cout << "Print orders" << endl;
 
   Order *processed_order = (Order*)queue->last;
 

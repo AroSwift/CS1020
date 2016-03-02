@@ -2,7 +2,7 @@
 //
 // queue.h
 // Written by: Aaron Barlow
-// 02/28/2016
+// 03/2/2016
 //
 // Header file for ticket processing program.
 //
@@ -13,10 +13,7 @@ using namespace std;
 
 const char FILE_NAME[] = "tickets.dat";
 const int NUM_TICKETS_AVAILABLE = 100;
-
-// Number of seconds multiplied to get milliseconds
 const int SLEEP_TIME = 10;
-
 
 struct Order {
   Queue *queue;

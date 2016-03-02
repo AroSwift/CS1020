@@ -19,6 +19,7 @@ const int SLEEP_TIME = 10 * 1000;
 
 
 struct Order {
+  Queue *queue;
   int current_tick_time;
   int tick_time;
   int confirmation_number;
@@ -27,8 +28,8 @@ struct Order {
   string last_name;
 
   // Methods
-  void get_orders( Queue *q );
-  void print_orders( Queue *q );
+  void get_orders();
+  void print_orders();
 };
 
 

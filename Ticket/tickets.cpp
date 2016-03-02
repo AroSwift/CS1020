@@ -21,13 +21,13 @@ using namespace std;
 int main() {
   bool tickets_available = true;
   Order *order = new Order();
-  Queue *q = newQueue();
+  order->queue = newQueue();
 
   order->current_tick_time = 0;
 
   while(tickets_available) {
-    order->get_orders( q );
-    order->print_orders( q );
+    order->get_orders();
+    order->print_orders();
 
     sleep(SLEEP_TIME);
     // Then get tickets
@@ -38,6 +38,9 @@ int main() {
     if( order->num_tickets > NUM_TICKETS_AVAILABLE ) tickets_available = false;
 
   }
+
+  delete order->queue;
+  delete order;
 
   return 0;
 }
@@ -60,10 +63,10 @@ void validate_file( ifstream& input ) {
   }
 }
 
-void Order::get_orders( Queue *q ) {
+void Order::get_orders() {
   ifstream input;
 
-  // Open and validate file exists and has content
+  // Open and validate file exists as well as contains content
   validate_file( input );
 
   // ticktime first-name last-name number-of-tickets
@@ -83,7 +86,7 @@ void Order::get_orders( Queue *q ) {
     tick_time = atoi( seconds.c_str() );
     num_tickets = atoi( tickets.c_str() );
 
-    // insert( q, )
+    insert( this->queue, this);
 
   }
 
@@ -91,7 +94,7 @@ void Order::get_orders( Queue *q ) {
 
 }
 
-void Order::print_orders( Queue *q ) {
+void Order::print_orders() {
   // if( q->front == NULL || q->rear == NULL) do stuff
 
   // do {

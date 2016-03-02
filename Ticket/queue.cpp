@@ -53,7 +53,7 @@ void *remove(Queue *q) {
 }
 
 
-void removeAll(Queue *q) {
-  while(q->first != NULL) remove(q);
-}
+// void removeAll(Queue *q) {
+//   while(q->first != NULL) remove(q);
+// }
 

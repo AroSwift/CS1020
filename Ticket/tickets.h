@@ -15,7 +15,7 @@ using namespace std;
 // Constants
 const char FILE_NAME[] = "tickets.dat";
 const int NUM_TICKETS_AVAILABLE = 100;
-const int SLEEP_TIME = 10;
+const int SLEEP_TIME = 1;
 
 struct Order {
   Queue *queue;
@@ -24,6 +24,7 @@ struct Order {
   time_t tick_time;
   int confirmation_number;
   int num_tickets;
+  int num_tickets_used;
   string first_name;
   string last_name;
 

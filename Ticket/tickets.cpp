@@ -143,13 +143,18 @@ void Order::process_orders() {
 
     cout << "Entering while in proccess orders" << endl;
 
-    if( queued_order->tick_time > starting_time ) return;
+    if( queued_order->tick_time > starting_time ) {
+      cout << "tick > starting" << endl;
+      return;
+    }
 
     if( (queued_order->num_tickets + num_tickets_used) < NUM_TICKETS_AVAILABLE ) {
+      cout << "first" << endl;
       print_orders();
       confirmation_number++;
       remove( queue );
     } else {
+      cout << "second" << endl;
       queued_order->num_tickets -= NUM_TICKETS_AVAILABLE;
       print_orders();
       sold_out();
@@ -168,7 +173,8 @@ void Order::process_orders() {
 void Order::print_orders() {
   cout << "Print orders" << endl;
 
-  Order *processed_order = (Order*)queue->last;
+  // Order *processed_order = (Order*)queue->last;
+  Order *processed_order = (Order*)remove(queue);
   cout << "Processed?" << endl;
 
   time_t diff = time(0) - starting_time;
@@ -178,11 +184,10 @@ void Order::print_orders() {
   // Timestamp - Order confirmation-number: last-name, first-name (number-of-tickets) tickets
   cout << tm_time->tm_hour << ":"
        << tm_time->tm_min << ":"
-       << tm_time->tm_sec
+       << tm_time->tm_sec << " "
        << "Order " << confirmation_number << ": "
        << processed_order->last_name << " "
-       << processed_order->first_name << "("
-       << processed_order->num_tickets << ")"
+       << processed_order->first_name << " "
        << num_tickets << endl;
 }
 

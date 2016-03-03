@@ -36,5 +36,3 @@ struct Order {
 };
 
 void get_file( ifstream& input );
-
-

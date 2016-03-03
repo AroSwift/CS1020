@@ -100,10 +100,11 @@ void Order::get_orders() {
     input >> last_name;
     input >> num_tickets;
 
-    // Order *o = new Order();
-    // o = this;
+    Order *copied_order = new Order();
+    copied_order = this;
+
     if( tick_time <= current_time ) {
-      insert( this->queue, this);
+      insert( this->queue, (void*)copied_order);
       process_orders();
     } else {
       while( tick_time > current_time ) {
@@ -112,7 +113,7 @@ void Order::get_orders() {
         current_time = starting_time + SLEEP_TIME;
         process_orders();
       }
-      insert( this->queue, this);
+      insert( this->queue, (void*)copied_order);
     }
 
     if( num_tickets_used == NUM_TICKETS_AVAILABLE && queue_empty( queue ) ) {

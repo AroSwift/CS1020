@@ -26,9 +26,10 @@ int main() {
   order->confirmation_number = 1;
   order->starting_time = time(0);
 
+
   while(!all_tickets_processed) {
     sleep(SLEEP_TIME);
-    order->current_time = time(0);
+    order->current_time += time(0);
 
     // Simulate proccessing orders
     order->get_orders();
@@ -38,7 +39,7 @@ int main() {
 
     order->process_orders();
 
-    if( order->num_tickets_used == NUM_TICKETS_AVAILABLE && !queue_empty( order->queue ) ) {
+    if( order->num_tickets_used == NUM_TICKETS_AVAILABLE && queue_empty( order->queue ) ) {
       cout << "Sold out... " << endl;
       order->sold_out();
       all_tickets_processed = true;
@@ -102,6 +103,12 @@ void Order::get_orders() {
     // o = this;
     if( tick_time <= current_time ) {
       insert( this->queue, this);
+    } else {
+      while( tick_time > current_time ) {
+        sleep(SLEEP_TIME);
+        current_time += time(0);
+      }
+      insert( this->queue, this);
     }
 
   }
@@ -156,12 +163,7 @@ void Order::print_orders() {
 
   time_t diff = time(0) - starting_time;
   time( &diff );
-
   tm *tm_time = localtime( &diff );
-
-  cout << "Seg2?" << endl;
-
-  cout << processed_order->last_name << endl;
 
   // Timestamp - Order confirmation-number: last-name, first-name (number-of-tickets) tickets
   cout << tm_time->tm_hour << ":"
@@ -172,8 +174,6 @@ void Order::print_orders() {
        << processed_order->first_name << "("
        << processed_order->num_tickets << ")"
        << num_tickets << endl;
-
-  cout << "Printed?" << endl;
 }
 
 //
@@ -189,7 +189,6 @@ void Order::sold_out() {
 
     time_t diff = time(0) - starting_time;
     time( &diff );
-
     tm *tm_time = localtime( &diff );
 
     cout << tm_time->tm_hour << ":"

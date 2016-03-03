@@ -3,7 +3,7 @@
 // Written by: Aaron Barlow
 // 03/2/2016
 //
-// General queue code library that allow the intialization, insertion,
+// General queue code library that allow the intialization, insertion, and
 // removal of last element in queue, and removal of all elements in queue.
 //
 
@@ -55,4 +55,3 @@ void *remove(Queue *q) {
 bool queue_empty(Queue *q) {
   return q->last == NULL ? true : false;
 }
-

@@ -4,13 +4,15 @@
 // Written by: Aaron Barlow
 // 03/2/2016
 //
-// Header file for ticket processing program.
+// Header file for constants, order struct,
+// and prototypes for ticket processing program.
 //
 
 #include <string>
 #include "queue.h"
 using namespace std;
 
+// Constants
 const char FILE_NAME[] = "tickets.dat";
 const int NUM_TICKETS_AVAILABLE = 100;
 const int SLEEP_TIME = 10;
@@ -33,14 +35,5 @@ struct Order {
 };
 
 void get_file( ifstream& input );
-
-// 1. sort data before pushing
-// 2. put onto queue
-// 3. Deal with data
-// 4. Print all
-
-// If all tickets sold
-  // Remove all from queue
-  // Print each persons ticket
 
 

@@ -51,7 +51,11 @@ int main() {
 }
 
 
-
+//
+// get_file
+// Open the file. If it exists and has content pass back input.
+// Otherwise, exit the program with an appropriate error message.
+//
 void get_file( ifstream& input ) {
   // Read in file
   input.open(FILE_NAME);
@@ -68,6 +72,10 @@ void get_file( ifstream& input ) {
   }
 }
 
+//
+// get_orders
+// Read the orders into a the order structure.
+//
 void Order::get_orders() {
   ifstream input;
 
@@ -107,6 +115,10 @@ void Order::get_orders() {
 
 }
 
+//
+// process_orders
+// Process tickets
+//
 void Order::process_orders() {
 
   cout << "Process orders " << endl;
@@ -141,6 +153,11 @@ void Order::process_orders() {
 
 }
 
+//
+// print_orders
+// Print orders' time in 00:00:00 format
+// last name, first name, and number of tickets requested
+//
 void Order::print_orders() {
   cout << "Print orders" << endl;
 
@@ -159,9 +176,14 @@ void Order::print_orders() {
        << processed_order->last_name << " "
        << processed_order->first_name << "("
        << processed_order->num_tickets << ")"
-       << processed_order->num_tickets << endl;
+       << num_tickets << endl;
 }
 
+//
+// sold_out
+// Print all the orders that could not be processed.
+// Remove the order from the queue after printing the order.
+//
 void Order::sold_out() {
   cout << "Print sold out" << endl;
 

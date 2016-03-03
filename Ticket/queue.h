@@ -4,7 +4,7 @@
 // Written by: Aaron Barlow
 // 03/2/2016
 //
-// Header file for queue code.
+// Header file for queue structures and prototypes.
 //
 
 struct Node {

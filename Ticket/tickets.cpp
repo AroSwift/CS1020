@@ -28,6 +28,7 @@ int main() {
   while(!all_tickets_processed) {
     order->current_time = order->starting_time + SLEEP_TIME;
 
+    // Simulate proccessing orders
     order->get_orders();
 
     // If ticket time is equal to
@@ -36,6 +37,7 @@ int main() {
     order->process_orders();
 
     if( order->num_tickets == NUM_TICKETS_AVAILABLE && !queue_empty( order->queue ) ) {
+      cout << "Sold out... " << endl;
       order->sold_out();
       all_tickets_processed = true;
     }
@@ -125,6 +127,7 @@ void Order::process_orders() {
       queued_order->num_tickets-- ,num_tickets++ ) {
 
       if( queued_order->num_tickets < NUM_TICKETS_AVAILABLE ) {
+        cout << "Printing orders " << endl;
         print_orders();
         confirmation_number++;
       } else {

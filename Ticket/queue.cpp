@@ -26,11 +26,11 @@ void insert(Queue *q, void *data) {
     new_node->data = data;
     new_node->next = new_node->prev = NULL;
 
-    if(q->last != NULL) {
+    if(q->last == NULL) {
+      q->first = new_node;
+    } else {
       new_node->prev = q->last;
       q->last->next = new_node;
-    } else {
-      q->first = new_node;
     }
 
     q->last = new_node;
@@ -45,6 +45,7 @@ void *remove(Queue *q) {
 
   if(q->first->next == NULL) {
     q->first = NULL;
+    q->last = NULL;
   } else {
     q->first = q->first->next;
   }
@@ -53,5 +54,5 @@ void *remove(Queue *q) {
 }
 
 bool queue_empty(Queue *q) {
-  return q->last == NULL ? true : false;
+  return q->last == NULL || q->first == NULL ? true : false;
 }

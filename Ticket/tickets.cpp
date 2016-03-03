@@ -28,8 +28,9 @@ int main() {
 
 
   while(!all_tickets_processed) {
-    sleep(SLEEP_TIME);
-    order->current_time += time(0);
+    // sleep(SLEEP_TIME);
+    order->current_time = order->starting_time + SLEEP_TIME;
+    // order->current_time += time(0);
 
     // Simulate proccessing orders
     order->get_orders();
@@ -91,7 +92,7 @@ void Order::get_orders() {
   while( !input.eof() ) {
 
     input >> tick_time;
-    tick_time += starting_time;
+    tick_time += starting_time + 1;
 
     cout << "Tick Time: " << tick_time << " Current Time: " << current_time << endl;
 
@@ -103,12 +104,20 @@ void Order::get_orders() {
     // o = this;
     if( tick_time <= current_time ) {
       insert( this->queue, this);
+      process_orders();
     } else {
       while( tick_time > current_time ) {
-        sleep(SLEEP_TIME);
-        current_time += time(0);
+        // sleep(SLEEP_TIME);
+        // current_time += time(0);
+        current_time = starting_time + SLEEP_TIME;
+        process_orders();
       }
       insert( this->queue, this);
+    }
+
+    if( num_tickets_used == NUM_TICKETS_AVAILABLE && queue_empty( queue ) ) {
+      cout << "Sold out... " << endl;
+      sold_out();
     }
 
   }

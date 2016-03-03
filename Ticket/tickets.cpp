@@ -135,32 +135,27 @@ void Order::process_orders() {
 
   cout << "Process orders " << endl;
 
-  if( queue_empty(queue) ) return;
+  if( queue_empty(queue) && !(num_tickets < NUM_TICKETS_AVAILABLE) ) return;
 
+  Order *queued_order = (Order*)queue->last;
 
-  while( num_tickets < NUM_TICKETS_AVAILABLE ) {
-    Order *queued_order = (Order*)queue->last;
+  cout << "Entering while in proccess orders" << endl;
 
-    cout << "Entering while in proccess orders" << endl;
+  if( queued_order->tick_time > starting_time ) {
+    cout << "tick > starting" << endl;
+    return;
+  }
 
-    if( queued_order->tick_time > starting_time ) {
-      cout << "tick > starting" << endl;
-      return;
-    }
-
-    if( (queued_order->num_tickets + num_tickets_used) < NUM_TICKETS_AVAILABLE ) {
-      cout << "first" << endl;
-      print_orders();
-      confirmation_number++;
-      remove( queue );
-    } else {
-      cout << "second" << endl;
-      queued_order->num_tickets -= NUM_TICKETS_AVAILABLE;
-      print_orders();
-      sold_out();
-    }
-
-
+  if( (queued_order->num_tickets + num_tickets_used) < NUM_TICKETS_AVAILABLE ) {
+    cout << "first" << endl;
+    print_orders();
+    confirmation_number++;
+    remove( queue );
+  } else {
+    cout << "second" << endl;
+    queued_order->num_tickets -= NUM_TICKETS_AVAILABLE;
+    print_orders();
+    sold_out();
   }
 
 }
@@ -200,7 +195,7 @@ void Order::sold_out() {
   cout << "Print sold out" << endl;
 
   while( queue->last != NULL ) {
-    Order *order_data = (Order*)queue->last;
+    Order *order_data = (Order*)remove(queue);
 
     time_t diff = time(0) - starting_time;
     time( &diff );

@@ -22,31 +22,61 @@ int main() {
   bool all_tickets_processed = false;
   Order *order = new Order();
   order->queue = newQueue();
+  ifstream input;
+  get_file( input );
 
   order->confirmation_number = 1;
   order->starting_time = time(0);
 
 
-  while(!all_tickets_processed) {
+  while( !all_tickets_processed) {
     // sleep(SLEEP_TIME);
     order->current_time = order->starting_time + SLEEP_TIME;
     // order->current_time += time(0);
 
+    if( !input.eof() ) {
+      input >> order->tick_time;
+      order->tick_time += order->starting_time + 1;
+
+      input >> order->first_name;
+      input >> order->last_name;
+      input >> order->num_tickets;
+
+      Order *copied_order = new Order();
+      copied_order = order;
+
+      if( order->tick_time <= order->current_time ) {
+        insert( order->queue, (void*)copied_order);
+      } else {
+        while( order->tick_time > order->current_time && !queue_empty(order->queue) ) {
+          // sleep(SLEEP_TIME);
+          // current_time += time(0);
+          order->current_time = order->starting_time + SLEEP_TIME;
+          order->process_orders();
+        }
+        insert( order->queue, (void*)copied_order);
+      }
+    }
+
+    order->process_orders();
+
     // Simulate proccessing orders
-    order->get_orders();
+    // order->get_orders();
 
     // If ticket time is equal to
     //  or less than current time, set that in queue
 
-    order->process_orders();
+    // order->process_orders();
 
-    if( order->num_tickets_used == NUM_TICKETS_AVAILABLE && queue_empty( order->queue ) ) {
+    if( order->num_tickets_used == NUM_TICKETS_AVAILABLE && queue_empty( order->queue ) && input.eof() ) {
       cout << "Sold out... " << endl;
       order->sold_out();
       all_tickets_processed = true;
     }
 
   }
+
+  input.close();
 
   delete order->queue;
   delete order;
@@ -71,7 +101,7 @@ void get_file( ifstream& input ) {
 
   // When file is empty
   } else if( input.peek() == EOF ) {
-    cout << "Input file " << FILE_NAME << " is empty. \n";
+    cout << "Input file " << FILE_NAME << " has no tickets to read. \n";
     exit(1);
   }
 }
@@ -134,8 +164,6 @@ void Order::get_orders() {
 void Order::process_orders() {
 
   cout << "Process orders " << endl;
-
-  if( queue_empty(queue) && !(num_tickets < NUM_TICKETS_AVAILABLE) ) return;
 
   Order *queued_order = (Order*)queue->last;
 

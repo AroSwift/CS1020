@@ -29,6 +29,7 @@ int main() {
   order->confirmation_number = 1;
   order->starting_time = time(0);
   order->current_time = time(0);
+  order->tick_time = order->current_time;
 
   while( order->num_tickets_used != NUM_TICKETS_AVAILABLE &&
       ( !queue_empty(order->queue) || !input.eof() ) ) {
@@ -75,23 +76,31 @@ void get_file( ifstream& input ) {
 // into queue ever time it is read in and
 //
 void Order::get_order( ifstream& input ) {
-  // Close the file when at the end of file
-  if( input.eof() ) input.close();
+  while( !input.eof() && tick_time <= current_time ) {
 
-  // Copy the order and send it to the queue
-  Order *copied_order = new Order();
-  copied_order = this;
+    cout << tick_time << "  " << current_time << endl;
 
-  // Insert the order into the queue
-  insert( queue, (void*)copied_order);
+    // Read in the order from the file
+    input >> tick_time;
+    tick_time += starting_time;
 
-  // Read in the order from the file
-  input >> tick_time;
-  tick_time += starting_time;
+    input >> first_name;
+    input >> last_name;
+    input >> num_tickets;
 
-  input >> first_name;
-  input >> last_name;
-  input >> num_tickets;
+    cout << first_name << endl;
+
+    // Copy the order and send it to the queue
+    Order *copied_order = new Order();
+    copied_order = this;
+
+    // Insert the order into the queue
+    insert( queue, (void*)copied_order);
+
+    // Close the file when at the end of file
+    if( input.eof() ) input.close();
+
+  }
 }
 
 //
@@ -99,18 +108,20 @@ void Order::get_order( ifstream& input ) {
 // Process tickets
 //
 void Order::process_orders() {
-  if( queue_empty(queue) ) return;
-  Order *queued_order = (Order*)queue->first->data;
-
   // Simulate sleep time
   sleep(SLEEP_TIME);
   current_time += SLEEP_TIME;
 
+  if( queue_empty(queue) ) return;
+  Order *queued_order = (Order*)queue->first->data;
+
   if( queued_order->tick_time <= current_time ) {
 
     if( (queued_order->num_tickets + num_tickets_used) < NUM_TICKETS_AVAILABLE ) {
+      cout << "option1" << endl;
       print_orders();
     } else {
+      cout << "options2" << endl;
       // Give the customer as many tickets as possible
       queued_order->num_tickets -= num_tickets_used;
       print_orders();

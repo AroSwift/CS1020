@@ -2,7 +2,7 @@
 //
 // queue.h
 // Written by: Aaron Barlow
-// 03/2/2016
+// 03/3/2016
 //
 // Header file for constants, order struct,
 // and prototypes for ticket processing program.
@@ -15,8 +15,9 @@ using namespace std;
 // Constants
 const char FILE_NAME[] = "tickets.dat";
 const int NUM_TICKETS_AVAILABLE = 100;
-const int SLEEP_TIME = 5;
+const int SLEEP_TIME = 3;
 
+// Order structure
 struct Order {
   Queue *queue;
   time_t starting_time;
@@ -29,7 +30,7 @@ struct Order {
   string last_name;
 
   // Methods
-  bool get_order( ifstream& input );
+  void get_order( ifstream& input );
   void process_orders();
   void print_orders();
   void sold_out();

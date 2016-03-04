@@ -1,7 +1,7 @@
 //
 // queue.cpp
 // Written by: Aaron Barlow
-// 03/2/2016
+// 03/3/2016
 //
 // General queue code library that allow the intialization, insertion, and
 // removal of last element in queue, and removal of all elements in queue.
@@ -12,15 +12,22 @@
 #include "queue.h"
 using namespace std;
 
-// FIFO scheme
+//
+// newQueue
+// Initialize a new queue and set first and last pointers
+// to null before returning the queue
+//
 Queue *newQueue() {
   Queue *q = new Queue();
   q->last = q->first = NULL;
   return q;
 }
 
-
-// Insert into the back node
+//
+// insert
+// Inserts into the back node while setting the next and prev
+// pointers to point to the appropriate queue.
+//
 void insert(Queue *q, void *data) {
   Node *new_node = new Node();
   new_node->data = data;
@@ -36,8 +43,12 @@ void insert(Queue *q, void *data) {
   q->last = new_node;
 }
 
-
-// Remove from the front node
+//
+// remove
+// Remove from the front node while setting the next and prev
+// pointers to point to the appropriate queue. Then return
+// a pointer to the removed node
+//
 void *remove(Queue *q) {
   if(q->first == NULL) return NULL;
   void *removed_node = q->first->data;
@@ -53,59 +64,11 @@ void *remove(Queue *q) {
   return removed_node;
 }
 
+//
+// queue_empty
+// Returns whether or not the queue is empty by checking
+// whether last or first point to anything.
+//
 bool queue_empty(Queue *q) {
   return q->last == NULL && q->first == NULL ? true : false;
 }
-
-
-
-// struct Wow {
-//   int number;
-// };
-
-// int main() {
-//   Queue *q = newQueue();
-
-//   Wow *w = new Wow();
-//   w->number = 5;
-//   insert( q, (void*)w );
-
-//   Wow *w2 = new Wow();
-//   w2->number = 25;
-//   insert( q, (void*)w2 );
-
-//   Wow *w3 = new Wow();
-//   w3->number = 100;
-//   insert( q, (void*)w3 );
-
-//   Wow *removed = (Wow*)remove(q);
-//   cout << removed->number << endl;
-
-//   Wow *removed2 = (Wow*)remove(q);
-//   cout << removed2->number << endl;
-
-//   Wow *w4 = new Wow();
-//   w4->number = 111;
-//   insert( q, (void*)w4 );
-
-//   Wow *w5 = new Wow();
-//   w5->number = 122;
-//   insert( q, (void*)w5 );
-
-//   Wow *removed3 = (Wow*)remove(q);
-//   cout << removed3->number << endl;
-
-//   Wow *w6 = new Wow();
-//   w6->number = 125;
-//   insert( q, (void*)w6 );
-
-//   Wow *removed4 = (Wow*)remove(q);
-//   cout << removed4->number << endl;
-
-//   Wow *removed5 = (Wow*)remove(q);
-//   cout << removed5->number << endl;
-
-//   Wow *removed6 = (Wow*)remove(q);
-//   cout << removed6->number << endl;
-
-// }

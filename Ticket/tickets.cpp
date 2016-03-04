@@ -31,39 +31,16 @@ int main() {
   order->starting_time = time(0);
   order->current_time = time(0);
 
+  order->get_order( input );
+
   while(!all_tickets_processed) {
-
-    if( order->get_order(input) ) {
-
-      Order *copied_order = new Order();
-      copied_order = order;
-
-      if( order->tick_time <= order->current_time ) {
-        insert( order->queue, (void*)copied_order);
-        order->process_orders();
-      } else {
-        while( order->tick_time > order->current_time && !queue_empty(order->queue) ) {
-          cout << "Ever while enough?" << endl;
-          insert( order->queue, (void*)copied_order);
-          order->process_orders();
-        }
-      }
+    while( !input.eof() && order->tick_time <= order->current_time ) {
+      order->get_order( input );
     }
 
-    if( order->num_tickets_used == NUM_TICKETS_AVAILABLE || input.eof() ) {
-      if( queue_empty( order->queue ) ) {
-        order->sold_out();
-        all_tickets_processed = true;
-      } else {
-        while( !queue_empty(order->queue) ) {
-          order->process_orders();
-        }
-      }
-    }
+    order->process_orders();
 
   }
-
-  input.close();
 
   delete order->queue;
   delete order;
@@ -95,20 +72,28 @@ void get_file( ifstream& input ) {
 
 //
 // get_orders
-// Read the orders into a the order structure.
+// Continue to read in orders until the tick time
+// is greater than the current time. While  order
+// into queue ever time it is read in and
 //
-bool Order::get_order( ifstream& input ) {
-  if( input.eof() ) return false;
+void Order::get_order( ifstream& input ) {
+  // Close the file when at the end of file
+  if( input.eof() ) input.close();
 
+  // Copy the order and send it to the queue
+  Order *copied_order = new Order();
+  copied_order = this;
+
+  // Insert the order into the queue
+  insert( queue, (void*)copied_order);
+
+  // Read in the order from the file
   input >> tick_time;
   tick_time += starting_time;
 
   input >> first_name;
   input >> last_name;
   input >> num_tickets;
-
-  return true;
-
 }
 
 //
@@ -116,19 +101,21 @@ bool Order::get_order( ifstream& input ) {
 // Process tickets
 //
 void Order::process_orders() {
+  if( queue_empty(queue) ) return;
 
   sleep(SLEEP_TIME);
   current_time += SLEEP_TIME;
 
   Order *queued_order = (Order*)queue->first->data;
-
   if( queued_order->tick_time > current_time ) return;
 
-  if( (queued_order->num_tickets + num_tickets_used) <= NUM_TICKETS_AVAILABLE ) {
+  num_tickets_used += queued_order->num_tickets;
+
+  if( num_tickets_used <= NUM_TICKETS_AVAILABLE ) {
     print_orders();
   } else {
-    queued_order->num_tickets -= NUM_TICKETS_AVAILABLE;
     // Print as many orders as possible
+    queued_order->num_tickets -= NUM_TICKETS_AVAILABLE;
     print_orders();
   }
 
@@ -146,14 +133,13 @@ void Order::print_orders() {
   time( &diff );
   tm *time_elapsed = localtime( &diff );
 
-  // Timestamp - Order confirmation-number: last-name, first-name (number-of-tickets) tickets
   cout << time_elapsed->tm_hour << ":"
        << time_elapsed->tm_min << ":"
        << time_elapsed->tm_sec << " - "
        << "Order " << confirmation_number << ": "
        << processed_order->last_name << ", "
        << processed_order->first_name << " "
-       << "(" << num_tickets << ") tickets" << endl;
+       << "(" << processed_order->num_tickets << ") tickets" << endl;
 
   confirmation_number++;
 

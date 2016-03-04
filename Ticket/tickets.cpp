@@ -19,6 +19,7 @@
 using namespace std;
 
 int main() {
+  // Instantiate order and queue
   Order *order = new Order();
   order->queue = newQueue();
 
@@ -26,21 +27,27 @@ int main() {
   ifstream input;
   get_file( input );
 
+  // Confirmation number must start at 1
   order->confirmation_number = 1;
+  // Config start and current time
   order->starting_time = time(0);
   order->current_time = time(0);
+  // Set dummy tick_time to compare with current time
   order->tick_time = order->current_time;
 
+  // Continue to simulate processing the tickets until all tickets are processed
   while( order->num_tickets_used != NUM_TICKETS_AVAILABLE &&
       ( !queue_empty(order->queue) || !input.eof() ) ) {
     while( !input.eof() && order->tick_time <= order->current_time ) {
-      order->get_order( input );
+      // Get the orders and insert into queue
+      order->get_orders( input );
     }
 
+    // Simulate processing the order
     order->process_orders();
-
   }
 
+  // Delete dynamically allocated memory
   delete order->queue;
   delete order;
 
@@ -75,7 +82,7 @@ void get_file( ifstream& input ) {
 // is greater than the current time. While  order
 // into queue ever time it is read in and
 //
-void Order::get_order( ifstream& input ) {
+void Order::get_orders( ifstream& input ) {
   while( !input.eof() && tick_time <= current_time ) {
 
     cout << tick_time << "  " << current_time << endl;
@@ -105,7 +112,9 @@ void Order::get_order( ifstream& input ) {
 
 //
 // process_orders
-// Process tickets
+// Simulate time passing and then ensure queue is not empty.
+// When the tick time is less than current time, read that order
+// in and then print it.
 //
 void Order::process_orders() {
   // Simulate sleep time
@@ -125,14 +134,16 @@ void Order::process_orders() {
       // Give the customer as many tickets as possible
       queued_order->num_tickets -= num_tickets_used;
       print_orders();
+      sold_out();
     }
   }
 }
 
 //
 // print_orders
-// Print orders' time in 00:00:00 format
-// last name, first name, and number of tickets requested
+// Print orders' time in 00:00:00 format, last name,
+// first name, and number of tickets requested.
+// Put order back on queue when the there are no more tickets.
 //
 void Order::print_orders() {
   Order *processed_order = (Order*)remove(queue);

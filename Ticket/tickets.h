@@ -29,7 +29,7 @@ struct Order {
   string last_name;
 
   // Methods
-  void get_orders();
+  bool get_order( ifstream& input );
   void process_orders();
   void print_orders();
   void sold_out();

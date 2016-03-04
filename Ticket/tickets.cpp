@@ -32,13 +32,7 @@ int main() {
   while(!all_tickets_processed) {
     // order->current_time += time(0);
 
-    if( !input.eof() ) {
-      input >> order->tick_time;
-      order->tick_time += order->starting_time;
-
-      input >> order->first_name;
-      input >> order->last_name;
-      input >> order->num_tickets;
+    if( order->get_order(input) ) {
 
       Order *copied_order = new Order();
       copied_order = order;
@@ -55,17 +49,8 @@ int main() {
       }
     }
 
-    // Simulate proccessing orders
-    // order->get_orders();
-
-    // If ticket time is equal to
-    //  or less than current time, set that in queue
-
-    // order->process_orders();
-
     if( order->num_tickets_used == NUM_TICKETS_AVAILABLE || input.eof() ) {
       if( queue_empty( order->queue ) ) {
-        cout << "Sold out... " << endl;
         order->sold_out();
         all_tickets_processed = true;
       } else {
@@ -111,53 +96,17 @@ void get_file( ifstream& input ) {
 // get_orders
 // Read the orders into a the order structure.
 //
-void Order::get_orders() {
-  ifstream input;
+bool Order::get_order( ifstream& input ) {
+  if( input.eof() ) return false;
 
-  cout << "Get orders" << endl;
+  input >> tick_time;
+  tick_time += starting_time;
 
-  // Open and validate file exists as well as contains content
-  get_file( input );
+  input >> first_name;
+  input >> last_name;
+  input >> num_tickets;
 
-  // ticktime first-name last-name number-of-tickets
-  while( !input.eof() ) {
-
-    // sleep(SLEEP_TIME);
-    // current_time = starting_time + SLEEP_TIME;
-
-    input >> tick_time;
-    tick_time += starting_time;
-
-    cout << "Tick Time: " << tick_time << " Current Time: " << current_time << endl;
-
-    input >> first_name;
-    input >> last_name;
-    input >> num_tickets;
-
-    Order *copied_order = new Order();
-    copied_order = this;
-
-    if( tick_time <= current_time ) {
-      insert( this->queue, (void*)copied_order);
-      process_orders();
-    } else {
-      while( tick_time > current_time ) {
-        sleep(SLEEP_TIME);
-        // current_time += time(0);
-        current_time = starting_time + SLEEP_TIME;
-        process_orders();
-      }
-      insert( this->queue, (void*)copied_order);
-    }
-
-    if( num_tickets_used == NUM_TICKETS_AVAILABLE && queue_empty( queue ) ) {
-      cout << "Sold out... " << endl;
-      sold_out();
-    }
-
-  }
-
-  input.close();
+  return true;
 
 }
 
@@ -170,13 +119,7 @@ void Order::process_orders() {
   sleep(SLEEP_TIME);
   current_time += SLEEP_TIME;
 
-  cout << "Process orders " << endl;
-
   Order *queued_order = (Order*)queue->first->data;
-  cout << queued_order->first_name << endl;
-
-    cout << "tick > starting" << endl;
-    cout << queued_order->tick_time << "  " << current_time << endl;
 
   if( queued_order->tick_time > current_time ) return;
 
@@ -188,7 +131,6 @@ void Order::process_orders() {
     queued_order->num_tickets -= NUM_TICKETS_AVAILABLE;
     // Print as many orders as possible
     print_orders();
-    sold_out();
   }
 
 }
@@ -219,6 +161,8 @@ void Order::print_orders() {
        << "(" << num_tickets << ") tickets" << endl;
 
   confirmation_number++;
+
+  if( num_tickets_used == NUM_TICKETS_AVAILABLE ) sold_out();
 }
 
 //

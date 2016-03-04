@@ -104,7 +104,7 @@ void Order::get_orders( ifstream& input ) {
     // Insert the order into the queue
     insert( queue, (void*)copied_order);
 
-    // Close the file when at the end of file
+    // Close the file once when at the end of file
     if( input.eof() ) input.close();
 
   }
@@ -129,6 +129,7 @@ void Order::process_orders() {
     if( (queued_order->num_tickets + num_tickets_used) < NUM_TICKETS_AVAILABLE ) {
       cout << "option1" << endl;
       print_orders();
+      remove(queue);
     } else {
       cout << "options2" << endl;
       // Give the customer as many tickets as possible
@@ -146,7 +147,7 @@ void Order::process_orders() {
 // Put order back on queue when the there are no more tickets.
 //
 void Order::print_orders() {
-  Order *processed_order = (Order*)remove(queue);
+  Order *processed_order = (Order*)queue->first->data;
 
   time_t diff = current_time - starting_time;
   time( &diff );
@@ -161,11 +162,6 @@ void Order::print_orders() {
        << "(" << processed_order->num_tickets << ") tickets" << endl;
 
   confirmation_number++;
-
-  // Insert back on queue if order has tickets still not processed
-  if( num_tickets_used == NUM_TICKETS_AVAILABLE ) {
-    insert( queue, (void*)processed_order);
-  }
 }
 
 //
@@ -186,11 +182,9 @@ void Order::sold_out() {
          << tm_time->tm_sec
          << " - Tickets sold out --> Unable to process "
          << order_data->last_name << " "
-         << order_data->first_name << "("
-         << order_data->num_tickets << ")"
-         << order_data->num_tickets << endl;
-
-    confirmation_number++;
+         << order_data->first_name
+         << "request for (" << order_data->num_tickets << ")"
+         << order_data->num_tickets << " tickets" << endl;
 
   }
 }

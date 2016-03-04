@@ -102,23 +102,22 @@ void Order::get_order( ifstream& input ) {
 //
 void Order::process_orders() {
   if( queue_empty(queue) ) return;
+  Order *queued_order = (Order*)queue->first->data;
 
+  // Simulate sleep time
   sleep(SLEEP_TIME);
   current_time += SLEEP_TIME;
 
-  Order *queued_order = (Order*)queue->first->data;
-  if( queued_order->tick_time > current_time ) return;
+  if( queued_order->tick_time <= current_time ) {
 
-  num_tickets_used += queued_order->num_tickets;
-
-  if( num_tickets_used <= NUM_TICKETS_AVAILABLE ) {
-    print_orders();
-  } else {
-    // Print as many orders as possible
-    queued_order->num_tickets -= NUM_TICKETS_AVAILABLE;
-    print_orders();
+    if( (queued_order->num_tickets + num_tickets_used) < NUM_TICKETS_AVAILABLE ) {
+      print_orders();
+    } else {
+      // Give the customer as many tickets as possible
+      queued_order->num_tickets -= num_tickets_used;
+      print_orders();
+    }
   }
-
 }
 
 //
@@ -143,7 +142,10 @@ void Order::print_orders() {
 
   confirmation_number++;
 
-  if( num_tickets_used == NUM_TICKETS_AVAILABLE ) sold_out();
+  // Insert back on queue if order has tickets still not processed
+  if( num_tickets_used == NUM_TICKETS_AVAILABLE ) {
+    insert( queue, (void*)processed_order);
+  }
 }
 
 //

@@ -19,7 +19,6 @@
 using namespace std;
 
 int main() {
-  bool all_tickets_processed = false;
   Order *order = new Order();
   order->queue = newQueue();
 
@@ -31,9 +30,8 @@ int main() {
   order->starting_time = time(0);
   order->current_time = time(0);
 
-  order->get_order( input );
-
-  while(!all_tickets_processed) {
+  while( order->num_tickets_used != NUM_TICKETS_AVAILABLE &&
+      ( !queue_empty(order->queue) || !input.eof() ) ) {
     while( !input.eof() && order->tick_time <= order->current_time ) {
       order->get_order( input );
     }

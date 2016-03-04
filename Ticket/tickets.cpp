@@ -22,6 +22,8 @@ int main() {
   bool all_tickets_processed = false;
   Order *order = new Order();
   order->queue = newQueue();
+
+  // Get the file
   ifstream input;
   get_file( input );
 
@@ -30,7 +32,6 @@ int main() {
   order->current_time = time(0);
 
   while(!all_tickets_processed) {
-    // order->current_time += time(0);
 
     if( order->get_order(input) ) {
 
@@ -123,11 +124,9 @@ void Order::process_orders() {
 
   if( queued_order->tick_time > current_time ) return;
 
-  if( (queued_order->num_tickets + num_tickets_used) < NUM_TICKETS_AVAILABLE ) {
-    cout << "first" << endl;
+  if( (queued_order->num_tickets + num_tickets_used) <= NUM_TICKETS_AVAILABLE ) {
     print_orders();
   } else {
-    cout << "second" << endl;
     queued_order->num_tickets -= NUM_TICKETS_AVAILABLE;
     // Print as many orders as possible
     print_orders();
@@ -141,20 +140,16 @@ void Order::process_orders() {
 // last name, first name, and number of tickets requested
 //
 void Order::print_orders() {
-  cout << "Print orders" << endl;
-
-  // Order *processed_order = (Order*)queue->last;
   Order *processed_order = (Order*)remove(queue);
-  cout << "Processed?" << endl;
 
   time_t diff = current_time - starting_time;
   time( &diff );
-  tm *tm_time = localtime( &diff );
+  tm *time_elapsed = localtime( &diff );
 
   // Timestamp - Order confirmation-number: last-name, first-name (number-of-tickets) tickets
-  cout << tm_time->tm_hour << ":"
-       << tm_time->tm_min << ":"
-       << tm_time->tm_sec << " - "
+  cout << time_elapsed->tm_hour << ":"
+       << time_elapsed->tm_min << ":"
+       << time_elapsed->tm_sec << " - "
        << "Order " << confirmation_number << ": "
        << processed_order->last_name << ", "
        << processed_order->first_name << " "
@@ -171,9 +166,7 @@ void Order::print_orders() {
 // Remove the order from the queue after printing the order.
 //
 void Order::sold_out() {
-  cout << "Print sold out" << endl;
-
-  while( queue->last != NULL ) {
+  while( !queue_empty(queue) ) {
     Order *order_data = (Order*)remove(queue);
 
     time_t diff = current_time - starting_time;
@@ -192,5 +185,4 @@ void Order::sold_out() {
     confirmation_number++;
 
   }
-
 }

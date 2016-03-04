@@ -31,8 +31,8 @@ struct Order {
 
   // Methods
   void get_orders( ifstream& input );
-  void process_orders();
-  void print_orders();
+  void process_order();
+  void print_order();
   void sold_out();
 };
 

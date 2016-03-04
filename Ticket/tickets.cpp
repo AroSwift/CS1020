@@ -38,13 +38,13 @@ int main() {
   // Continue to simulate processing the tickets until all tickets are processed
   while( order->num_tickets_used != NUM_TICKETS_AVAILABLE &&
       ( !queue_empty(order->queue) || !input.eof() ) ) {
-    while( !input.eof() && order->tick_time <= order->current_time ) {
+    // while( !input.eof() && order->tick_time <= order->current_time ) {
       // Get the orders and insert into queue
       order->get_orders( input );
-    }
+    // }
 
     // Simulate processing the order
-    order->process_orders();
+    order->process_order();
   }
 
   // Delete dynamically allocated memory
@@ -83,7 +83,7 @@ void get_file( ifstream& input ) {
 // into queue ever time it is read in and
 //
 void Order::get_orders( ifstream& input ) {
-  while( !input.eof() && tick_time <= current_time ) {
+  // while( !input.eof() && tick_time <= current_time ) {
 
     cout << tick_time << "  " << current_time << endl;
 
@@ -107,16 +107,16 @@ void Order::get_orders( ifstream& input ) {
     // Close the file once when at the end of file
     if( input.eof() ) input.close();
 
-  }
+  // }
 }
 
 //
-// process_orders
+// process_order
 // Simulate time passing and then ensure queue is not empty.
 // When the tick time is less than current time, read that order
 // in and then print it.
 //
-void Order::process_orders() {
+void Order::process_order() {
   // Simulate sleep time
   sleep(SLEEP_TIME);
   current_time += SLEEP_TIME;
@@ -128,25 +128,25 @@ void Order::process_orders() {
 
     if( (queued_order->num_tickets + num_tickets_used) < NUM_TICKETS_AVAILABLE ) {
       cout << "option1" << endl;
-      print_orders();
+      print_order();
       remove(queue);
     } else {
       cout << "options2" << endl;
       // Give the customer as many tickets as possible
       queued_order->num_tickets -= num_tickets_used;
-      print_orders();
+      print_order();
       sold_out();
     }
   }
 }
 
 //
-// print_orders
+// print_order
 // Print orders' time in 00:00:00 format, last name,
 // first name, and number of tickets requested.
 // Put order back on queue when the there are no more tickets.
 //
-void Order::print_orders() {
+void Order::print_order() {
   Order *processed_order = (Order*)queue->first->data;
 
   time_t diff = current_time - starting_time;

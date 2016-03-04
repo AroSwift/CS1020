@@ -27,13 +27,14 @@ int main() {
 
   order->confirmation_number = 1;
   order->starting_time = time(0);
+  order->current_time = time(0);
 
   while(!all_tickets_processed) {
     // order->current_time += time(0);
 
     if( !input.eof() ) {
       input >> order->tick_time;
-      // order->tick_time += order->starting_time;
+      order->tick_time += order->starting_time;
 
       input >> order->first_name;
       input >> order->last_name;
@@ -47,9 +48,10 @@ int main() {
         order->process_orders();
       } else {
         while( order->tick_time > order->current_time && !queue_empty(order->queue) ) {
+          cout << "Ever while enough?" << endl;
+          insert( order->queue, (void*)copied_order);
           order->process_orders();
         }
-        insert( order->queue, (void*)copied_order);
       }
     }
 
@@ -166,7 +168,7 @@ void Order::get_orders() {
 void Order::process_orders() {
 
   sleep(SLEEP_TIME);
-  current_time = starting_time + SLEEP_TIME;
+  current_time += SLEEP_TIME;
 
   cout << "Process orders " << endl;
 
@@ -174,7 +176,7 @@ void Order::process_orders() {
   cout << queued_order->first_name << endl;
 
     cout << "tick > starting" << endl;
-    cout << queued_order->tick_time << "  " << starting_time << endl;
+    cout << queued_order->tick_time << "  " << current_time << endl;
 
   if( queued_order->tick_time > current_time ) return;
 

@@ -1,7 +1,7 @@
 //
 // tickets.cpp
 // Written by: Aaron Barlow
-// 03/2/2016
+// 03/4/2016
 //
 // Simulated ticket processing system that will read in orders,
 // process the orders, and then put the orders in a queue
@@ -39,10 +39,9 @@ int main() {
   // Continue to simulate processing the tickets until all tickets are processed
   while( order->num_tickets_used != NUM_TICKETS_AVAILABLE &&
       ( !queue_empty(order->queue) || !input.eof() ) ) {
-    // while( !input.eof() && order->tick_time <= order->current_time ) {
-      // Get the orders and insert into queue
-      order->get_orders( input );
-    // }
+
+    // Simulate getting orders from file
+    order->get_orders( input );
 
     // Simulate processing the order
     order->process_order();
@@ -94,14 +93,14 @@ void Order::get_orders( ifstream& input ) {
     input >> last_name;
     input >> num_tickets;
 
-    // Copy the order and send it to the queue
+    // Copy the vital order objects
     Order *copied_order = new Order();
     copied_order->first_name  = first_name;
     copied_order->last_name   = last_name;
     copied_order->tick_time   = tick_time;
     copied_order->num_tickets = num_tickets;
 
-    // Insert the order into the queue
+    // Insert the copied order into the queue
     insert( queue, (void*)copied_order);
 
     // Close the file once when at the end of file
@@ -198,6 +197,8 @@ void Order::sold_out() {
          << order_data->last_name << " "
          << order_data->first_name << " request for ("
          << order_data->num_tickets << ") tickets" << endl;
+
+    delete order_data;
 
   }
 

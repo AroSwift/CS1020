@@ -2,7 +2,7 @@
 //
 // queue.h
 // Written by: Aaron Barlow
-// 03/3/2016
+// 03/4/2016
 //
 // Header file for queue structures and prototypes.
 //

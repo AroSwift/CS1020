@@ -1,7 +1,7 @@
 //
 // queue.cpp
 // Written by: Aaron Barlow
-// 03/3/2016
+// 03/4/2016
 //
 // General queue code library that allow the intialization, insertion, and
 // removal of last element in queue, and removal of all elements in queue.

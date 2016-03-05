@@ -84,7 +84,7 @@ void get_file( ifstream& input ) {
 // into queue ever time it is read in and
 //
 void Order::get_orders( ifstream& input ) {
-  // while( !input.eof() && tick_time <= current_time ) {
+  while( !input.eof() && tick_time <= current_time ) {
 
     // Read in the order from the file
     input >> tick_time;
@@ -106,7 +106,7 @@ void Order::get_orders( ifstream& input ) {
     // Close the file once when at the end of file
     if( input.eof() ) input.close();
 
-  // }
+  }
 }
 
 //
@@ -131,30 +131,25 @@ void Order::process_order() {
       print_order();
       remove(queue);
     } else {
-      int num_processed_tickets = 0;
+      int num_tickets_processed = 0;
+      int num_tickets_not_processed = queued_order->num_tickets;
 
       cout << "In Used: " << num_tickets_used << endl;
       cout << "Num Ticks: " << queued_order->num_tickets << endl;
 
-      // // Give customer the max amount of tickets requested
-      // queued_order->num_tickets = abs(num_tickets_used - queued_order->num_tickets);
-      // // Updated the number of tickets used
-      // num_tickets_used += queued_order->num_tickets;
-
       while( num_tickets_used < NUM_TICKETS_AVAILABLE ) {
         num_tickets_used++;
-        num_processed_tickets++;
-        // queued_order->num_tickets--;
+        num_tickets_processed++;
       }
 
       cout << "In Used: " << num_tickets_used << endl;
       cout << "Num Ticks: " << queued_order->num_tickets << endl;
 
       // Give the customer as many tickets as possible
-      queued_order->num_tickets = num_processed_tickets;
+      queued_order->num_tickets = num_tickets_processed;
       print_order();
       // Then inform all customers that orders can not be processed
-      queued_order->num_tickets = num_tickets_used - num_processed_tickets;
+      queued_order->num_tickets = num_tickets_not_processed - num_tickets_processed;
       sold_out();
     }
   }

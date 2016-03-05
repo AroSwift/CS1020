@@ -20,9 +20,8 @@ const int SLEEP_TIME = 10;
 // Order structure
 struct Order {
   Queue *queue;
-  time_t starting_time;
-  time_t current_time;
-  time_t tick_time;
+  tm current_time;
+  tm tick_time;
   int confirmation_number;
   int num_tickets;
   int num_tickets_used;

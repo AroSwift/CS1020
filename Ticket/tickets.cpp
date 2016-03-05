@@ -29,11 +29,13 @@ int main() {
 
   // Confirmation number must start at 1
   order->confirmation_number = 1;
-  // Config start and current time
-  order->starting_time = time(0);
-  order->current_time = time(0);
+  // Config current time
+  order->current_time.tm_hour = 0;
+  order->current_time.tm_min  = 0;
+  order->current_time.tm_sec  = 0;
+  // Config starting number of tickets used
   order->num_tickets_used = 0;
-  // Set dummy tick_time to compare with current time
+  // Set starting tick_time to compare with current time
   order->tick_time = order->current_time;
 
   // Continue to simulate processing the tickets until all tickets are processed
@@ -83,11 +85,10 @@ void get_file( ifstream& input ) {
 // end of input, close the file once.
 //
 void Order::get_orders( ifstream& input ) {
-  while( !input.eof() && tick_time <= current_time ) {
+  while( !input.eof() && mktime(&tick_time) <= mktime(&current_time) ) {
 
     // Read in the order from the file
-    input >> tick_time;
-    tick_time += starting_time;
+    input >> tick_time.tm_sec;
 
     input >> first_name;
     input >> last_name;
@@ -121,14 +122,14 @@ void Order::get_orders( ifstream& input ) {
 void Order::process_order() {
   // Simulate sleep time
   sleep(SLEEP_TIME);
-  current_time += SLEEP_TIME;
+  current_time.tm_sec += SLEEP_TIME;
 
   // Check if there are any orders to process
   if( queue_empty(queue) ) return;
   Order *queued_order = (Order*)queue->first->data;
 
   // When an order can be processed
-  if( queued_order->tick_time <= current_time ) {
+  if( mktime(&queued_order->tick_time) <= mktime(&current_time) ) {
 
     // If it is possible to process the requested number of tickets
     if( (queued_order->num_tickets + num_tickets_used) < NUM_TICKETS_AVAILABLE ) {
@@ -168,14 +169,10 @@ void Order::print_order() {
 
   Order *processed_order = (Order*)queue->first->data;
 
-  time_t diff = current_time;
-  time( &diff );
-  tm *time_elapsed = localtime( &diff );
-
   // Print the successfull order for the requested number of tickets
-  cout << setfill('0') << setw(2) << time_elapsed->tm_hour << ":"
-       << setfill('0') << setw(2) << time_elapsed->tm_min << ":"
-       << setfill('0') << setw(2) << time_elapsed->tm_sec << " - "
+  cout << setfill('0') << setw(2) << current_time.tm_hour << ":"
+       << setfill('0') << setw(2) << current_time.tm_min << ":"
+       << setfill('0') << setw(2) << current_time.tm_sec << " - "
        << "Order " << confirmation_number << ": "
        << processed_order->last_name << ", "
        << processed_order->first_name << " "
@@ -196,14 +193,10 @@ void Order::sold_out() {
   while( !queue_empty(queue) ) {
     Order *order_data = (Order*)remove(queue);
 
-    time_t diff = current_time - starting_time;
-    time( &diff );
-    tm *time_elapsed = localtime( &diff );
-
   // Print the unsuccessfull order for the requested number of tickets
-  cout << setfill('0') << setw(2) << time_elapsed->tm_hour << ":"
-       << setfill('0') << setw(2) << time_elapsed->tm_min << ":"
-       << setfill('0') << setw(2) << time_elapsed->tm_sec
+  cout << setfill('0') << setw(2) << current_time.tm_hour << ":"
+       << setfill('0') << setw(2) << current_time.tm_min << ":"
+       << setfill('0') << setw(2) << current_time.tm_sec
          << " - Tickets sold out --> Unable to process "
          << order_data->last_name << " "
          << order_data->first_name << " request for ("

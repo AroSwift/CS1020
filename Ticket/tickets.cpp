@@ -98,7 +98,11 @@ void Order::get_orders( ifstream& input ) {
 
     // Copy the order and send it to the queue
     Order *copied_order = new Order();
-    copied_order = this;
+    // copied_order = this;
+    copied_order->first_name  = first_name;
+    copied_order->last_name   = last_name;
+    copied_order->tick_time   = tick_time;
+    copied_order->num_tickets = num_tickets;
 
     // Insert the order into the queue
     insert( queue, (void*)copied_order);
@@ -131,25 +135,20 @@ void Order::process_order() {
       print_order();
       remove(queue);
     } else {
-      int num_tickets_processed = 0;
-      int num_tickets_not_processed = queued_order->num_tickets;
+      int tickets_processed = 0;
+      int tickets_not_processed = queued_order->num_tickets;
 
-      cout << "In Used: " << num_tickets_used << endl;
-      cout << "Num Ticks: " << queued_order->num_tickets << endl;
-
+      // Determine number of tickets that can and can not be processed
       while( num_tickets_used < NUM_TICKETS_AVAILABLE ) {
         num_tickets_used++;
-        num_tickets_processed++;
+        tickets_processed++;
       }
 
-      cout << "In Used: " << num_tickets_used << endl;
-      cout << "Num Ticks: " << queued_order->num_tickets << endl;
-
       // Give the customer as many tickets as possible
-      queued_order->num_tickets = num_tickets_processed;
+      queued_order->num_tickets = tickets_processed;
       print_order();
       // Then inform all customers that orders can not be processed
-      queued_order->num_tickets = num_tickets_not_processed - num_tickets_processed;
+      queued_order->num_tickets = tickets_not_processed - tickets_processed;
       sold_out();
     }
   }
@@ -162,6 +161,9 @@ void Order::process_order() {
 // Put order back on queue when the there are no more tickets.
 //
 void Order::print_order() {
+  // Ensure there is something in the queue to work with
+  if( queue_empty(queue) ) return;
+
   Order *processed_order = (Order*)queue->first->data;
 
   time_t diff = current_time - starting_time;
@@ -177,10 +179,6 @@ void Order::print_order() {
        << "(" << processed_order->num_tickets << ") tickets" << endl;
 
   confirmation_number++;
-
-  // if(queued_order->num_tickets + num_tickets_used) < NUM_TICKETS_AVAILABLE ) {
-  //   insert( queue,  );
-  // }
 }
 
 //
@@ -189,8 +187,12 @@ void Order::print_order() {
 // Remove the order from the queue after printing the order.
 //
 void Order::sold_out() {
+  int row = 0;
   while( !queue_empty(queue) ) {
     Order *order_data = (Order*)remove(queue);
+
+    row++;
+    cout << row << endl;
 
     time_t diff = current_time - starting_time;
     time( &diff );
@@ -205,4 +207,6 @@ void Order::sold_out() {
          << order_data->num_tickets << ") tickets" << endl;
 
   }
+
+  cout << "Tickets are sold out and any future tickets will not be processed." << endl;
 }

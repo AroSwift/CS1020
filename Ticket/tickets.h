@@ -14,7 +14,7 @@ using namespace std;
 
 // Constants
 const char FILE_NAME[] = "tickets.dat";
-const int NUM_TICKETS_AVAILABLE = 100;
+const int NUM_TICKETS_AVAILABLE = 4;
 const int SLEEP_TIME = 3;
 
 // Order structure

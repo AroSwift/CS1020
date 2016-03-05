@@ -32,6 +32,7 @@ int main() {
   // Config start and current time
   order->starting_time = time(0);
   order->current_time = time(0);
+  order->num_tickets_used = 0;
   // Set dummy tick_time to compare with current time
   order->tick_time = order->current_time;
 
@@ -85,8 +86,6 @@ void get_file( ifstream& input ) {
 void Order::get_orders( ifstream& input ) {
   // while( !input.eof() && tick_time <= current_time ) {
 
-    cout << tick_time << "  " << current_time << endl;
-
     // Read in the order from the file
     input >> tick_time;
     tick_time += starting_time;
@@ -127,14 +126,25 @@ void Order::process_order() {
   if( queued_order->tick_time <= current_time ) {
 
     if( (queued_order->num_tickets + num_tickets_used) < NUM_TICKETS_AVAILABLE ) {
-      cout << "option1" << endl;
+      num_tickets_used += queued_order->num_tickets;
       print_order();
       remove(queue);
     } else {
-      cout << "options2" << endl;
+
+      cout << "In Used: " << num_tickets_used << endl;
+      cout << "Num Ticks: " << queued_order->num_tickets << endl;
+
+      // Give customer the max amount of tickets requested
+      queued_order->num_tickets = NUM_TICKETS_AVAILABLE - queued_order->num_tickets;
+      // Updated the number of tickets used
+      num_tickets_used += queued_order->num_tickets;
+
+      cout << "In Used: " << num_tickets_used << endl;
+      cout << "Num Ticks: " << queued_order->num_tickets << endl;
+
       // Give the customer as many tickets as possible
-      queued_order->num_tickets -= num_tickets_used;
       print_order();
+      // Then inform all customers that orders can not be processed
       sold_out();
     }
   }
@@ -182,9 +192,8 @@ void Order::sold_out() {
          << tm_time->tm_sec
          << " - Tickets sold out --> Unable to process "
          << order_data->last_name << " "
-         << order_data->first_name
-         << "request for (" << order_data->num_tickets << ")"
-         << order_data->num_tickets << " tickets" << endl;
+         << order_data->first_name << " request for ("
+         << order_data->num_tickets << ") tickets" << endl;
 
   }
 }

@@ -94,11 +94,8 @@ void Order::get_orders( ifstream& input ) {
     input >> last_name;
     input >> num_tickets;
 
-    cout << first_name << endl;
-
     // Copy the order and send it to the queue
     Order *copied_order = new Order();
-    // copied_order = this;
     copied_order->first_name  = first_name;
     copied_order->last_name   = last_name;
     copied_order->tick_time   = tick_time;
@@ -121,7 +118,7 @@ void Order::get_orders( ifstream& input ) {
 //
 void Order::process_order() {
   // Simulate sleep time
-  // sleep(SLEEP_TIME);
+  sleep(SLEEP_TIME);
   current_time += SLEEP_TIME;
 
   // Check if there are any orders to process
@@ -187,12 +184,8 @@ void Order::print_order() {
 // Remove the order from the queue after printing the order.
 //
 void Order::sold_out() {
-  int row = 0;
   while( !queue_empty(queue) ) {
     Order *order_data = (Order*)remove(queue);
-
-    row++;
-    cout << row << endl;
 
     time_t diff = current_time - starting_time;
     time( &diff );

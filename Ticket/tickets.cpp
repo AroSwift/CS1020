@@ -117,9 +117,10 @@ void Order::get_orders( ifstream& input ) {
 //
 void Order::process_order() {
   // Simulate sleep time
-  sleep(SLEEP_TIME);
+  // sleep(SLEEP_TIME);
   current_time += SLEEP_TIME;
 
+  // Check if there are any orders to process
   if( queue_empty(queue) ) return;
   Order *queued_order = (Order*)queue->first->data;
 
@@ -130,21 +131,30 @@ void Order::process_order() {
       print_order();
       remove(queue);
     } else {
+      int num_processed_tickets = 0;
 
       cout << "In Used: " << num_tickets_used << endl;
       cout << "Num Ticks: " << queued_order->num_tickets << endl;
 
-      // Give customer the max amount of tickets requested
-      queued_order->num_tickets = NUM_TICKETS_AVAILABLE - queued_order->num_tickets;
-      // Updated the number of tickets used
-      num_tickets_used += queued_order->num_tickets;
+      // // Give customer the max amount of tickets requested
+      // queued_order->num_tickets = abs(num_tickets_used - queued_order->num_tickets);
+      // // Updated the number of tickets used
+      // num_tickets_used += queued_order->num_tickets;
+
+      while( num_tickets_used < NUM_TICKETS_AVAILABLE ) {
+        num_tickets_used++;
+        num_processed_tickets++;
+        // queued_order->num_tickets--;
+      }
 
       cout << "In Used: " << num_tickets_used << endl;
       cout << "Num Ticks: " << queued_order->num_tickets << endl;
 
       // Give the customer as many tickets as possible
+      queued_order->num_tickets = num_processed_tickets;
       print_order();
       // Then inform all customers that orders can not be processed
+      queued_order->num_tickets = num_tickets_used - num_processed_tickets;
       sold_out();
     }
   }
@@ -172,6 +182,10 @@ void Order::print_order() {
        << "(" << processed_order->num_tickets << ") tickets" << endl;
 
   confirmation_number++;
+
+  // if(queued_order->num_tickets + num_tickets_used) < NUM_TICKETS_AVAILABLE ) {
+  //   insert( queue,  );
+  // }
 }
 
 //

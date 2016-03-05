@@ -3,8 +3,8 @@
 // Written by: Aaron Barlow
 // 03/4/2016
 //
-// Simulated ticket processing system that will read in orders,
-// process the orders, and then put the orders in a queue
+// Simulates a ticket processing system that will read in orders,
+// process the orders, and put the orders in a queue
 // as the orders are recieved.
 //
 
@@ -23,7 +23,7 @@ int main() {
   Order *order = new Order();
   order->queue = newQueue();
 
-  // Get the file
+  // Get the file if possible
   ifstream input;
   get_file( input );
 
@@ -40,7 +40,7 @@ int main() {
   while( order->num_tickets_used != NUM_TICKETS_AVAILABLE &&
       ( !queue_empty(order->queue) || !input.eof() ) ) {
 
-    // Simulate getting orders from file
+    // Simulate getting orders
     order->get_orders( input );
 
     // Simulate processing the order
@@ -79,8 +79,8 @@ void get_file( ifstream& input ) {
 //
 // get_orders
 // Continue to read in orders until the tick time
-// is greater than the current time. While  order
-// into queue ever time it is read in and
+// is greater than the current time. If it is the
+// end of input, close the file once.
 //
 void Order::get_orders( ifstream& input ) {
   while( !input.eof() && tick_time <= current_time ) {
@@ -112,8 +112,11 @@ void Order::get_orders( ifstream& input ) {
 //
 // process_order
 // Simulate time passing and then ensure queue is not empty.
-// When the tick time is less than current time, read that order
-// in and then print it.
+// When the tick time is less than or equal to the current time,
+// read that order in and then print it. If an order will use all
+// the available tickets, give the customer as many as possible and
+// then inform all customers whose orders could not go through that
+// there are no more tickets.
 //
 void Order::process_order() {
   // Simulate sleep time
@@ -124,13 +127,17 @@ void Order::process_order() {
   if( queue_empty(queue) ) return;
   Order *queued_order = (Order*)queue->first->data;
 
+  // When an order can be processed
   if( queued_order->tick_time <= current_time ) {
 
+    // If it is possible to process the requested number of tickets
     if( (queued_order->num_tickets + num_tickets_used) < NUM_TICKETS_AVAILABLE ) {
+      // Increase the tickets used by the number of tickets requested
       num_tickets_used += queued_order->num_tickets;
+      // Print and remove order
       print_order();
       remove(queue);
-    } else {
+    } else { // It is not possible to process all of the requested tickets
       int tickets_processed = 0;
       int tickets_not_processed = queued_order->num_tickets;
 
@@ -152,9 +159,8 @@ void Order::process_order() {
 
 //
 // print_order
-// Print orders' time in 00:00:00 format, last name,
+// Print order's time in 00:00:00 format, last name,
 // first name, and number of tickets requested.
-// Put order back on queue when the there are no more tickets.
 //
 void Order::print_order() {
   // Ensure there is something in the queue to work with
@@ -162,7 +168,7 @@ void Order::print_order() {
 
   Order *processed_order = (Order*)queue->first->data;
 
-  time_t diff = current_time - starting_time;
+  time_t diff = current_time;
   time( &diff );
   tm *time_elapsed = localtime( &diff );
 
@@ -175,6 +181,7 @@ void Order::print_order() {
        << processed_order->first_name << " "
        << "(" << processed_order->num_tickets << ") tickets" << endl;
 
+  // Increment confirmation number for next possible reiteration
   confirmation_number++;
 }
 
@@ -182,6 +189,8 @@ void Order::print_order() {
 // sold_out
 // Print all the orders that could not be processed.
 // Remove the order from the queue after printing the order.
+// Inform the customer that all future tickets can not be processed
+// because there are no more tickets to be processed.
 //
 void Order::sold_out() {
   while( !queue_empty(queue) ) {
@@ -194,7 +203,7 @@ void Order::sold_out() {
   // Print the unsuccessfull order for the requested number of tickets
   cout << setfill('0') << setw(2) << time_elapsed->tm_hour << ":"
        << setfill('0') << setw(2) << time_elapsed->tm_min << ":"
-       << setfill('0') << setw(2) << time_elapsed->tm_sec << " - "
+       << setfill('0') << setw(2) << time_elapsed->tm_sec
          << " - Tickets sold out --> Unable to process "
          << order_data->last_name << " "
          << order_data->first_name << " request for ("
@@ -205,5 +214,6 @@ void Order::sold_out() {
 
   }
 
+  // No more tickets available
   cout << "Tickets are sold out and any future tickets will not be processed." << endl;
 }

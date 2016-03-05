@@ -1,6 +1,6 @@
 #pragma once
 //
-// queue.h
+// tickets.h
 // Written by: Aaron Barlow
 // 03/4/2016
 //
@@ -15,7 +15,7 @@ using namespace std;
 // Constants
 const char FILE_NAME[] = "tickets.dat";
 const int NUM_TICKETS_AVAILABLE = 100;
-const int SLEEP_TIME = 3;
+const int SLEEP_TIME = 10;
 
 // Order structure
 struct Order {

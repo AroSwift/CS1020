@@ -166,9 +166,10 @@ void Order::print_order() {
   time( &diff );
   tm *time_elapsed = localtime( &diff );
 
-  cout << time_elapsed->tm_hour << ":"
-       << time_elapsed->tm_min << ":"
-       << time_elapsed->tm_sec << " - "
+  // Print the successfull order for the requested number of tickets
+  cout << setfill('0') << setw(2) << time_elapsed->tm_hour << ":"
+       << setfill('0') << setw(2) << time_elapsed->tm_min << ":"
+       << setfill('0') << setw(2) << time_elapsed->tm_sec << " - "
        << "Order " << confirmation_number << ": "
        << processed_order->last_name << ", "
        << processed_order->first_name << " "
@@ -188,16 +189,18 @@ void Order::sold_out() {
 
     time_t diff = current_time - starting_time;
     time( &diff );
-    tm *tm_time = localtime( &diff );
+    tm *time_elapsed = localtime( &diff );
 
-    cout << tm_time->tm_hour << ":"
-         << tm_time->tm_min << ":"
-         << tm_time->tm_sec
+  // Print the unsuccessfull order for the requested number of tickets
+  cout << setfill('0') << setw(2) << time_elapsed->tm_hour << ":"
+       << setfill('0') << setw(2) << time_elapsed->tm_min << ":"
+       << setfill('0') << setw(2) << time_elapsed->tm_sec << " - "
          << " - Tickets sold out --> Unable to process "
          << order_data->last_name << " "
          << order_data->first_name << " request for ("
          << order_data->num_tickets << ") tickets" << endl;
 
+    // Delete dynamically allocated memory
     delete order_data;
 
   }

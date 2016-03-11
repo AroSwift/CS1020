@@ -24,7 +24,7 @@ void setup() {
   // Set the size of the window
   size(1200,700);
   // Load the background image
-  bg_image = loadImage("background.jpg");
+  //bg_image = loadImage("background.jpg");
   
   minim = new Minim(this);
   // Bacon & Eggs is produced by Ethan Barlow and processed by Aaron Barlow
@@ -39,17 +39,18 @@ void setup() {
 
 void draw() {
   // Set the background image
- background(bg_image);
+ //background(bg_image);
  
+ main_character.display();
  
 }
 
 
 void keyPressed() {
  if( key == 'd' || key == 'D' ) {
-   
+   main_character.change_animation("run");
  } else if( key == 'w' || key == 'W' ) {
-   
+   //character.change_animation("jump");
  }
   
   

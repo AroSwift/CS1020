@@ -12,18 +12,15 @@ class Celeb extends Object {
   }
   
   //Set to idle, run, or bathroom
-  void change_animation( String aninimation ) {
-   myImage = loadImage("MainCharacter/" + animation + ".gif");{
+  void change_animation(String animation) {
+   super.change_image("MainCharacter/" + animation + ".gif");
   }
- 
- 
+  
   void hit() {
    health -= 10;
    if( health <= 0 ) {
      alive = false;
-   
    }
   }
-  }
-
+ 
 }

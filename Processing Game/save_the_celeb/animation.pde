@@ -17,7 +17,6 @@ class Animation {
   }
 
   void display() {
-    background(0);
     frame = (frame+1) % image_count;
     image(images[frame], 0, 0);
   }

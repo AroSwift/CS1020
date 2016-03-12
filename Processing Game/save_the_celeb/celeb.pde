@@ -19,6 +19,16 @@ class Celeb extends Animation {
     super.change_animation(animation_path + state, 62);
   }
   
+  void go() {
+    velocity = new PVector(10, 0);
+    acceleration = new PVector(5, 0);
+  }
+  
+  void stop() {
+    velocity = new PVector(0, 0);
+    acceleration = new PVector(0, 0);
+  }
+  
   void hit() {
    health -= 10;
    if( health <= 0 ) {

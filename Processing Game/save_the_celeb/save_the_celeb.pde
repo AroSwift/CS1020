@@ -1,6 +1,3 @@
-import de.looksgood.ani.*;
-import de.looksgood.ani.easing.*;
-
 // Sound Libraries for music and sound effects
 import ddf.minim.*;
 import ddf.minim.analysis.*;
@@ -38,10 +35,8 @@ void setup() {
   player = minim.loadFile("Bacon & Eggs.mp3", 2048);
   player.loop();
   
+  
   main_character = new Celeb("idle");
-
-
-  Ani.init(this);
 
 }
 
@@ -59,7 +54,7 @@ void draw() {
 void keyPressed() {
  if( key == 'd' || key == 'D' ) {
    main_character.set_state("run");
-   main_character.applyForce(new PVector(20, 0));
+   main_character.go();
    main_character.update();
  } else if( key == 'w' || key == 'W' ) {
    //character.change_animation("jump");
@@ -72,7 +67,7 @@ void keyPressed() {
 void keyReleased() {
   if( key == 'd' || key == 'D') {
    main_character.set_state("idle");
-   main_character.applyForce(new PVector(0, 0));
+   main_character.stop();
    main_character.update();
   }
   

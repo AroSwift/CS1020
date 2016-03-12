@@ -46,6 +46,7 @@ void draw() {
  //background(bg_image);
  background(255);
  
+ main_character.update();
  main_character.display();
 
 }
@@ -54,8 +55,6 @@ void draw() {
 void keyPressed() {
  if( key == 'd' || key == 'D' ) {
    main_character.set_state("run");
-   main_character.go();
-   main_character.update();
  } else if( key == 'w' || key == 'W' ) {
    //character.change_animation("jump");
  }
@@ -67,8 +66,6 @@ void keyPressed() {
 void keyReleased() {
   if( key == 'd' || key == 'D') {
    main_character.set_state("idle");
-   main_character.stop();
-   main_character.update();
   }
   
 }

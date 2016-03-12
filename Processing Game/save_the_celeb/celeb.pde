@@ -14,19 +14,24 @@ class Celeb extends Animation {
     alive = true;
   }
   
-  //Set to idle, run, or bathroom
-  void set_state(String state) {
-    super.change_animation(animation_path + state, 62);
-  }
-  
-  void go() {
-    velocity = new PVector(10, 0);
-    acceleration = new PVector(5, 0);
+  void go(int x, int y) {
+    velocity = new PVector(x, y);
+    applyForce(new PVector(10,0));
   }
   
   void stop() {
     velocity = new PVector(0, 0);
     acceleration = new PVector(0, 0);
+  }
+  
+  //Set to idle, run, or bathroom
+  void set_state(String state) {
+    if(state == "idle") stop();
+    if(state == "run") go(10, 0);
+    if(state == "bathroom") stop();
+    
+    // Set the new animation state
+    super.change_animation(animation_path + state, 62);
   }
   
   void hit() {

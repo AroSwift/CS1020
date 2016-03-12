@@ -32,8 +32,6 @@ class Animation extends Object {
 
   void display() {
     frame = (frame+1) % image_count;
-    //image(images[frame], x, y);
-    //image(images[frame], super.location.x, super.location.y);
     super.myImage = images[frame];
     super.display();
   }

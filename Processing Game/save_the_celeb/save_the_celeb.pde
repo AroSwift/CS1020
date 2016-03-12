@@ -51,7 +51,7 @@ void draw() {
  //background(bg_image);
  background(255);
  
- main_character.display(100, 500);
+ main_character.display();
 
 }
 
@@ -59,11 +59,21 @@ void draw() {
 void keyPressed() {
  if( key == 'd' || key == 'D' ) {
    main_character.set_state("run");
-   main_character.applyForce(new PVector(-1,0));
+   main_character.applyForce(new PVector(20, 0));
    main_character.update();
  } else if( key == 'w' || key == 'W' ) {
    //character.change_animation("jump");
  }
   
+  
+}
+
+
+void keyReleased() {
+  if( key == 'd' || key == 'D') {
+   main_character.set_state("idle");
+   main_character.applyForce(new PVector(0, 0));
+   main_character.update();
+  }
   
 }

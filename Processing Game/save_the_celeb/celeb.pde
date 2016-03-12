@@ -7,7 +7,7 @@ class Celeb extends Animation {
   
   Celeb(String state) {
     // Default pose and position of character
-    super(animation_path + state, 62, 100, 500, 75, 150);
+    super(animation_path + state, 62, 400, 500, 75, 150);
     // Health by defualt shall be 100
     health = 100;
     // Should start boolean alive

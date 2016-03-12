@@ -11,8 +11,7 @@ import interfascia.*;
 
 PImage bg_image;
 Celeb main_character;
-Animation animation1;
-
+Animation crowd;
 
 //
 // Sounds and support objects.
@@ -23,7 +22,7 @@ Minim minim;
 
 void setup() {
   // Set the size of the window
-  size(1200,700);
+  size(1200,600);
   // Load the background image
   bg_image = loadImage("background.jpg");
   
@@ -37,6 +36,7 @@ void setup() {
   
   
   main_character = new Celeb("idle");
+  crowd = new Animation("MainCharacter/Actions/crowd", 25, 125, 450, 250, 250);
 
 }
 
@@ -48,6 +48,8 @@ void draw() {
  
  main_character.update();
  main_character.display();
+ 
+ crowd.display();
 
 }
 

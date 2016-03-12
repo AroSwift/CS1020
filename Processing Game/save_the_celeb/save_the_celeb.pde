@@ -11,7 +11,7 @@ import interfascia.*;
 
 PImage bg_image;
 Celeb main_character;
-
+Animation animation1;
 
 //
 // Sounds and support objects.
@@ -24,7 +24,10 @@ void setup() {
   // Set the size of the window
   size(1200,700);
   // Load the background image
-  //bg_image = loadImage("background.jpg");
+  bg_image = loadImage("background.jpg");
+  
+  // Set frame rate so that game works on lower spec machines
+  frameRate(40);
   
   minim = new Minim(this);
   // Bacon & Eggs is produced by Ethan Barlow and processed by Aaron Barlow
@@ -33,6 +36,8 @@ void setup() {
   player.loop();
   
   main_character = new Celeb();
+  
+  animation1 = new Animation("MainCharacter/Actions/run", 62);
 
 }
 
@@ -41,7 +46,13 @@ void draw() {
   // Set the background image
  //background(bg_image);
  
- main_character.display();
+ //main_character.display();
+ 
+
+  // Display the sprite at the position xpos, ypos
+   animation1.display();
+   
+   background(bg_image);
  
 }
 

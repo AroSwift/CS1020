@@ -40,7 +40,6 @@ void setup() {
 
 }
 
-
 void draw() {
   // Set the background image
  //background(bg_image);
@@ -57,8 +56,14 @@ void draw() {
 void keyPressed() {
  if( key == 'd' || key == 'D' ) {
    main_character.set_state("run");
+ } else if( key == 'a' || key == 'A' ) {
+   main_character.set_state("run");
  } else if( key == 'w' || key == 'W' ) {
-   //character.change_animation("jump");
+   main_character.set_state("jump");
+ } else if( key == 'k' || key == 'K' ) {
+   main_character.set_state("kick"); 
+ } else if( key == 'j' || key == 'J' ) {
+   main_character.set_state("punch");
  }
   
   
@@ -67,6 +72,8 @@ void keyPressed() {
 
 void keyReleased() {
   if( key == 'd' || key == 'D') {
+   main_character.set_state("idle");
+  } else if( key == 'a' || key == 'A') {
    main_character.set_state("idle");
   }
   

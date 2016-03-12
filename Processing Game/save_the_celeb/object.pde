@@ -195,8 +195,4 @@ class Object {
     return ((x >= (location.x - w)) && (x <= (location.x + w)) &&
         (y >= (location.y - h)) && (y <= (location.y + h)));
   }
-  
-  void change_image(String new_image) {
-    myImage = loadImage(new_image);
-  }
 }

@@ -1,10 +1,13 @@
-class Celeb extends Object {
+String animation_path = "MainCharacter/Actions/";
+
+class Celeb extends Animation {
   float health;
   boolean alive;
+  String state;
   
-  Celeb() {
-    // Default pose for character
-    super(70,70, "MainCharacter/idle.gif");
+  Celeb(String state) {
+    // Default pose and position of character
+    super(animation_path + state, 62, 0, 900);
     // Health by defualt shall be 100
     health = 100;
     // Should start boolean alive
@@ -12,8 +15,8 @@ class Celeb extends Object {
   }
   
   //Set to idle, run, or bathroom
-  void change_animation(String animation) {
-   super.change_image("MainCharacter/" + animation + ".gif");
+  void set_state(String state) {
+    super.change_animation(animation_path + state, 62);
   }
   
   void hit() {

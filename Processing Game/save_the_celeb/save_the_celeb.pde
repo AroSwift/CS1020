@@ -48,9 +48,10 @@ void setup() {
 
 void draw() {
   // Set the background image
- background(bg_image);
+ //background(bg_image);
+ background(255);
  
- main_character.display();
+ main_character.display(100, 500);
 
 }
 
@@ -58,7 +59,8 @@ void draw() {
 void keyPressed() {
  if( key == 'd' || key == 'D' ) {
    main_character.set_state("run");
-   
+   main_character.applyForce(new PVector(-1,0));
+   main_character.update();
  } else if( key == 'w' || key == 'W' ) {
    //character.change_animation("jump");
  }

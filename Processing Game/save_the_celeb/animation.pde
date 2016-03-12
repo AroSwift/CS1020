@@ -5,15 +5,15 @@ class Animation extends Object {
   int image_count;
   int frame;
   
-  Animation(String path, int count, int x, int y) {
-    super(x, y, 300, 300);
+  Animation(String path, int count) {
+    super(300, 300, 300, 300);
     images = new PImage[count];
     image_count = count;
     frame = 0;
     
     for (int i = 0; i < image_count; i++) {
-     String imageName = path + "__" + nf(i, 3) + ".png";
-     images[i] = loadImage(imageName);
+     String image_name = path + "__" + nf(i, 3) + ".png";
+     images[i] = loadImage(image_name);
     }
   }
   
@@ -23,14 +23,14 @@ class Animation extends Object {
     frame = 0;
     
     for (int i = 0; i < image_count; i++) {
-     String imageName = path + "__" + nf(i, 3) + ".png";
-     images[i] = loadImage(imageName);
+     String image_name = path + "__" + nf(i, 3) + ".png";
+     images[i] = loadImage(image_name);
     }
   }
 
-  void display() {
+  void display(int x, int y) {
     frame = (frame+1) % image_count;
-    image(images[frame], 0, 0);
+    image(images[frame], x, y);
   }
   
 }

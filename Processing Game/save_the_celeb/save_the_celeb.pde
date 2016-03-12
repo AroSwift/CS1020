@@ -13,8 +13,6 @@ PImage bg_image;
 Celeb main_character;
 Animation crowd;
 
-float speed;
-float gravity;
 
 //
 // Sounds and support objects.
@@ -36,11 +34,6 @@ void setup() {
   // Bacon & Eggs is produced by Ethan Barlow and processed by Aaron Barlow
   player = minim.loadFile("Bacon & Eggs.mp3", 2048);
   player.loop();
-  
-  
-  speed = 0;
-  gravity = 0.6;
-
   
   main_character = new Celeb("idle");
   crowd = new Animation("MainCharacter/Actions/crowd", 25, 125, 450, 250, 250);

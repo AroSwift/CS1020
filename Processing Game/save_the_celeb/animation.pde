@@ -16,6 +16,9 @@ class Animation extends Object {
      images[i] = loadImage(image_name);
      images[i].resize(int(size.x), int(size.y));
     }
+    
+    heightBuffer = 150;
+    widthBuffer = 35;
   }
   
   void change_animation(String path, int count) {
@@ -31,10 +34,12 @@ class Animation extends Object {
   }
 
   void display( boolean repeat ) {
-    if(repeat && frame+1 == image_count) frame = 0;
+    if(repeat && frame == image_count) frame = 0;
     
     frame = (frame+1) % image_count;
     super.myImage = images[frame];
+    
+    if(repeat && frame == image_count) frame = 0;
     
     super.display();
   }

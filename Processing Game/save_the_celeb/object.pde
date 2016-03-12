@@ -8,26 +8,28 @@
 // untinted image.
 //
 class Object {
-  PVector size;               // size of object
-  float   mass;               // mass of object (mostly ignored)
-  PVector myColor;            // color of object (RGB)
-  PImage  myImage;            // image of object (if applicable)
-  PVector location;           // location of object  
-  PVector velocity;           // speed of object
-  PVector acceleration;       // acceleration of object
-  float rotation;             // rotation of object
-  float rotationVelocity;     // speed of rotation
-  float rotationAcceleration; // acceleration of object rotation
+  PVector size;                 // size of object
+  float   mass;                 // mass of object (mostly ignored)
+  PVector myColor;              // color of object (RGB)
+  PImage  myImage;              // image of object (if applicable)
+  PVector location;             // location of object  
+  PVector velocity;             // speed of object
+  PVector acceleration;         // acceleration of object
+  float   rotation;             // rotation of object
+  float   rotationVelocity;     // speed of rotation
+  float   rotationAcceleration; // acceleration of object rotation
+  float widthBuffer;            // offset from window width boundaries
+  float heightBuffer;           // offset from window height boundaries
 
-  float maxVelocity = 5;      // maximum object velocity default
-  final   float G = 0.4;      // force of gravity
-
+  float maxVelocity = 5;        // maximum object velocity default
+  final   float G = 0.4;        // force of gravity
+  
   //
   // Object
   // Constructor. Allows designation of location and RGB color of the
   // object.
   //
-  Object(float x, float y, float w, float h, int red, int green, int blue) {
+  Object(float x, float y, float w, float h, float red, float green, float blue) {
     this(x,y,w,h);
     myColor = new PVector(red, green, blue);
   }
@@ -63,7 +65,8 @@ class Object {
     // No color or image yet specified.
     myColor = null;
     myImage = null;
-     
+    widthBuffer = size.x/2;
+    heightBuffer = size.y/2;     
   }
   
   //
@@ -89,10 +92,8 @@ class Object {
   //
   void update() {
     velocity.add(acceleration);
-    if (velocity.x > maxVelocity)
-       velocity.x = maxVelocity;
-    if (velocity.y > maxVelocity)
-       velocity.y = maxVelocity;
+    velocity.x = constrain(velocity.x, -maxVelocity, maxVelocity);
+    velocity.y = constrain(velocity.y, -maxVelocity, maxVelocity);
     location.add(velocity);
     acceleration.mult(0);
   }
@@ -140,7 +141,7 @@ class Object {
     if (myImage != null) {
        pushMatrix();
        translate(-size.x/2, -size.y/2);
-       image(myImage, 0, 0);
+       image(myImage, 0, 0, size.x, size.y);
        popMatrix();
     }
     // or a filled rectangle
@@ -160,8 +161,8 @@ class Object {
     distance = constrain(distance, 5.0, 25.0);           // Limiting the distance 
     force.normalize();                                   // Normalize vector (we just want direction)
 
-    //float strength = (G * mass * m.mass) / (distance * distance); // Calculate gravitional force magnitude
-    //force.mult(strength);                                         // Get force vector --> magnitude * direction
+    float strength = (G * mass * m.mass) / (distance * distance); // Calculate gravitional force magnitude
+    force.mult(strength);                                         // Get force vector --> magnitude * direction
     return force;
   }
 
@@ -171,18 +172,23 @@ class Object {
   // Am going to expand this in the future to allow objects within
   // other objects.
   //
-  void enforceBoundaries() {
-    float widthBuffer = size.x/2;
-    float heightBuffer = size.y/2;
-    
-    if (location.x < widthBuffer)
-      velocity.x = abs(velocity.x);
-    else if (location.x > (width - widthBuffer))
-      velocity.x = abs(velocity.x) * -1;
-    if (location.y < heightBuffer)
-      velocity.y = abs(velocity.y);
-    else if (location.y > (height - heightBuffer))
-      velocity.y = abs(velocity.y) * -1;
+  void enforceBoundaries() {    
+    if (location.x < widthBuffer) {
+      velocity.x = velocity.x * -1;
+      location.x = widthBuffer;
+    }
+    else if (location.x > (width - widthBuffer)) {
+      velocity.x = velocity.x * -1;
+      location.x = width - widthBuffer;
+    }
+    if (location.y < heightBuffer) {
+      velocity.y = velocity.y * -1;
+      location.y = heightBuffer;
+    }
+    if (location.y > (height - heightBuffer)) {
+      velocity.y = velocity.y * -1;
+      location.y = height - heightBuffer;
+    }
   }
   
   //

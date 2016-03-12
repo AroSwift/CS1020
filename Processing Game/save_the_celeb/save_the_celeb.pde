@@ -29,7 +29,7 @@ void setup() {
   minim = new Minim(this);
   // Bacon & Eggs is produced by Ethan Barlow and processed by Aaron Barlow
   player = minim.loadFile("Bacon & Eggs.mp3", 2048);
-  player.play();
+  //player.play();
   player.loop();
   
   main_character = new Celeb();
@@ -49,6 +49,7 @@ void draw() {
 void keyPressed() {
  if( key == 'd' || key == 'D' ) {
    main_character.change_animation("run");
+   
  } else if( key == 'w' || key == 'W' ) {
    //character.change_animation("jump");
  }

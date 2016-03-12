@@ -4,7 +4,7 @@ class Celeb extends Object {
   
   Celeb() {
     // Default pose for character
-    super(100,100, "MainCharacter/idle.gif");
+    super(70,70, "MainCharacter/idle.gif");
     // Health by defualt shall be 100
     health = 100;
     // Should start boolean alive

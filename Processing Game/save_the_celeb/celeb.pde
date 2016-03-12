@@ -28,7 +28,7 @@ class Celeb extends Animation {
   void set_state(String state) {
     if(state == "idle") stop();
     if(state == "bathroom") stop();
-    if(state == "jump") go(0, -15);
+    if(state == "jump") go(0, -10);
     if(state == "kick" || state == "punch") stop();
     
     if(state == "run") {

@@ -13,6 +13,9 @@ PImage bg_image;
 Celeb main_character;
 Animation crowd;
 
+float speed;
+float gravity;
+
 //
 // Sounds and support objects.
 //
@@ -35,6 +38,10 @@ void setup() {
   player.loop();
   
   
+  speed = 0;
+  gravity = 0.6;
+
+  
   main_character = new Celeb("idle");
   crowd = new Animation("MainCharacter/Actions/crowd", 25, 125, 450, 250, 250);
 
@@ -45,10 +52,18 @@ void draw() {
  //background(bg_image);
  background(255);
  
+  // Set the floor
+  fill(175);
+  noStroke();
+  rect(0, height-100, width, 100);
+ 
+  // Set the sky background
+  fill(255);
+  noStroke();
+  rect(0, 0, width, 200);
+ 
  main_character.update();
  main_character.display();
- 
- crowd.display();
 
 }
 

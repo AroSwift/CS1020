@@ -12,6 +12,8 @@ class Celeb extends Animation {
     health = 100;
     // Should start boolean alive
     alive = true;
+    
+    this.state = state;
   }
   
   void go(int x, int y) {
@@ -39,6 +41,8 @@ class Celeb extends Animation {
       }
     }
     
+    this.state = state;
+    
     // Set the new animation state
     super.change_animation(animation_path + state, 62);
   }
@@ -52,10 +56,13 @@ class Celeb extends Animation {
   
   void display() {
     // Only run the animation once unless otherwise specified
-    if(frame+1 == image_count) {
-     set_state("idle");
+
+    if(state == "punch" || state == "kick") { //<>//
+      super.display(true); //<>//
+    } else {
+     super.display(false); 
     }
-    super.display();
+  
   }
  
 }

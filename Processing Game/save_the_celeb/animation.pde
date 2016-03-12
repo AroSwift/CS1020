@@ -30,9 +30,12 @@ class Animation extends Object {
     }
   }
 
-  void display() {
+  void display( boolean repeat ) {
+    if(repeat && frame+1 == image_count) frame = 0;
+    
     frame = (frame+1) % image_count;
     super.myImage = images[frame];
+    
     super.display();
   }
   

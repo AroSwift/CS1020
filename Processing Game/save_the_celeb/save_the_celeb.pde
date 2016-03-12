@@ -36,7 +36,7 @@ void setup() {
   player.loop();
   
   main_character = new Celeb("idle");
-  crowd = new Animation("MainCharacter/Actions/crowd", 25, 125, 450, 250, 250);
+  //crowd = new Animation("MainCharacter/Actions/crowd", 25, true, 125, 450, 250, 250);
 
 }
 

@@ -7,7 +7,7 @@ class Celeb extends Animation {
   
   Celeb(String state) {
     // Default pose and position of character
-    super(animation_path + state, 62, 400, 500, 75, 150);
+    super(animation_path + state, 62, true, 400, 500, 75, 150);
     // Health by defualt shall be 100
     health = 100;
     // Should start boolean alive
@@ -28,6 +28,8 @@ class Celeb extends Animation {
   
   //Set to idle, run, or bathroom
   void set_state(String state) {
+    boolean can_repeat_animation;
+    
     if(state == "idle") stop();
     if(state == "bathroom") stop();
     if(state == "jump") go(0, -10);
@@ -41,10 +43,12 @@ class Celeb extends Animation {
       }
     }
     
+    can_repeat_animation = state == "idle" || state == "run" ? true : false;
+    
     this.state = state;
     
     // Set the new animation state
-    super.change_animation(animation_path + state, 62);
+    super.change_animation(animation_path + state, 62, can_repeat_animation);
   }
   
   void hit() {
@@ -53,16 +57,12 @@ class Celeb extends Animation {
      alive = false;
    }
   }
-  
-  void display() {
-    // Only run the animation once unless otherwise specified
-
-    if(state == "punch" || state == "kick") { //<>//
-      super.display(true); //<>//
-    } else {
-     super.display(false); 
-    }
-  
+   //<>//
+  void display() { //<>//
+     boolean done_with_animation;
+     done_with_animation = super.display_animation(); 
+      
+     if(done_with_animation) set_state("idle");
   }
  
 }

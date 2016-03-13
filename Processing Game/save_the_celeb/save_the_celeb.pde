@@ -41,27 +41,20 @@ void setup() {
 }
 
 void draw() {
- // Detemine which state the game is in 
- //switch(game_screen) {
- // case 0: 
- //   // Show intro screen (instructions)
- //   initial_screen();
- // case 1:
- //   // Play the game!
- //   play_game_screen();
- // case 2:
- //   // Show end of game screen
- //   end_game_screen();
- // default:
- //   initial_screen();
- //}
-
+ // Detemine which state the game is in
   if(game_screen == 0) {
+    // Show intro screen (instructions)
    initial_screen(); 
-  } else {
+  } else if(game_screen == 1) {
+    // Play the game!
     play_game_screen();
+  } else if(game_screen == 2) {
+    // Show end of game screen
+    end_game_screen();
+  } else {
+    // Set a defualt screen just incase
+    initial_screen();
   }
-
 }
 
 

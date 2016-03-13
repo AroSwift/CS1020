@@ -68,9 +68,9 @@ class Paparazzi extends Animation {
       
       paparazzi.stop();
       
-      if(randomize >= 10 && done_with_animation) {
+      if( (randomize > 10 && done_with_animation) || state == "run" ) {
         paparazzi.set_state("punch");
-      } else if(done_with_animation) {
+      } else if( (randomize < 10 && done_with_animation) || state == "run" ) {
         paparazzi.set_state("kick");
       }
     } else {

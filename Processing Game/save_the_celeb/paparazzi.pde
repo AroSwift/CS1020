@@ -10,7 +10,7 @@ class Paparazzi extends Animation {
   
   Paparazzi(String state) {
     // Default pose and position of character
-    super(paparazzi_animation_path + state, 62, true, 0, 425, 125, 275);
+    super(paparazzi_animation_path + state, 61, true, 0, 425, 125, 275);
     // Health by defualt shall be 100
     health = max_health;
     // Should start boolean alive
@@ -58,7 +58,7 @@ class Paparazzi extends Animation {
     this.state = state;
     
     // Set the new animation state
-    super.change_animation(paparazzi_animation_path + state, 62, can_repeat_animation);
+    super.change_animation(paparazzi_animation_path + state, 61, can_repeat_animation);
   }
   
   void hit(int loss) {

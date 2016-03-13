@@ -9,13 +9,19 @@ import ddf.minim.signals.*;
 import ddf.minim.spi.*;
 import ddf.minim.ugens.*;
 
+// Library for randomness
+import java.util.*;
+
 // Screen background images
 PImage intial_bg_image;
 PImage game_bg_image;
 PImage end_bg_image;
 
+// Characters
 Celeb main_character;
 Paparazzi paparazzi;
+String celeb_animation_path = "MainCharacter/Actions/";
+String paparazzi_animation_path = "Paparazzi/Character_1/";
 
 // Default screen
 int game_screen = 0;
@@ -24,9 +30,11 @@ int game_screen = 0;
 int heightBuffer = 130;
 int widthBuffer = 40;
 
+// Determine the amount of time that has passed since beg
 long loop_time;
 
 // Sounds and support objects
+Random generator;
 AudioPlayer music;
 AudioPlayer punch;
 AudioPlayer kick;

@@ -1,5 +1,3 @@
-String paparazzi_animation_path = "Paparazzi/Character_1/";
-
 class Paparazzi extends Animation {
   // Default max life of character(s)
   int max_health = 50;
@@ -80,16 +78,20 @@ class Paparazzi extends Animation {
   
   void die() {
     alive = false;
-    super.applyRotation(40);
-   
-    go(600, width/2);
+    super.applyRotation(20);
+    go(-50, width/2);
   }
   
-  //void enforceBoundaries() {
-  //  if (location.x <= -size.x/2) {
-  //     location.x = width;
-  //  }
-  //}
+  // Overide super class's enforcement of boundries
+  void enforceBoundaries() {
+   if (location.x <= -size.x/2) {
+      location.y = width;
+   }
+    
+   if (location.y <= -size.y/2) {
+      location.y = height;
+   }
+  }
   
   void display() {
      if(!alive) {

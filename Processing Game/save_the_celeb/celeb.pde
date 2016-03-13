@@ -1,5 +1,3 @@
-String celeb_animation_path = "MainCharacter/Actions/";
-int max_health = 100;
 class Celeb extends Animation {
   // Default max life of character(s)
   int max_health = 100;

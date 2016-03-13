@@ -20,8 +20,11 @@ Paparazzi paparazzi;
 // Default screen
 int game_screen = 0;
 
+// Set the defualt area in which the character should not go
 int heightBuffer = 130;
 int widthBuffer = 40;
+
+long loop_time;
 
 // Sounds and support objects
 AudioPlayer music;
@@ -33,6 +36,7 @@ Minim minim;
 void setup() {
    // Set the size of the window
    size(1200,600);
+   //fullScreen();
 
    // Set a lower frame rate so that game works on lower spec machines
    frameRate(30);
@@ -47,6 +51,10 @@ void setup() {
    // Sound effects provided by SoundBible
    punch = minim.loadFile("Punch.mp3", 2048);
    kick = minim.loadFile("Kick.mp3", 2048);
+   
+   // Keep tract of the time that has changed
+   //loop_time = millis() + 60000;
+   loop_time = millis();
   
    paparazzi = new Paparazzi("idle");
    main_character = new Celeb("idle");
@@ -101,8 +109,9 @@ void keyPressed() {
          fill(0);
          textSize(40);
          // Inform user that game is paused
-         text("Game Paused...",width/2,height/2);
-         text("Press 'P' to continue",width/2-50,height/2+50);
+         textAlign(CENTER);
+         text("Game Paused...",width/2,(height/2)-(height*0.3));
+         text("P to continue",width/2,(height/2)-(height*0.3)+50);
          
          // Stop the game
          noLoop();

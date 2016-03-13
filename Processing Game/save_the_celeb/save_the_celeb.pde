@@ -174,8 +174,8 @@ void play_game_screen() {
   
    fill(0);
    textSize(20);
-   // Display main character's score and account for text size
-   text("Score: " + main_character.num_kills,(width-widthBuffer-main_character.num_kills-60),BOTTOM-heightBuffer+60);
+   // Display main character's kills and account for text size
+   text("Kills: " + main_character.num_kills,(width-widthBuffer-main_character.num_kills-60),BOTTOM-heightBuffer+60);
   
   if(!main_character.alive) game_screen = 2;
 }

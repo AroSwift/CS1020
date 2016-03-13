@@ -5,6 +5,7 @@ class Celeb extends Animation {
   int health;
   boolean alive;
   String state;
+  Blood drawing_blood;
   
   Celeb(String state) {
     // Default pose and position of character
@@ -13,13 +14,14 @@ class Celeb extends Animation {
     health = max_health;
     // Should start boolean alive
     alive = true;
+    drawing_blood = null;
     
     this.state = state;
     
     // Put a health bar in the top left screen
     //health_bar = new HealthBar(max_health, 0, 10, 30);
     PVector new_location = new PVector(0, 10);
-    health_bar = new HealthBar(max_health, 50, new_location);
+    health_bar = new HealthBar(health, 50, new_location);
   }
   
   void go(int x, int y) {
@@ -45,6 +47,7 @@ class Celeb extends Animation {
       float randomize = random(15,30);
       // Decrease the health of paparazzi because celeb is punching or kicking them
       paparazzi.hit( int(randomize) );
+      paparazzi.drawing_blood = new Blood(100, paparazzi.location, 5, 8);
       
       if(state == "kick") {
         kick.play();
@@ -102,6 +105,8 @@ class Celeb extends Animation {
 
     health_bar.update(health);
     health_bar.display();
+    
+    if(drawing_blood != null) drawing_blood.display();
   }
  
 }

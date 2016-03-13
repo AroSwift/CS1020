@@ -5,6 +5,7 @@ class Paparazzi extends Animation {
   int health;
   boolean alive;
   String state;
+  Blood drawing_blood;
   
   Paparazzi(String state) {
     // Default pose and position of character
@@ -13,13 +14,14 @@ class Paparazzi extends Animation {
     health = max_health;
     // Should start boolean alive
     alive = true;
+    drawing_blood = null;
     
     this.state = state;
     
     // Put a health bar above the paparazzi's head
     //health_bar = new HealthBar(max_health, 10, location);
     PVector new_location = new PVector(location.x, location.y+size.y);
-    health_bar = new HealthBar(max_health, 10, new_location);
+    health_bar = new HealthBar(health, 10, new_location);
   }
   
   void go(int x, int y) {
@@ -39,7 +41,8 @@ class Paparazzi extends Animation {
     if(state == "idle") stop();
     if(state == "jump") go(0, -10);
     if(state == "kick" || state == "punch") {
-      main_character.hit( int(random(3, 10)) ); 
+      main_character.hit( int(random(3, 10)) );
+      main_character.drawing_blood = new Blood(100, main_character.location, 5, 8);
       stop();
             
       if(state == "kick") {
@@ -124,6 +127,8 @@ class Paparazzi extends Animation {
     PVector new_location = new PVector(location.x, location.y+heightBuffer+(-size.y));    
     health_bar.update(health, new_location);
     health_bar.display();
+    
+    if(drawing_blood != null) drawing_blood.display();
   }
  
 }

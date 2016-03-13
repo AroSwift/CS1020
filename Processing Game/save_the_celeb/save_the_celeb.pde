@@ -20,8 +20,11 @@ PImage end_bg_image;
 // Characters
 Celeb main_character;
 Paparazzi paparazzi;
-String celeb_animation_path = "MainCharacter/Actions/";
+String celeb_animation_path = "MainCharacter/";
 String paparazzi_animation_path = "Paparazzi/Character_1/";
+
+// Blood Effects
+Blood drawing_blood = null;
 
 // Default screen
 int game_screen = 0;
@@ -160,6 +163,9 @@ void play_game_screen() {
   
   paparazzi.update();
   paparazzi.display();
+ 
+  // Show blood if someone was hit
+  if(drawing_blood != null) drawing_blood.display();
   
   if(!main_character.alive) game_screen = 2;
 }

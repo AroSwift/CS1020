@@ -34,7 +34,7 @@ class Paparazzi extends Animation {
     acceleration = new PVector(0, 0);
   }
   
-  //Set to idle, run, or bathroom
+  //Set to idle, run, jump, punch, or kick
   void set_state(String state) {
     boolean can_repeat_animation;
     
@@ -85,27 +85,38 @@ class Paparazzi extends Animation {
     go(600, width/2);
   }
   
+  //void enforceBoundaries() {
+  //  if (location.x <= -size.x/2) {
+  //     location.x = width;
+  //  }
+  //}
+  
   void display() {
+     if(!alive) {
+        super.display();
+        return;
+     }
      boolean done_with_animation;
      done_with_animation = super.display_animation(); 
       
      if(done_with_animation) set_state("idle");
      
-    if( dist(main_character.location.x, main_character.location.y, paparazzi.location.x, paparazzi.location.y) <= main_character.size.x ) {
-      float randomize = random(20);
+     // Define the actions that the simulate the paparazzi following the celebrity
+     if( dist(main_character.location.x, main_character.location.y, paparazzi.location.x, paparazzi.location.y) <= main_character.size.x ) {
+       float randomize = random(20);
       
-      paparazzi.stop();
+       paparazzi.stop();
       
-      if( (randomize > 10 && done_with_animation) || state == "run" ) {
-        paparazzi.set_state("punch");
-      } else if( (randomize <= 10 && done_with_animation) || state == "run" ) {
-        paparazzi.set_state("kick");
-      }
+       if( (randomize > 10 && done_with_animation) || state == "run" ) {
+         paparazzi.set_state("punch");
+       } else if( (randomize <= 10 && done_with_animation) || state == "run" ) {
+         paparazzi.set_state("kick");
+       }
     } else {
-      PVector f = main_character.attract(paparazzi);
-      f.mult(0.000000003);
-      paparazzi.applyForce(f); 
-      if(state != "run") paparazzi.set_state("run");
+       PVector f = main_character.attract(paparazzi);
+       f.mult(0.000000001);
+       paparazzi.applyForce(f); 
+       if(state != "run") paparazzi.set_state("run");
     }
     
     PVector new_location = new PVector(location.x, location.y+heightBuffer+(-size.y));    

@@ -20,7 +20,7 @@ Paparazzi paparazzi;
 // Default screen
 int game_screen = 0;
 
-// Set the defualt area in which the character should not go
+// Set the defualt offset from window in which objects should not go
 int heightBuffer = 130;
 int widthBuffer = 40;
 

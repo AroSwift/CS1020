@@ -34,7 +34,7 @@ class Celeb extends Animation {
     acceleration = new PVector(0, 0);
   }
   
-  //Set to idle, run, or bathroom
+  //Set to idle, run, jump, punch, or kick
   void set_state(String state) {
     boolean can_repeat_animation;
     

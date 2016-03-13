@@ -2,12 +2,14 @@
 
 class Animation extends Object {
   PImage[] images;
+  PVector  animation_size;
   int image_count;
   int frame;
   boolean repeat;
   
   Animation(String path, int count, boolean repeat, int x, int y, int w, int h) {
     super(x, y, w, h);
+    animation_size = new PVector(w, h);
     images = new PImage[count];
     image_count = count;
     frame = 0;
@@ -16,7 +18,7 @@ class Animation extends Object {
     for (int i = 0; i < image_count; i++) {
      String image_name = path + "__" + nf(i, 3) + ".png";
      images[i] = loadImage(image_name);
-     images[i].resize(int(size.x), int(size.y));
+     images[i].resize(int(animation_size.x), int(animation_size.y));
     }
     
     heightBuffer = 130;
@@ -32,7 +34,7 @@ class Animation extends Object {
     for (int i = 0; i < image_count; i++) {
      String image_name = path + "__" + nf(i, 3) + ".png";
      images[i] = loadImage(image_name);
-     images[i].resize(int(size.x), int(size.y));
+     images[i].resize(int(animation_size.x), int(animation_size.y));
     }
   }
 

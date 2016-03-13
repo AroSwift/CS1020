@@ -1,11 +1,11 @@
-String celeb_animation_path = "MainCharacter/Actions/";
+String paparazzi_animation_path = "Paparazzi/Character_1/";
 
-class Celeb extends Animation {
+class Paparazzi extends Animation {
   float health;
   boolean alive;
   String state;
   
-  Celeb(String state) {
+  Paparazzi(String state) {
     // Default pose and position of character
     super(paparazzi_animation_path + state, 62, true, 400, 425, 125, 275);
     // Health by defualt shall be 100
@@ -47,7 +47,7 @@ class Celeb extends Animation {
     this.state = state;
     
     // Set the new animation state
-    super.change_animation(celeb_animation_path + state, 62, can_repeat_animation);
+    super.change_animation(paparazzi_animation_path + state, 62, can_repeat_animation);
   }
   
   void hit() {
@@ -57,11 +57,13 @@ class Celeb extends Animation {
    }
   }
   
-  void display() { //<>//
-     boolean done_with_animation; //<>//
+  void display() {
+     boolean done_with_animation;
      done_with_animation = super.display_animation(); 
       
      if(done_with_animation) set_state("idle");
+     
+     
   }
  
 }

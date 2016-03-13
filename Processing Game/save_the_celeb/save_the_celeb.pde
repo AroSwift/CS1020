@@ -6,16 +6,18 @@ import ddf.minim.signals.*;
 import ddf.minim.spi.*;
 import ddf.minim.ugens.*;
 
+// Screen background images
 PImage intial_bg_image;
 PImage game_bg_image;
 PImage end_bg_image;
+
 Celeb main_character;
-Animation crowd;
+Paparazzi paparazzi;
+
+// Default screen
 int game_screen = 0;
 
-//
-// Sounds and support objects.
-//
+// Sounds and support objects
 AudioPlayer player;
 Minim minim;
 
@@ -32,8 +34,8 @@ void setup() {
    player = minim.loadFile("Bacon & Eggs.mp3", 2048);
    player.loop();
   
+   paparazzi = new Paparazzi("idle");
    main_character = new Celeb("idle");
-   //crowd = new Animation("MainCharacter/Actions/crowd", 25, true, 125, 450, 250, 250);
   
    // Load the intial background image only once
    intial_bg_image = loadImage("intial_screen_background.jpg");
@@ -106,6 +108,13 @@ void play_game_screen() {
  
   main_character.update();
   main_character.display();
+  
+  PVector f = main_character.attract(paparazzi);
+  f.mult(0.000000005);
+  paparazzi.applyForce(f);
+  
+  paparazzi.update();
+  paparazzi.display();
 }
 
 void end_game_screen() {

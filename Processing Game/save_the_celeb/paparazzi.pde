@@ -14,7 +14,8 @@ class Paparazzi extends Animation {
   boolean alive;
   String state;
   Blood drawing_blood;
-  long time_before_regenerate = 10000;
+  //long time_before_regenerate = 10000;
+  long time_before_regenerate = 6000;
   long respawn_time;
   
   //
@@ -130,15 +131,25 @@ class Paparazzi extends Animation {
     death.rewind();
     
     respawn_time = millis() + time_before_regenerate;
+    
+    // Show drawing blood
+    if(drawing_blood != null) drawing_blood.display();
   }
   
-  void regenerate() {
+  void generate() {
     alive = true;
     stop();
     health = max_health;
     set_state("idle");
-    location = new PVector(random(0,width), 425);
-    set_state("idle");
+    
+    boolean suitable_location = false;
+    
+    do {
+      location = new PVector(random(0+widthBuffer,width-widthBuffer), 425);
+      if( dist(main_character.location.x, main_character.location.y, location.x, location.y) > main_character.size.x) {
+        suitable_location = true;
+      }
+    } while(!suitable_location);
   }
   
   //
@@ -172,7 +183,7 @@ class Paparazzi extends Animation {
   void display() {
      if(!alive) {
         if(millis() >= respawn_time) {
-          regenerate();
+          generate();
         } else {
           super.display();
           return;

@@ -65,31 +65,35 @@ void draw() {
 
 void keyPressed() {
   // Play the game when the user is ready to play the game
-  if(game_screen == 0) game_screen = 1;
-  
- if( key == 'd' || key == 'D' ) {
-   main_character.set_state("run");
- } else if( key == 'a' || key == 'A' ) {
-   main_character.set_state("run");
- } else if( key == 'w' || key == 'W' ) {
-   //main_character.set_state("jump");
- } else if( key == 'k' || key == 'K' ) {
-   main_character.set_state("kick"); 
- } else if( key == 'j' || key == 'J' ) {
-   main_character.set_state("punch");
- }
-  
-  
+  if(game_screen == 0) {
+    // Starting game for the first time
+    game_screen = 1;
+    main_character.set_state("idle");
+  } else { // Playing game
+    if( key == 'd' || key == 'D' ) {
+      main_character.set_state("run");
+    } else if( key == 'a' || key == 'A' ) {
+      main_character.set_state("run");
+    } else if( key == 'w' || key == 'W' ) {
+      //main_character.set_state("jump");
+    } else if( key == 'k' || key == 'K' ) {
+      main_character.set_state("kick"); 
+    } else if( key == 'j' || key == 'J' ) {
+      main_character.set_state("punch");
+    }
+  }
 }
 
 
 void keyReleased() {
-  if( key == 'd' || key == 'D') {
-   main_character.set_state("idle");
-  } else if( key == 'a' || key == 'A') {
-   main_character.set_state("idle");
+  // Dont do game actions if user is not ready to play game
+  if(game_screen != 0 && game_screen != 2) {
+    if( key == 'd' || key == 'D') {
+     main_character.set_state("idle");
+    } else if( key == 'a' || key == 'A') {
+     main_character.set_state("idle");
+    }
   }
-  
 }
 
 void initial_screen() {
@@ -120,5 +124,5 @@ void play_game_screen() {
 }
 
 void end_game_screen() {
-  
+  background(intial_bg_image);
 }

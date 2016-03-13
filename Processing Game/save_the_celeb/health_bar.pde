@@ -2,10 +2,9 @@ class HealthBar extends Object {
   int orig_health;
   int current_health;
  
- HealthBar(int orig_health, int x, int y, int thickness) {
-   // Create a rectangle that resembles a health bar
-   // Set the width to health
-   super(x, y, orig_health, thickness, 0, 255, 0);
+ HealthBar(int orig_health, int x, int y, int h) {
+   // Create a rectangle that resembles a health bar and set the width to health
+   super(x, y, orig_health, h, 0, 255, 0);
    
    this.orig_health = orig_health;
    current_health = orig_health;
@@ -21,7 +20,7 @@ class HealthBar extends Object {
    } else if(current_health >= orig_health/2) {
      // Set the health bar color to yellow/orange
      super.myColor = new PVector(255,200,0);
-   } else {
+   } else if(current_health >= orig_health/3) {
      // Set the health bar color to red
      super.myColor = new PVector(255,0,0);
    }

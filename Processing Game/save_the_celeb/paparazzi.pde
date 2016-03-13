@@ -2,7 +2,7 @@ String paparazzi_animation_path = "Paparazzi/Character_1/";
 
 class Paparazzi extends Animation {
   // Default max life of character(s)
-  int max_health = 100;
+  int max_health = 50;
   HealthBar health_bar;
   int health;
   boolean alive;
@@ -12,14 +12,15 @@ class Paparazzi extends Animation {
     // Default pose and position of character
     super(paparazzi_animation_path + state, 62, true, 0, 425, 125, 275);
     // Health by defualt shall be 100
-    health = 100;
+    health = max_health;
     // Should start boolean alive
     alive = true;
     
     this.state = state;
     
     // Put a health bar above the paparazzi's head
-    health_bar = new HealthBar(max_health, int(location.x), max_health, 20);
+    int top_head = int(location.x - size.x);
+    health_bar = new HealthBar(max_health, top_head, 5, 20);
   }
   
   void go(int x, int y) {

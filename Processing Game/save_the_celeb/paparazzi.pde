@@ -19,7 +19,8 @@ class Paparazzi extends Animation {
     this.state = state;
     
     // Put a health bar above the paparazzi's head
-    int top_head = int(location.x - size.x);
+    int top_head = abs(int(location.x - size.x));
+    println(top_head);
     health_bar = new HealthBar(max_health, top_head, 5, 20);
   }
   
@@ -74,13 +75,13 @@ class Paparazzi extends Animation {
      if(done_with_animation) set_state("idle");
      
     if( dist(main_character.location.x, main_character.location.y, paparazzi.location.x, paparazzi.location.y) <= main_character.size.x ) {
-      float randomize = random(10);
+      float randomize = random(20);
       
       paparazzi.stop();
       
-      if( (randomize > 5 && done_with_animation) || state == "run" ) {
+      if( (randomize > 10 && done_with_animation) || state == "run" ) {
         paparazzi.set_state("punch");
-      } else if( (randomize <= 5 && done_with_animation) || state == "run" ) {
+      } else if( (randomize <= 10 && done_with_animation) || state == "run" ) {
         paparazzi.set_state("kick");
       }
     } else {

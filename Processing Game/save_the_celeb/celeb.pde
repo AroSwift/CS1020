@@ -63,6 +63,10 @@ class Celeb extends Animation {
    }
   }
   
+  boolean still_doing_current_animation() {
+    return super.frame <= super.image_count; 
+  }
+  
   void display() {
      boolean done_with_animation;
      done_with_animation = super.display_animation(); 
@@ -70,13 +74,13 @@ class Celeb extends Animation {
      if(done_with_animation) set_state("idle");
      
      if( dist(main_character.location.x, main_character.location.y, paparazzi.location.x, paparazzi.location.y) <= main_character.size.x ) {
-      float randomize = random(20);
+      float randomize = random(30);
       
       paparazzi.stop();
       
-      if( (randomize > 10 && done_with_animation) || state == "run" ) {
+      if( (randomize > 15 && done_with_animation) || state == "run" ) {
         paparazzi.set_state("punch");
-      } else if( (randomize <= 10 && done_with_animation) || state == "run" ) {
+      } else if( (randomize <= 15 && done_with_animation) || state == "run" ) {
         paparazzi.set_state("kick");
       }
     }

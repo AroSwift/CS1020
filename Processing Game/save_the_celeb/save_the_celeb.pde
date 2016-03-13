@@ -77,9 +77,9 @@ void keyPressed() {
     } else if( key == 'w' || key == 'W' ) {
       //main_character.set_state("jump");
     } else if( key == 'k' || key == 'K' ) {
-      main_character.set_state("kick"); 
+      if(main_character.state != "kick") main_character.set_state("kick"); 
     } else if( key == 'j' || key == 'J' ) {
-      main_character.set_state("punch");
+      if(main_character.state != "punch") main_character.set_state("punch");
     }
   }
 }
@@ -89,9 +89,9 @@ void keyReleased() {
   // Dont do game actions if user is not ready to play game
   if(game_screen != 0 && game_screen != 2) {
     if( key == 'd' || key == 'D') {
-     main_character.set_state("idle");
+      if(main_character.state != "idle") main_character.set_state("idle");
     } else if( key == 'a' || key == 'A') {
-     main_character.set_state("idle");
+      if(main_character.state != "idle")  main_character.set_state("idle");
     }
   }
 }

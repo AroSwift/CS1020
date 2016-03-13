@@ -18,32 +18,34 @@ class Celeb extends Animation {
   Celeb(String state) {
     // Default pose and position of character
     super(paparazzi_animation_path + state, 61, true, 400, 425, 125, 275);
-    // Health by defualt shall be 100
     health = max_health;
-    // Should start boolean alive
+    // Should start game alive
     alive = true;
+    // We are not being punched or kicked
     drawing_blood = null;
+    // Have not kicked anyone
     num_kills = 0;
     
+    // Set the current animation state
     this.state = state;
     
-    // Put a health bar in the top left screen
-    //health_bar = new HealthBar(max_health, 0, 10, 30);
+    // Put a health bar in the top left corner
     PVector new_location = new PVector(0, 10);
     health_bar = new HealthBar(health, 50, new_location);
   }
   
   void go(int x, int y) {
-    velocity = new PVector(x, y);
-    //applyForce(new PVector(x,y));
+    // Move in the specified direction
+    super.velocity = new PVector(x, y);
   }
   
   void stop() {
-    velocity = new PVector(0, 0);
-    acceleration = new PVector(0, 0);
+    // Stop moving in any direction
+    super.velocity = new PVector(0, 0);
+    super.acceleration = new PVector(0, 0);
   }
   
-  //Set to idle, run, jump, punch, or kick
+  //Set to animation state to idle, run, jump, punch, or kick
   void set_state(String state) {
     boolean can_repeat_animation;
     
@@ -65,10 +67,10 @@ class Celeb extends Animation {
       
       if(state == "punch") {
         punch.play();
-        punch.rewind();
-      }
-       //<>//
-    } //<>//
+        punch.rewind(); //<>//
+      } //<>//
+      
+    }
       
     }
     

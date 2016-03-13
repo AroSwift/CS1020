@@ -53,7 +53,11 @@ AudioPlayer kick;
 AudioPlayer death;
 Minim minim;
 
-
+//
+// setup
+// Load the neccissary objects, but do not display them.
+// Play Bacon & Eggs music forever.
+//
 void setup() {
    // Set the size of the window
    size(1200,600);
@@ -84,6 +88,11 @@ void setup() {
    intial_bg_image.resize(width, height);
 }
 
+//
+// draw
+// Determines which screen the game is currently at
+// By default set to 0 which is the instruction screen
+//
 void draw() {
  // Detemine which state the game is in
   if(game_screen == 0) {
@@ -101,7 +110,11 @@ void draw() {
   }
 }
 
-
+//
+// keyPressed
+// When a key is pressed on the the intro or end screen, play game
+// When playing game, handles the actions and animations of the celeb
+//
 void keyPressed() {
   // Play the game when the user is ready to play the game
   if(game_screen == 0) {
@@ -147,7 +160,10 @@ void keyPressed() {
   }
 }
 
-
+//
+// keyReleased
+// When playing game set celeb animation to idle if user does not want to run
+//
 void keyReleased() {
   // Dont do game actions if user is not ready to play game
   if(game_screen != 0 && game_screen != 2) {
@@ -161,10 +177,22 @@ void keyReleased() {
   }
 }
 
+//
+// initial_screen
+// Introduction screen. Give user instructions for game.
+//
 void initial_screen() {
+   // Show user how to play the game
+   // When user presses key, start the game!
    background(intial_bg_image);
 }
 
+//
+// play_game_screen
+// Continuely set the background to white, create a floor,
+// and update the celeb and paparazzi state. Show the updated
+// kill count and when the celeb is dead, stop playing game.
+//
 void play_game_screen() {
   background(255);
  
@@ -173,28 +201,39 @@ void play_game_screen() {
   noStroke();
   rect(0, height-100, width, 100);
  
+  // Update the totality of celeb
   main_character.update();
   main_character.display();
   
+  // Update the totality of paparazzi
   paparazzi.update();
   paparazzi.display();
  
-  // Show blood if someone was hit
-  if(drawing_blood != null) drawing_blood.display();
-  
-   fill(0);
-   textSize(20);
+   fill(0); // Set text to black
+   textSize(20); // Set text size to 20
    // Display main character's kills and account for text size
    text("Kills: " + main_character.num_kills,(width-widthBuffer-main_character.num_kills-60),BOTTOM-heightBuffer+60);
   
+  // When the celeb dies, go to losing screen
   if(!main_character.alive) game_screen = 2;
 }
 
+//
+// end_game_screen
+// Show the end game screen.
+//
 void end_game_screen() {
+  // Show the losing screen
+  // Play again when user presses any key
   background(intial_bg_image);
 }
 
+//
+// reset_game
+// Reset the celeb and paparazzi and allow user to play game again.
+//
 void reset_game() {
+ // Reset the entire game
  game_screen = 1;
  paparazzi = new Paparazzi("idle");
  main_character = new Celeb("idle");

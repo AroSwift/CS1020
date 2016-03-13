@@ -74,7 +74,7 @@ class Paparazzi extends Animation {
   
   void hit(int loss) {
     health -= loss;
-    if( health <= 0 ) {
+    if( health <= 0 && alive ) {
       die();
     }
   }
@@ -89,15 +89,19 @@ class Paparazzi extends Animation {
   }
   
   // Overide super class's enforcement of boundries
-  //void enforceBoundaries() {
-  // if (location.x <= -size.x/2) {
-  //    location.y = width;
-  // }
-    
-  // if (location.y <= -size.y/2) {
-  //    location.y = height;
-  // }
-  //}
+  void enforceBoundaries() {
+    if(alive) {
+      super.enforceBoundaries();
+    } else {
+      if (location.x <= -size.x/2) {
+         location.y = width;
+      }
+        
+      if (location.y <= -size.y/2) {
+         location.y = height;
+      }
+    }
+  }
   
   void display() {
      if(!alive) {

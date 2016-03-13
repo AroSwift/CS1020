@@ -12,6 +12,11 @@ class Animation extends Object {
   int frame;
   boolean repeat;
   
+  
+  //
+  // Animation
+  // Constructor for animation.
+  //
   Animation(String path, int count, boolean repeat, int x, int y, int w, int h) {
     // Intialize the varables
     super(x, y, w, h);
@@ -30,6 +35,10 @@ class Animation extends Object {
     }
   }
   
+  //
+  // change_animation
+  // Set the animation of the character to the new specified animation.
+  //
   void change_animation(String path, int count, boolean repeat) {
     // Reset the variables
     images = new PImage[count];
@@ -46,6 +55,11 @@ class Animation extends Object {
     }
   }
 
+  //
+  // display_animation
+  // Show the image sequence frame by frame.
+  // Returns whether or not the animation is at the end.
+  //
   boolean display_animation() {
     boolean done_with_animation = false;
     

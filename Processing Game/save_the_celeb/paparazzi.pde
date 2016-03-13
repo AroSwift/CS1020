@@ -14,6 +14,8 @@ class Paparazzi extends Animation {
   boolean alive;
   String state;
   Blood drawing_blood;
+  long time_before_regenerate = 10000;
+  long respawn_time;
   
   //
   // Paparazzi
@@ -52,6 +54,9 @@ class Paparazzi extends Animation {
   void stop() {
     velocity = new PVector(0, 0);
     acceleration = new PVector(0, 0);
+    super.rotation = 0;
+    super.rotationVelocity = 0;
+    super.rotationAcceleration = 0;
   }
   
   //
@@ -123,6 +128,17 @@ class Paparazzi extends Animation {
     // Play the death sound effect
     death.play();
     death.rewind();
+    
+    respawn_time = millis() + time_before_regenerate;
+  }
+  
+  void regenerate() {
+    alive = true;
+    stop();
+    health = max_health;
+    set_state("idle");
+    location = new PVector(random(0,width), 425);
+    set_state("idle");
   }
   
   //
@@ -155,8 +171,12 @@ class Paparazzi extends Animation {
   //
   void display() {
      if(!alive) {
-        super.display();
-        return;
+        if(millis() >= respawn_time) {
+          regenerate();
+        } else {
+          super.display();
+          return;
+        }
      }
      boolean done_with_animation;
      done_with_animation = super.display_animation(); 
@@ -176,7 +196,7 @@ class Paparazzi extends Animation {
        }
     } else {
        PVector f = main_character.attract(paparazzi);
-       f.mult(0.000003);
+       f.mult(0.00000007);
        paparazzi.applyForce(f); 
        if(state != "run") paparazzi.set_state("run");
     }

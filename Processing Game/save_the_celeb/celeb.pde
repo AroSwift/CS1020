@@ -55,6 +55,9 @@ class Celeb extends Animation {
     // Stop moving in any direction
     super.velocity = new PVector(0, 0);
     super.acceleration = new PVector(0, 0);
+    super.rotation = 0;
+    super.rotationVelocity = 0;
+    super.rotationAcceleration = 0;
   }
   
   //
@@ -64,11 +67,11 @@ class Celeb extends Animation {
   void set_state(String state) {
     boolean can_repeat_animation;
     
-    if(state == "idle") stop();
-    if(state == "jump") go(0, -10);
+    if(state == "idle") stop(); //<>//
+    if(state == "jump") go(0, -10); //<>//
     if(state == "kick" || state == "punch")  {
-      stop(); //<>//
-       //<>//
+      stop();
+      
     if( dist(main_character.location.x, main_character.location.y, paparazzi.location.x, paparazzi.location.y) <= main_character.size.x ) {
       float randomize = random(15,30);
       // Decrease the health of paparazzi because celeb is punching or kicking them

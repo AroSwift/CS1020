@@ -63,7 +63,6 @@ class Paparazzi extends Animation {
       
      if(done_with_animation) set_state("idle");
      
-     
   }
  
 }

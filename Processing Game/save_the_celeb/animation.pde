@@ -34,7 +34,7 @@ class Animation extends Object {
     for (int i = 0; i < image_count; i++) {
      String image_name = path + "__" + nf(i, 3) + ".png";
      images[i] = loadImage(image_name);
-     images[i].resize(int(animation_size.x), int(animation_size.y));
+     images[i].resize(int(animation_size.x), int(size.y));
     }
   }
 

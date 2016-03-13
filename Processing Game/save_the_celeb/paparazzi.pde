@@ -1,19 +1,25 @@
 String paparazzi_animation_path = "Paparazzi/Character_1/";
 
 class Paparazzi extends Animation {
-  float health;
+  // Default max life of character(s)
+  int max_health = 100;
+  HealthBar health_bar;
+  int health;
   boolean alive;
   String state;
   
   Paparazzi(String state) {
     // Default pose and position of character
-    super(paparazzi_animation_path + state, 62, true, 400, 425, 125, 275);
+    super(paparazzi_animation_path + state, 62, true, 0, 425, 125, 275);
     // Health by defualt shall be 100
     health = 100;
     // Should start boolean alive
     alive = true;
     
     this.state = state;
+    
+    // Put a health bar above the paparazzi's head
+    health_bar = new HealthBar(max_health, int(location.x), max_health, 20);
   }
   
   void go(int x, int y) {
@@ -32,12 +38,15 @@ class Paparazzi extends Animation {
     
     if(state == "idle") stop();
     if(state == "jump") go(0, -10);
-    if(state == "kick" || state == "punch") stop();
+    if(state == "kick" || state == "punch") {
+      main_character.hit( int(random(5)) ); 
+      stop();
+    }
     
     if(state == "run") {
       if(key == 'a' || key == 'A') {
          go(-5, 0);
-      }else if(key == 'd' || key == 'D') {
+      } else if(key == 'd' || key == 'D') {
         go(10, 0);
       }
     }
@@ -50,11 +59,11 @@ class Paparazzi extends Animation {
     super.change_animation(paparazzi_animation_path + state, 62, can_repeat_animation);
   }
   
-  void hit() {
-   health -= 10;
-   if( health <= 0 ) {
-     alive = false;
-   }
+  void hit(int loss) {
+    health -= loss;
+    if( health <= 0 ) {
+      alive = false;
+    }
   }
   
   void display() {
@@ -64,23 +73,24 @@ class Paparazzi extends Animation {
      if(done_with_animation) set_state("idle");
      
     if( dist(main_character.location.x, main_character.location.y, paparazzi.location.x, paparazzi.location.y) <= main_character.size.x ) {
-      float randomize = random(20);
+      float randomize = random(10);
       
       paparazzi.stop();
       
-      if( (randomize > 10 && done_with_animation) || state == "run" ) {
+      if( (randomize > 5 && done_with_animation) || state == "run" ) {
         paparazzi.set_state("punch");
-      } else if( (randomize < 10 && done_with_animation) || state == "run" ) {
+      } else if( (randomize <= 5 && done_with_animation) || state == "run" ) {
         paparazzi.set_state("kick");
       }
     } else {
-     PVector f = main_character.attract(paparazzi);
-     f.mult(0.000000005);
-     paparazzi.applyForce(f); 
-     if(state != "run") paparazzi.set_state("run");
+      PVector f = main_character.attract(paparazzi);
+      f.mult(0.000000005);
+      paparazzi.applyForce(f); 
+      if(state != "run") paparazzi.set_state("run");
     }
-     
-     
+    
+    health_bar.update(health);
+    health_bar.display();
   }
  
 }

@@ -1,4 +1,5 @@
-//Paparazzi Peril
+// Paparazzi Peril
+// Paparazzi Attack
 
 // Sound Libraries for music and sound effects
 import ddf.minim.*;
@@ -29,7 +30,7 @@ void setup() {
    size(1200,600);
 
    // Set frame rate so that game works on lower spec machines
-   frameRate(40);
+   frameRate(30);
   
    minim = new Minim(this);
    // Bacon & Eggs is produced by Ethan Barlow and processed by Aaron Barlow
@@ -113,6 +114,8 @@ void play_game_screen() {
   
   paparazzi.update();
   paparazzi.display();
+  
+  if(!main_character.alive) game_screen = 2;
 
 }
 

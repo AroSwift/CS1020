@@ -24,7 +24,9 @@ int heightBuffer = 130;
 int widthBuffer = 40;
 
 // Sounds and support objects
-AudioPlayer player;
+AudioPlayer music;
+AudioPlayer punch;
+AudioPlayer kick;
 Minim minim;
 
 
@@ -35,10 +37,16 @@ void setup() {
    // Set a lower frame rate so that game works on lower spec machines
    frameRate(40);
   
+  
+  // Load music and sound effects
    minim = new Minim(this);
    // Bacon & Eggs is produced by Ethan Barlow and processed by Aaron Barlow
-   player = minim.loadFile("Bacon & Eggs.mp3", 2048);
-   player.loop();
+   music = minim.loadFile("Bacon & Eggs.mp3", 2048);
+   music.loop();
+   
+   // Sound effects provided by SoundBible
+   punch = minim.loadFile("Punch.mp3", 2048);
+   kick = minim.loadFile("Kick.mp3", 2048);
   
    paparazzi = new Paparazzi("idle");
    main_character = new Celeb("idle");

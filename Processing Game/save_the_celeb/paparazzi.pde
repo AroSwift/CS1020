@@ -19,7 +19,9 @@ class Paparazzi extends Animation {
     this.state = state;
     
     // Put a health bar above the paparazzi's head
-    health_bar = new HealthBar(max_health, int(location.x), int(size.x), 10, location);
+    //health_bar = new HealthBar(max_health, 10, location);
+    PVector new_location = new PVector(location.x, location.y+size.y);
+    health_bar = new HealthBar(max_health, 10, new_location);
   }
   
   void go(int x, int y) {
@@ -89,7 +91,8 @@ class Paparazzi extends Animation {
       if(state != "run") paparazzi.set_state("run");
     }
     
-    health_bar.update(health, location);
+    PVector new_location = new PVector(location.x, location.y+heightBuffer+(-size.y));    
+    health_bar.update(health, new_location);
     health_bar.display();
   }
  

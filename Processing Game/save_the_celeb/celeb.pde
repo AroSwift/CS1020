@@ -19,7 +19,9 @@ class Celeb extends Animation {
     this.state = state;
     
     // Put a health bar in the top left screen
-    health_bar = new HealthBar(max_health, 0, 10, 30);
+    //health_bar = new HealthBar(max_health, 0, 10, 30);
+    PVector new_location = new PVector(0, 10);
+    health_bar = new HealthBar(max_health, 50, new_location);
   }
   
   void go(int x, int y) {
@@ -38,14 +40,26 @@ class Celeb extends Animation {
     
     if(state == "idle") stop();
     if(state == "jump") go(0, -10);
-    if(state == "kick" || state == "punch") stop();
+    if(state == "kick" || state == "punch")  {
+      stop();
+            
+      if(state == "kick") {
+        kick.play();
+        kick.rewind();
+      }
+      
+      if(state == "punch") {
+        punch.play();
+        punch.rewind();
+      }
+    }
     
     if(state == "run") {
       if(key == 'a' || key == 'A') {
          go(-5, 0);
       }else if(key == 'd' || key == 'D') {
-        go(10, 0);
-      }
+        go(10, 0); //<>//
+      } //<>//
     }
     
     can_repeat_animation = state == "idle" || state == "run" ? true : false;
@@ -57,8 +71,8 @@ class Celeb extends Animation {
   }
   
   void hit(int loss) {
-   health -= loss; //<>//
-   if( health <= 0 ) { //<>//
+   health -= loss;
+   if( health <= 0 ) {
      alive = false;
    }
   }
@@ -84,7 +98,7 @@ class Celeb extends Animation {
         paparazzi.set_state("kick");
       }
     }
-    
+
     health_bar.update(health);
     health_bar.display();
   }

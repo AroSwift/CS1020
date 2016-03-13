@@ -9,7 +9,7 @@ class Paparazzi extends Animation {
   
   Paparazzi(String state) {
     // Default pose and position of character
-    super(paparazzi_animation_path + state, 61, true, 8, 425, 125, 275);
+    super(paparazzi_animation_path + state, 61, true, 7, 425, 125, 275);
     // Health by defualt shall be 100
     health = max_health;
     // Should start boolean alive
@@ -86,6 +86,10 @@ class Paparazzi extends Animation {
     
     // Celeb got another kill
     main_character.num_kills++;
+    
+    // Play the death sound effect
+    death.play();
+    death.rewind();
   }
   
   // Overide super class's enforcement of boundries
@@ -126,7 +130,7 @@ class Paparazzi extends Animation {
        }
     } else {
        PVector f = main_character.attract(paparazzi);
-       f.mult(0.000000003);
+       f.mult(0.000003);
        paparazzi.applyForce(f); 
        if(state != "run") paparazzi.set_state("run");
     }

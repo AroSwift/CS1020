@@ -41,6 +41,7 @@ Random generator;
 AudioPlayer music;
 AudioPlayer punch;
 AudioPlayer kick;
+AudioPlayer death;
 Minim minim;
 
 
@@ -62,6 +63,7 @@ void setup() {
    // Sound effects provided by SoundBible
    punch = minim.loadFile("Punch.mp3", 2048);
    kick = minim.loadFile("Kick.mp3", 2048);
+   death = minim.loadFile("Death.mp3", 2048);
    
    // Keep tract of the time that has changed
    //loop_time = millis() + 60000;

@@ -68,9 +68,9 @@ class Celeb extends Animation {
     if(state == "run") {
       if(key == 'a' || key == 'A') {
          go(-5, 0); //<>//
-      }else if(key == 'd' || key == 'D') { //<>//
-        go(10, 0); //<>//
-      } //<>//
+       } else if(key == 'd' || key == 'D') { //<>//
+        go(10, 0);
+      }
     }
     
     can_repeat_animation = state == "idle" || state == "run" ? true : false;
@@ -91,8 +91,11 @@ class Celeb extends Animation {
   void die() {
     alive = false;
     super.applyRotation(40);
-   
     go(-100, width/2);
+    
+    // Play the death sound effect
+    death.play();
+    death.rewind();
   }
   
   boolean still_doing_current_animation() {

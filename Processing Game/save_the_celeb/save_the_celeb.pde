@@ -20,6 +20,9 @@ Paparazzi paparazzi;
 // Default screen
 int game_screen = 0;
 
+int heightBuffer = 130;
+int widthBuffer = 40;
+
 // Sounds and support objects
 AudioPlayer player;
 Minim minim;
@@ -29,8 +32,8 @@ void setup() {
    // Set the size of the window
    size(1200,600);
 
-   // Set frame rate so that game works on lower spec machines
-   frameRate(30);
+   // Set a lower frame rate so that game works on lower spec machines
+   frameRate(40);
   
    minim = new Minim(this);
    // Bacon & Eggs is produced by Ethan Barlow and processed by Aaron Barlow
@@ -109,9 +112,9 @@ void play_game_screen() {
   rect(0, height-100, width, 100);
  
   // Set the sky background
-  fill(255);
-  noStroke();
-  rect(0, 0, width, 200);
+  //fill(255);
+  //noStroke();
+  //rect(0, 0, width, 200);
  
   main_character.update();
   main_character.display();

@@ -19,9 +19,7 @@ class Paparazzi extends Animation {
     this.state = state;
     
     // Put a health bar above the paparazzi's head
-    int top_head = abs(int(location.x - size.x));
-    println(top_head);
-    health_bar = new HealthBar(max_health, top_head, 5, 20);
+    health_bar = new HealthBar(max_health, int(location.x), int(size.x), 10, location);
   }
   
   void go(int x, int y) {
@@ -91,7 +89,7 @@ class Paparazzi extends Animation {
       if(state != "run") paparazzi.set_state("run");
     }
     
-    health_bar.update(health);
+    health_bar.update(health, location);
     health_bar.display();
   }
  

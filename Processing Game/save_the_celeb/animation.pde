@@ -20,9 +20,6 @@ class Animation extends Object {
      images[i] = loadImage(image_name);
      images[i].resize(int(animation_size.x), int(animation_size.y));
     }
-    
-    heightBuffer = 130;
-    widthBuffer = 40;
   }
   
   void change_animation(String path, int count, boolean repeat) {

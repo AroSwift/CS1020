@@ -19,7 +19,7 @@ class Celeb extends Animation {
     this.state = state;
     
     // Put a health bar in the top left screen
-    health_bar = new HealthBar(max_health, 0, 5, 20);
+    health_bar = new HealthBar(max_health, 0, 10, 30);
   }
   
   void go(int x, int y) {

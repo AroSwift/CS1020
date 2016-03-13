@@ -31,7 +31,6 @@ class Celeb extends Animation {
     boolean can_repeat_animation;
     
     if(state == "idle") stop();
-    if(state == "bathroom") stop();
     if(state == "jump") go(0, -10);
     if(state == "kick" || state == "punch") stop();
     
@@ -57,9 +56,9 @@ class Celeb extends Animation {
      alive = false;
    }
   }
-   //<>//
+  
   void display() { //<>//
-     boolean done_with_animation;
+     boolean done_with_animation; //<>//
      done_with_animation = super.display_animation(); 
       
      if(done_with_animation) set_state("idle");

@@ -1,4 +1,6 @@
 //
+// particle_system
+// by: Dr. Brown
 // ParticleSytem
 // (adapted from example in "The Nature of Code")
 //

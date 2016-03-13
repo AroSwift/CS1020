@@ -1,5 +1,10 @@
-// Class for animating a sequence of GIFs
-
+//
+// animation
+// by: Aaron Barlow
+//
+// Simulate animation by getting images and going to the next frame.
+// Allows frames to either repeat or not repeat the sequence.
+//
 class Animation extends Object {
   PImage[] images;
   PVector  animation_size;

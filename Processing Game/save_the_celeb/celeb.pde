@@ -1,3 +1,10 @@
+//
+// celeb
+// by: Aaron Barlow
+//
+// Encapsilate the characteristics of the celebrity.
+// The celeb can run left, right, punch, and kick paparazzi.
+//
 class Celeb extends Animation {
   // Default max life of character(s)
   int max_health = 100;
@@ -60,15 +67,15 @@ class Celeb extends Animation {
         punch.play();
         punch.rewind();
       }
-      
-    }
+       //<>//
+    } //<>//
       
     }
     
     if(state == "run") {
       if(key == 'a' || key == 'A') {
-         go(-5, 0); //<>//
-       } else if(key == 'd' || key == 'D') { //<>//
+         go(-5, 0);
+       } else if(key == 'd' || key == 'D') {
         go(10, 0);
       }
     }

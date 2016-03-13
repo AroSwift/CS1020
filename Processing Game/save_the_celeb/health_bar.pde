@@ -1,3 +1,10 @@
+//
+// health_bar
+// by: Aaron Barlow
+//
+// A health bar for characters which sets the width of the bar to the health of the character.
+// Health bar color changes in increments of thirds from green to orange to red.
+//
 class HealthBar extends Object {
   int orig_health;
   int current_health;

@@ -1,3 +1,11 @@
+//
+// paparazzi
+// by: Aaron Barlow
+//
+// Encapsilate the characteristics of the paparazzi.
+// The paparazzi can run left, right, punch, and kick paparazzi.
+// The paparazzi follows the celebrity and tries to take the celeb down.
+//
 class Paparazzi extends Animation {
   // Default max life of character(s)
   int max_health = 50;

@@ -1,5 +1,11 @@
-// Paparazzi Peril
-// Paparazzi Attack
+//
+// paparazzi_attack
+// by: Aaron Barlow
+// game name: Paparazzi Attack
+//
+// The paparazzi are after you, a celebrity, and you must not
+// not only defend yourself, but kill all the paparazzi
+//
 
 // Sound Libraries for music and sound effects
 import ddf.minim.*;
@@ -17,7 +23,7 @@ PImage intial_bg_image;
 PImage game_bg_image;
 PImage end_bg_image;
 
-// Characters
+// Characters and their animation path
 Celeb main_character;
 Paparazzi paparazzi;
 String celeb_animation_path = "MainCharacter/";
@@ -27,13 +33,16 @@ String paparazzi_animation_path = "Paparazzi/Character_1/";
 Blood drawing_blood = null;
 
 // Default screen
+// 0: introduction screen
+// 1: Play the game screen
+// 2: Lose game screen
 int game_screen = 0;
 
 // Set the defualt offset from window in which objects should not go
 int heightBuffer = 130;
 int widthBuffer = 40;
 
-// Determine the amount of time that has passed since beg
+// Determine the amount of time that has passed since start of game
 long loop_time;
 
 // Sounds and support objects
@@ -48,11 +57,9 @@ Minim minim;
 void setup() {
    // Set the size of the window
    size(1200,600);
-   //fullScreen();
 
    // Set a lower frame rate so that game works on lower spec machines
-   frameRate(30);
-  
+   frameRate(30); // Default is 60 frames per second
   
   // Load music and sound effects
    minim = new Minim(this);
@@ -65,10 +72,10 @@ void setup() {
    kick = minim.loadFile("Kick.mp3", 2048);
    death = minim.loadFile("Death.mp3", 2048);
    
-   // Keep tract of the time that has changed
-   //loop_time = millis() + 60000;
-   loop_time = millis();
+   // Keep track of the time that has changed
+   loop_time = millis() + 60000;
   
+  // Create new instance of paparrazzi and celeb
    paparazzi = new Paparazzi("idle");
    main_character = new Celeb("idle");
   
@@ -98,12 +105,11 @@ void draw() {
 void keyPressed() {
   // Play the game when the user is ready to play the game
   if(game_screen == 0) {
-    // Starting game for the first time
+    // Starting game for the first time when any key is pressed
     game_screen = 1;
+    // Set the first animation frame
     main_character.set_state("idle");
     paparazzi.set_state("idle");
-    redraw();
-    //main_character = new Celeb("idle");
   } else if(game_screen == 2) {
     // Play the game again
     reset_game();
@@ -121,18 +127,20 @@ void keyPressed() {
     } else if( key == 'j' || key == 'J' ) {
       if(main_character.state != "punch") main_character.set_state("punch");
     } else if(key == 'p' || key == 'P') {
+      // Pause the game
        if(looping) {
-         fill(0);
-         textSize(40);
+         fill(0); // Set text to black
+         textSize(40); // Set text size to 40
          // Inform user that game is paused
          textAlign(CENTER);
+         // Put text near the top of the screen
          text("Game Paused...",width/2,(height/2)-(height*0.3));
          text("P to continue",width/2,(height/2)-(height*0.3)+50);
          
          // Stop the game
          noLoop();
        } else {
-         // Start the game agin
+         // Start the game again
          loop();
        }  
     }

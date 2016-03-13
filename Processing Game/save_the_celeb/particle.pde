@@ -1,4 +1,6 @@
 //
+// particle
+// by: Dr. Brown
 // Partilce
 // (adapted from example in "The Nature of Code")
 //

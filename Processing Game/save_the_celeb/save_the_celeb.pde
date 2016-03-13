@@ -95,15 +95,16 @@ void draw() {
 
 void keyPressed() {
   // Play the game when the user is ready to play the game
-  if(game_screen == 0 || game_screen == 2) {
+  if(game_screen == 0) {
     // Starting game for the first time
     game_screen = 1;
     main_character.set_state("idle");
-    main_character.health = main_character.max_health;
-    
     paparazzi.set_state("idle");
-    paparazzi.health = paparazzi.max_health;
+    redraw();
     //main_character = new Celeb("idle");
+  } else if(game_screen == 2) {
+    // Play the game again
+    reset_game();
   } else if(game_screen == 1) { // Playing game
     if( key == 'd' || key == 'D' ) {
       // Do not reset run animation if already running!
@@ -181,4 +182,13 @@ void play_game_screen() {
 
 void end_game_screen() {
   background(intial_bg_image);
+}
+
+void reset_game() {
+ game_screen = 1;
+ paparazzi = new Paparazzi("idle");
+ main_character = new Celeb("idle");
+ 
+ main_character.set_state("idle");
+ paparazzi.set_state("idle");
 }

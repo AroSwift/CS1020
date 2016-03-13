@@ -41,8 +41,18 @@ class Paparazzi extends Animation {
     if(state == "idle") stop();
     if(state == "jump") go(0, -10);
     if(state == "kick" || state == "punch") {
-      main_character.hit( int(random(5)) ); 
+      main_character.hit( int(random(3, 10)) ); 
       stop();
+            
+      if(state == "kick") {
+        kick.play();
+        kick.rewind();
+      }
+      
+      if(state == "punch") {
+        punch.play();
+        punch.rewind();
+      }
     }
     
     if(state == "run") {
@@ -64,8 +74,15 @@ class Paparazzi extends Animation {
   void hit(int loss) {
     health -= loss;
     if( health <= 0 ) {
-      alive = false;
+      die();
     }
+  }
+  
+  void die() {
+    alive = false;
+    super.applyRotation(40);
+   
+    go(600, width/2);
   }
   
   void display() {
@@ -86,7 +103,7 @@ class Paparazzi extends Animation {
       }
     } else {
       PVector f = main_character.attract(paparazzi);
-      f.mult(0.000000005);
+      f.mult(0.000000003);
       paparazzi.applyForce(f); 
       if(state != "run") paparazzi.set_state("run");
     }

@@ -42,7 +42,12 @@ class Celeb extends Animation {
     if(state == "jump") go(0, -10);
     if(state == "kick" || state == "punch")  {
       stop();
-            
+      
+    if( dist(main_character.location.x, main_character.location.y, paparazzi.location.x, paparazzi.location.y) <= main_character.size.x ) {
+      float randomize = random(15,30);
+      // Decrease the health of paparazzi because celeb is punching or kicking them
+      paparazzi.hit( int(randomize) );
+      
       if(state == "kick") {
         kick.play();
         kick.rewind();
@@ -52,6 +57,9 @@ class Celeb extends Animation {
         punch.play();
         punch.rewind();
       }
+      
+    }
+      
     }
     
     if(state == "run") {
@@ -71,10 +79,17 @@ class Celeb extends Animation {
   }
   
   void hit(int loss) {
-   health -= loss;
-   if( health <= 0 ) {
-     alive = false;
-   }
+    health -= loss;
+    if( health <= 0 ) {
+      die();
+    }
+  }
+  
+  void die() {
+    alive = false;
+    super.applyRotation(40);
+   
+    go(-100, width/2);
   }
   
   boolean still_doing_current_animation() {
@@ -82,22 +97,10 @@ class Celeb extends Animation {
   }
   
   void display() {
-     boolean done_with_animation;
-     done_with_animation = super.display_animation(); 
+    boolean done_with_animation;
+    done_with_animation = super.display_animation(); 
       
-     if(done_with_animation) set_state("idle");
-     
-     if( dist(main_character.location.x, main_character.location.y, paparazzi.location.x, paparazzi.location.y) <= main_character.size.x ) {
-      float randomize = random(30);
-      
-      paparazzi.stop();
-      
-      if( (randomize > 15 && done_with_animation) || state == "run" ) {
-        paparazzi.set_state("punch");
-      } else if( (randomize <= 15 && done_with_animation) || state == "run" ) {
-        paparazzi.set_state("kick");
-      }
-    }
+    if(done_with_animation) set_state("idle");
 
     health_bar.update(health);
     health_bar.display();

@@ -35,7 +35,7 @@ void setup() {
    size(1200,600);
 
    // Set a lower frame rate so that game works on lower spec machines
-   frameRate(40);
+   frameRate(30);
   
   
   // Load music and sound effects
@@ -138,11 +138,6 @@ void play_game_screen() {
   noStroke();
   rect(0, height-100, width, 100);
  
-  // Set the sky background
-  //fill(255);
-  //noStroke();
-  //rect(0, 0, width, 200);
- 
   main_character.update();
   main_character.display();
   
@@ -150,7 +145,6 @@ void play_game_screen() {
   paparazzi.display();
   
   if(!main_character.alive) game_screen = 2;
-
 }
 
 void end_game_screen() {

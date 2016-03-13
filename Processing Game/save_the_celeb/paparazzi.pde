@@ -9,7 +9,7 @@ class Paparazzi extends Animation {
   
   Paparazzi(String state) {
     // Default pose and position of character
-    super(paparazzi_animation_path + state, 61, true, 0, 425, 125, 275);
+    super(paparazzi_animation_path + state, 61, true, 8, 425, 125, 275);
     // Health by defualt shall be 100
     health = max_health;
     // Should start boolean alive
@@ -83,18 +83,21 @@ class Paparazzi extends Animation {
     alive = false;
     super.applyRotation(20);
     go(-50, width/2);
+    
+    // Celeb got another kill
+    main_character.num_kills++;
   }
   
   // Overide super class's enforcement of boundries
-  void enforceBoundaries() {
-   if (location.x <= -size.x/2) {
-      location.y = width;
-   }
+  //void enforceBoundaries() {
+  // if (location.x <= -size.x/2) {
+  //    location.y = width;
+  // }
     
-   if (location.y <= -size.y/2) {
-      location.y = height;
-   }
-  }
+  // if (location.y <= -size.y/2) {
+  //    location.y = height;
+  // }
+  //}
   
   void display() {
      if(!alive) {
@@ -119,7 +122,7 @@ class Paparazzi extends Animation {
        }
     } else {
        PVector f = main_character.attract(paparazzi);
-       f.mult(0.000000001);
+       f.mult(0.000000003);
        paparazzi.applyForce(f); 
        if(state != "run") paparazzi.set_state("run");
     }

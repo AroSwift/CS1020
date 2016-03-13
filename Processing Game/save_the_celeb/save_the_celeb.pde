@@ -106,9 +106,11 @@ void keyPressed() {
     //main_character = new Celeb("idle");
   } else if(game_screen == 1) { // Playing game
     if( key == 'd' || key == 'D' ) {
-      main_character.set_state("run");
+      // Do not reset run animation if already running!
+      if(main_character.state != "run") main_character.set_state("run");
     } else if( key == 'a' || key == 'A' ) {
-      main_character.set_state("run");
+      // Do not reset run animation if already running!
+      if(main_character.state != "run") main_character.set_state("run");
     } else if( key == 'w' || key == 'W' ) {
       //main_character.set_state("jump");
     } else if( key == 'k' || key == 'K' ) {
@@ -139,8 +141,10 @@ void keyReleased() {
   // Dont do game actions if user is not ready to play game
   if(game_screen != 0 && game_screen != 2) {
     if( key == 'd' || key == 'D') {
+      // Do not reset idle animation if already idling
       if(main_character.state != "idle") main_character.set_state("idle");
     } else if( key == 'a' || key == 'A') {
+      // Do not reset idle animation if already idling
       if(main_character.state != "idle")  main_character.set_state("idle");
     }
   }
@@ -166,6 +170,11 @@ void play_game_screen() {
  
   // Show blood if someone was hit
   if(drawing_blood != null) drawing_blood.display();
+  
+   fill(0);
+   textSize(20);
+   // Display main character's score and account for text size
+   text("Score: " + main_character.num_kills,(width-widthBuffer-main_character.num_kills-60),BOTTOM-heightBuffer+60);
   
   if(!main_character.alive) game_screen = 2;
 }

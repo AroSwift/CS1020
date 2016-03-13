@@ -5,6 +5,7 @@ class Celeb extends Animation {
   int health;
   boolean alive;
   String state;
+  int num_kills;
   Blood drawing_blood;
   
   Celeb(String state) {
@@ -15,6 +16,7 @@ class Celeb extends Animation {
     // Should start boolean alive
     alive = true;
     drawing_blood = null;
+    num_kills = 0;
     
     this.state = state;
     
@@ -65,8 +67,8 @@ class Celeb extends Animation {
     
     if(state == "run") {
       if(key == 'a' || key == 'A') {
-         go(-5, 0);
-      }else if(key == 'd' || key == 'D') {
+         go(-5, 0); //<>//
+      }else if(key == 'd' || key == 'D') { //<>//
         go(10, 0); //<>//
       } //<>//
     }

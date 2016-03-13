@@ -76,11 +76,16 @@ void draw() {
 
 void keyPressed() {
   // Play the game when the user is ready to play the game
-  if(game_screen == 0) {
+  if(game_screen == 0 || game_screen == 2) {
     // Starting game for the first time
     game_screen = 1;
     main_character.set_state("idle");
-  } else { // Playing game
+    main_character.health = main_character.max_health;
+    
+    paparazzi.set_state("idle");
+    paparazzi.health = paparazzi.max_health;
+    //main_character = new Celeb("idle");
+  } else if(game_screen == 1) { // Playing game
     if( key == 'd' || key == 'D' ) {
       main_character.set_state("run");
     } else if( key == 'a' || key == 'A' ) {
@@ -91,6 +96,20 @@ void keyPressed() {
       if(main_character.state != "kick") main_character.set_state("kick"); 
     } else if( key == 'j' || key == 'J' ) {
       if(main_character.state != "punch") main_character.set_state("punch");
+    } else if(key == 'p' || key == 'P') {
+       if(looping) {
+         fill(0);
+         textSize(40);
+         // Inform user that game is paused
+         text("Game Paused...",width/2,height/2);
+         text("Press 'P' to continue",width/2-50,height/2+50);
+         
+         // Stop the game
+         noLoop();
+       } else {
+         // Start the game agin
+         loop();
+       }  
     }
   }
 }

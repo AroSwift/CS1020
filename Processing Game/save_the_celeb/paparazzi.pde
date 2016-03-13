@@ -8,13 +8,17 @@
 //
 class Paparazzi extends Animation {
   // Default max life of character(s)
-  int max_health = 50;
+  int max_health = 75;
   HealthBar health_bar;
   int health;
   boolean alive;
   String state;
   Blood drawing_blood;
   
+  //
+  // Paparazzi
+  // Constructor for paparazzi character.
+  //
   Paparazzi(String state) {
     // Default pose and position of character
     super(paparazzi_animation_path + state, 61, true, 7, 425, 125, 275);
@@ -32,17 +36,28 @@ class Paparazzi extends Animation {
     health_bar = new HealthBar(health, 10, new_location);
   }
   
+   //
+  // go
+  // Move the character in the specified direction.
+  //
   void go(int x, int y) {
     velocity = new PVector(x, y);
     //applyForce(new PVector(x,y));
   }
   
+  //
+  // stop
+  // Stop all character movement.
+  //
   void stop() {
     velocity = new PVector(0, 0);
     acceleration = new PVector(0, 0);
   }
   
-  //Set to idle, run, jump, punch, or kick
+  //
+  // set_state
+  // Set the animation state to idle, run, jump, punch, or kick
+  //
   void set_state(String state) {
     boolean can_repeat_animation;
     
@@ -80,6 +95,11 @@ class Paparazzi extends Animation {
     super.change_animation(paparazzi_animation_path + state, 61, can_repeat_animation);
   }
   
+  //
+  // hit
+  // Decrease the health of paparazzi if still alive.
+  // If health is below or at zero, set state to dead.
+  //
   void hit(int loss) {
     health -= loss;
     if( health <= 0 && alive ) {
@@ -87,6 +107,11 @@ class Paparazzi extends Animation {
     }
   }
   
+  //
+  // die
+  // Encapsulate logic that sets chracter's state to dead.
+  // Make celeb fly off screen and play dead sound.
+  //
   void die() {
     alive = false;
     super.applyRotation(20);
@@ -100,7 +125,11 @@ class Paparazzi extends Animation {
     death.rewind();
   }
   
-  // Overide super class's enforcement of boundries
+  //
+  // enforceBoundaries
+  // Overide super class's enforcement of boundries when dead 
+  // otherwise use super class's boundary enforcement
+  //
   void enforceBoundaries() {
     if(alive) {
       super.enforceBoundaries();
@@ -115,6 +144,15 @@ class Paparazzi extends Animation {
     }
   }
   
+  //
+  // display
+  // Show updated state of paparazzi:
+  // Set health bar of paparazzi to health and update animation of paparazzi.
+  // When celeb is away from paparazzi, paparazzi should follow the celeb.
+  // Once paparazzi is within punching and kicking distance, commence randomly
+  // Punching and kicking. While paparazzi is not within punching and kicking
+  // Distance, paparazzi should run towards celeb. Show blood if punched or kicked.
+  //
   void display() {
      if(!alive) {
         super.display();

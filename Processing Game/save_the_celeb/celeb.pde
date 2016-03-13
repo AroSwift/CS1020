@@ -135,7 +135,8 @@ class Celeb extends Animation {
   //
   // display
   // Show updated state of celeb:
-  // Set health bar of celeb to health and update animation of celeb.
+  // Set health bar of celeb to health and update animation of celeb and 
+  // Show blood if punched or kicked.
   //
   void display() {
     boolean done_with_animation;

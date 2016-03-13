@@ -115,21 +115,13 @@ void play_game_screen() {
   println(main_character.location.x + main_character.size.x);
   println(paparazzi.location.x);
   
-  //if( (main_character.location.x + main_character.size.x) >= paparazzi.location.x ) {
-  //  PVector f = main_character.attract(paparazzi);
-  //  f.mult(0.000000005);
-  //  paparazzi.applyForce(f);
-  //} else {
+  //if( dist(main_character.location.x, main_character.location.y, paparazzi.location.x, paparazzi.location.y) <= main_character.size.x ) {
   //  paparazzi.stop();
+  //} else {
+  // PVector f = main_character.attract(paparazzi);
+  // f.mult(0.000000005);
+  // paparazzi.applyForce(f); 
   //}
-
-  if( dist(main_character.location.x, main_character.location.y, paparazzi.location.x, paparazzi.location.y) <= main_character.size.x ) {
-    paparazzi.stop();
-  } else {
-   PVector f = main_character.attract(paparazzi);
-   f.mult(0.000000005);
-   paparazzi.applyForce(f); 
-  }
 
 }
 

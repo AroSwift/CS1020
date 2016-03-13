@@ -63,6 +63,24 @@ class Paparazzi extends Animation {
       
      if(done_with_animation) set_state("idle");
      
+    if( dist(main_character.location.x, main_character.location.y, paparazzi.location.x, paparazzi.location.y) <= main_character.size.x ) {
+      float randomize = random(20);
+      
+      paparazzi.stop();
+      
+      if(randomize >= 10 && done_with_animation) {
+        paparazzi.set_state("punch");
+      } else if(done_with_animation) {
+        paparazzi.set_state("kick");
+      }
+    } else {
+     PVector f = main_character.attract(paparazzi);
+     f.mult(0.000000005);
+     paparazzi.applyForce(f); 
+     if(state != "run") paparazzi.set_state("run");
+    }
+     
+     
   }
  
 }

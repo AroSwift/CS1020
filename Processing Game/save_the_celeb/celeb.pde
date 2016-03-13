@@ -15,6 +15,10 @@ class Celeb extends Animation {
   int num_kills;
   Blood drawing_blood;
   
+  //
+  // Celeb
+  // Constructor for celebrity character.
+  //
   Celeb(String state) {
     // Default pose and position of character
     super(paparazzi_animation_path + state, 61, true, 400, 425, 125, 275);
@@ -34,26 +38,37 @@ class Celeb extends Animation {
     health_bar = new HealthBar(health, 50, new_location);
   }
   
+  //
+  // go
+  // Move the character in the specified direction.
+  //
   void go(int x, int y) {
     // Move in the specified direction
     super.velocity = new PVector(x, y);
   }
   
+  //
+  // stop
+  // Stop all character movement.
+  //
   void stop() {
     // Stop moving in any direction
     super.velocity = new PVector(0, 0);
     super.acceleration = new PVector(0, 0);
   }
   
-  //Set to animation state to idle, run, jump, punch, or kick
+  //
+  // set_state
+  // Set the animation state to idle, run, jump, punch, or kick
+  //
   void set_state(String state) {
     boolean can_repeat_animation;
     
     if(state == "idle") stop();
     if(state == "jump") go(0, -10);
     if(state == "kick" || state == "punch")  {
-      stop();
-      
+      stop(); //<>//
+       //<>//
     if( dist(main_character.location.x, main_character.location.y, paparazzi.location.x, paparazzi.location.y) <= main_character.size.x ) {
       float randomize = random(15,30);
       // Decrease the health of paparazzi because celeb is punching or kicking them
@@ -67,8 +82,8 @@ class Celeb extends Animation {
       
       if(state == "punch") {
         punch.play();
-        punch.rewind(); //<>//
-      } //<>//
+        punch.rewind();
+      }
       
     }
       
@@ -90,6 +105,11 @@ class Celeb extends Animation {
     super.change_animation(celeb_animation_path + state, 61, can_repeat_animation);
   }
   
+  //
+  // hit
+  // Decrease the health of celeb if still alive.
+  // If health is below or at zero, set state to dead.
+  //
   void hit(int loss) {
     health -= loss;
     if( health <= 0 ) {
@@ -97,6 +117,11 @@ class Celeb extends Animation {
     }
   }
   
+  //
+  // die
+  // Encapsulate logic that sets chracter's state to dead.
+  // Make celeb fly off screen and play dead sound.
+  //
   void die() {
     alive = false;
     super.applyRotation(40);
@@ -106,11 +131,12 @@ class Celeb extends Animation {
     death.play();
     death.rewind();
   }
-  
-  boolean still_doing_current_animation() {
-    return super.frame <= super.image_count; 
-  }
-  
+
+  //
+  // display
+  // Show updated state of celeb:
+  // Set health bar of celeb to health and update animation of celeb.
+  //
   void display() {
     boolean done_with_animation;
     done_with_animation = super.display_animation(); 

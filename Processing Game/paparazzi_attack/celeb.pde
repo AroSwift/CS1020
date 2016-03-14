@@ -140,6 +140,8 @@ class Celeb extends Animation {
     // Play the death sound effect
     death.play();
     death.rewind();
+    
+    text_emitter.clear();
   }
 
   //

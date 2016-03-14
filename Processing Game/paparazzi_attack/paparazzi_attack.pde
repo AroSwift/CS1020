@@ -73,7 +73,7 @@ void setup() {
    paparazzi = new Paparazzi("idle");
   
    // Load the background image only once
-   bg_iamge = loadImage("intial_screen_background.jpg");
+   bg_iamge = loadImage("background_screen.jpg");
    bg_iamge.resize(width, height);
 }
 

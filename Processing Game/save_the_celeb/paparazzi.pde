@@ -30,8 +30,10 @@ class Paparazzi extends Animation {
     // Should start boolean alive
     alive = true;
     drawing_blood = null;
-    
     this.state = state;
+    
+    // Put the paparazzi as far from the celeb as possible
+    generate();
     
     // Put a health bar above the paparazzi's head
     //health_bar = new HealthBar(max_health, 10, location);
@@ -66,7 +68,9 @@ class Paparazzi extends Animation {
   //
   void set_state(String state) {
     boolean can_repeat_animation;
+    this.state = state;
     
+    // Set the current animation state to the given animation state
     if(state == "idle") stop();
     if(state == "jump") go(0, -10);
     if(state == "kick" || state == "punch") {
@@ -74,28 +78,20 @@ class Paparazzi extends Animation {
       main_character.drawing_blood = new Blood(100, main_character.location, 5, 8);
       stop();
             
+      // Play kicking sound
       if(state == "kick") {
         kick.play();
         kick.rewind();
       }
       
+      // Play punching sound
       if(state == "punch") {
         punch.play();
         punch.rewind();
       }
     }
     
-    if(state == "run") {
-      if(key == 'a' || key == 'A') {
-         go(-5, 0);
-      } else if(key == 'd' || key == 'D') {
-        go(10, 0);
-      }
-    }
-    
     can_repeat_animation = state == "idle" || state == "run" ? true : false;
-    
-    this.state = state;
     
     // Set the new animation state
     super.change_animation(paparazzi_animation_path + state, 61, can_repeat_animation);
@@ -136,6 +132,12 @@ class Paparazzi extends Animation {
     if(drawing_blood != null) drawing_blood.display();
   }
   
+  
+  //
+  // generate
+  // Place the paparazzi farthest from the celeb. Set the celeb
+  // alive, stop all motion, set health to max, and set animation to idle.
+  //
   void generate() {
     alive = true;
     stop();

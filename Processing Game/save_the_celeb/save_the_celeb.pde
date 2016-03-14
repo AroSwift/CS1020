@@ -80,8 +80,8 @@ void setup() {
    loop_time = millis() + 60000;
   
   // Create new instance of paparrazzi and celeb
-   paparazzi = new Paparazzi("idle");
    main_character = new Celeb("idle");
+   paparazzi = new Paparazzi("idle");
   
    // Load the intial background image only once
    intial_bg_image = loadImage("intial_screen_background.jpg");
@@ -233,11 +233,11 @@ void end_game_screen() {
 // Reset the celeb and paparazzi and allow user to play game again.
 //
 void reset_game() {
- // Reset the entire game
- game_screen = 1;
- paparazzi = new Paparazzi("idle");
- main_character = new Celeb("idle");
+  // Reset the entire game
+  game_screen = 1;
+  main_character = new Celeb("idle");
+  paparazzi = new Paparazzi("idle");
  
- main_character.set_state("idle");
- paparazzi.set_state("idle");
+  main_character.set_state("idle");
+  paparazzi.set_state("idle");
 }

@@ -20,8 +20,8 @@ class Celeb extends Animation {
   // Constructor for celebrity character.
   //
   Celeb(String state) {
-    // Default pose and position of character
-    super(paparazzi_animation_path + state, 61, true, 400, 425, 125, 275);
+    // Character should be set in the middle of the screen
+    super(paparazzi_animation_path + state, 61, true, width/2, 425, 125, 275);
     health = max_health;
     // Should start game alive
     alive = true;
@@ -72,31 +72,34 @@ class Celeb extends Animation {
     if(state == "kick" || state == "punch")  {
       stop();
       
-    if( dist(main_character.location.x, main_character.location.y, paparazzi.location.x, paparazzi.location.y) <= main_character.size.x ) {
-      float randomize = random(15,30);
-      // Decrease the health of paparazzi because celeb is punching or kicking them
-      paparazzi.hit( int(randomize) );
-      paparazzi.drawing_blood = new Blood(100, paparazzi.location, 5, 8);
-      
-      if(state == "kick") {
-        kick.play();
-        kick.rewind();
+      if( dist(main_character.location.x, main_character.location.y, paparazzi.location.x, paparazzi.location.y) <= main_character.size.x ) {
+        float randomize = random(15,30);
+        // Decrease the health of paparazzi because celeb is punching or kicking them
+        paparazzi.hit( int(randomize) );
+        paparazzi.drawing_blood = new Blood(100, paparazzi.location, 5, 8);
+        
+        // Play kick sound effect
+        if(state == "kick") {
+          kick.play();
+          kick.rewind();
+        }
+        
+        // Play punch sound effect
+        if(state == "punch") {
+          punch.play();
+          punch.rewind();
+        }
+        
       }
-      
-      if(state == "punch") {
-        punch.play();
-        punch.rewind();
-      }
-      
-    }
-      
     }
     
     if(state == "run") {
       if(key == 'a' || key == 'A') {
+         stop();
          go(-5, 0);
        } else if(key == 'd' || key == 'D') {
-        go(10, 0);
+         stop();
+        go(5, 0);
       }
     }
     

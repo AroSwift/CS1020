@@ -142,14 +142,14 @@ class Paparazzi extends Animation {
     health = max_health;
     set_state("idle");
     
-    boolean suitable_location = false;
+    float celeb_distance_from_left = dist(main_character.location.x, main_character.location.y, 0, height);
+    float celeb_distance_from_right = dist(main_character.location.x, main_character.location.y, width, height);
     
-    do {
-      location = new PVector(random(0+widthBuffer,width-widthBuffer), 425);
-      if( dist(main_character.location.x, main_character.location.y, location.x, location.y) > main_character.size.x) {
-        suitable_location = true;
-      }
-    } while(!suitable_location);
+    if( celeb_distance_from_left > celeb_distance_from_right) {
+      location = new PVector(widthBuffer, 425);
+    } else {
+      location = new PVector(width-widthBuffer, 425);
+    }
   }
   
   //

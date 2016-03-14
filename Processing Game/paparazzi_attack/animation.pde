@@ -26,6 +26,7 @@ class Animation extends Object {
     image_count = count;
     frame = 0;
     this.repeat = repeat;
+    // Load the speech file
     speech_text = loadStrings("Speech.txt");
     text_emitter = new TextEmitter(location.x,location.y-(size.y/2),300);
     

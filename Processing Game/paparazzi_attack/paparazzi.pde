@@ -78,19 +78,20 @@ class Paparazzi extends Animation {
       main_character.drawing_blood = new Blood(100, main_character.location, 5, 8);
       stop();
             
-      // Play kicking sound
+      // Play kicking sound when kicking
       if(state == "kick") {
         kick.play();
         kick.rewind();
       }
       
-      // Play punching sound
+      // Play punching sound when punching
       if(state == "punch") {
         punch.play();
         punch.rewind();
       }
     }
     
+    // Determine if this current animation can be repeated
     can_repeat_animation = state == "idle" || state == "run" ? true : false;
     
     // Set the new animation state

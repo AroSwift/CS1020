@@ -69,22 +69,23 @@ class Celeb extends Animation {
     
     if(state == "idle") stop(); //<>//
     if(state == "jump") go(0, -10); //<>//
-    if(state == "kick" || state == "punch")  {
+    if(state == "kick" || state == "punch") {
       stop();
       
+      // When celeb is within punching or kicking distance
       if( dist(main_character.location.x, main_character.location.y, paparazzi.location.x, paparazzi.location.y) <= main_character.size.x ) {
         float randomize = random(15,30);
         // Decrease the health of paparazzi because celeb is punching or kicking them
         paparazzi.hit( int(randomize) );
         paparazzi.drawing_blood = new Blood(100, paparazzi.location, 5, 8);
         
-        // Play kick sound effect
+        // Play kick sound effect when kicking
         if(state == "kick") {
           kick.play();
           kick.rewind();
         }
         
-        // Play punch sound effect
+        // Play punch sound effect when punching
         if(state == "punch") {
           punch.play();
           punch.rewind();
@@ -93,7 +94,9 @@ class Celeb extends Animation {
       }
     }
     
+    // When running
     if(state == "run") {
+      // Move the character in the direction the celeb is running
       if(key == 'a' || key == 'A') {
          stop();
          go(-5, 0);
@@ -103,6 +106,7 @@ class Celeb extends Animation {
       }
     }
     
+    // Determine if this current animation can be repeated
     can_repeat_animation = state == "idle" || state == "run" ? true : false;
     
     this.state = state;

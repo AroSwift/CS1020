@@ -40,9 +40,6 @@ int game_screen = 0;
 int heightBuffer = 130;
 int widthBuffer = 40;
 
-// Determine the amount of time that has passed since start of game
-long loop_time;
-
 // Sounds and support objects
 Random generator;
 AudioPlayer music;
@@ -53,15 +50,12 @@ Minim minim;
 
 //
 // setup
-// Load the neccissary objects, but do not display them.
+// Load the necessary objects, but do not display them.
 // Play Bacon & Eggs music forever.
 //
 void setup() {
    // Set the size of the window
    size(1200,600);
-
-   // Set a lower frame rate so that game works on lower spec machines
-   frameRate(40); // Default is 60 frames per second
   
   // Load music and sound effects
    minim = new Minim(this);
@@ -73,9 +67,6 @@ void setup() {
    punch = minim.loadFile("Punch.mp3", 2048);
    kick = minim.loadFile("Kick.mp3", 2048);
    death = minim.loadFile("Death.mp3", 2048);
-   
-   // Keep track of the time that has changed
-   loop_time = millis() + 60000;
   
   // Create new instance of paparrazzi and celeb
    main_character = new Celeb("idle");

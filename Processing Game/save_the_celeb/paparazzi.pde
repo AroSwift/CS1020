@@ -127,9 +127,6 @@ class Paparazzi extends Animation {
     death.rewind();
     
     respawn_time = millis() + time_before_regenerate;
-    
-    // Show drawing blood
-    if(drawing_blood != null) drawing_blood.display();
   }
   
   
@@ -141,6 +138,7 @@ class Paparazzi extends Animation {
   void generate() {
     alive = true;
     stop();
+    drawing_blood = null;
     health = max_health;
     set_state("idle");
     
@@ -184,6 +182,9 @@ class Paparazzi extends Animation {
   //
   void display() {
      if(!alive) {
+        // Show drawing blood
+        if(drawing_blood != null) drawing_blood.display();
+       
         if(millis() >= respawn_time) {
           generate();
         } else {

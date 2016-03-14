@@ -11,7 +11,8 @@ class Animation extends Object {
   int image_count;
   int frame;
   boolean repeat;
-  
+  String speech_text[];
+  TextEmitter  text_emitter;
   
   //
   // Animation
@@ -25,6 +26,8 @@ class Animation extends Object {
     image_count = count;
     frame = 0;
     this.repeat = repeat;
+    speech_text = loadStrings("Speech.txt");
+    text_emitter = new TextEmitter(location.x,location.y-20,300);
     
     // Load each image under the given file path into an array
     for (int i = 0; i < image_count; i++) {
@@ -33,6 +36,12 @@ class Animation extends Object {
      // Set the image size to the size of the object
      images[i].resize(int(animation_size.x), int(animation_size.y));
     }
+  }
+  
+  void show_speech() {
+    if(speech_text == null) return;
+    float random_text = random(0, speech_text.length);
+    text_emitter.load(speech_text[int(random_text)]);
   }
   
   //
@@ -77,6 +86,11 @@ class Animation extends Object {
          done_with_animation = true;
        }
     }
+    
+    // Update text emitter location
+    text_emitter.location = location;
+    
+    text_emitter.run();
     
     super.display(); // Run the super class's dispaly method
     return done_with_animation;

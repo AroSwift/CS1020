@@ -13,10 +13,10 @@ class Paparazzi extends Animation {
   int health;
   boolean alive;
   String state;
-  Blood drawing_blood;
   //long time_before_regenerate = 10000;
   long time_before_regenerate = 6000;
   long respawn_time;
+  Blood drawing_blood;
   
   //
   // Paparazzi
@@ -77,6 +77,8 @@ class Paparazzi extends Animation {
       main_character.hit( int(random(3, 10)) );
       main_character.drawing_blood = new Blood(100, main_character.location, 5, 8);
       stop();
+      
+      show_speech();
             
       // Play kicking sound
       if(state == "kick") {

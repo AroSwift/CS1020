@@ -78,6 +78,8 @@ class Celeb extends Animation {
         paparazzi.hit( int(randomize) );
         paparazzi.drawing_blood = new Blood(100, paparazzi.location, 5, 8);
         
+        show_speech();
+        
         // Play kick sound effect
         if(state == "kick") {
           kick.play();

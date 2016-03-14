@@ -18,10 +18,8 @@ import ddf.minim.ugens.*;
 // Library for randomness
 import java.util.*;
 
-// Screen background images
-PImage intial_bg_image;
-PImage game_bg_image;
-PImage end_bg_image;
+// Screen background image
+PImage bg_iamge;
 
 // Characters and their animation path
 Celeb main_character;
@@ -63,7 +61,7 @@ void setup() {
    size(1200,600);
 
    // Set a lower frame rate so that game works on lower spec machines
-   frameRate(30); // Default is 60 frames per second
+   frameRate(40); // Default is 60 frames per second
   
   // Load music and sound effects
    minim = new Minim(this);
@@ -83,9 +81,9 @@ void setup() {
    main_character = new Celeb("idle");
    paparazzi = new Paparazzi("idle");
   
-   // Load the intial background image only once
-   intial_bg_image = loadImage("intial_screen_background.jpg");
-   intial_bg_image.resize(width, height);
+   // Load the background image only once
+   bg_iamge = loadImage("intial_screen_background.jpg");
+   bg_iamge.resize(width, height);
 }
 
 //
@@ -184,7 +182,7 @@ void keyReleased() {
 void initial_screen() {
    // Show user how to play the game
    // When user presses key, start the game!
-   background(intial_bg_image);
+   background(bg_iamge);
 }
 
 //
@@ -225,7 +223,7 @@ void play_game_screen() {
 void end_game_screen() {
   // Show the losing screen
   // Play again when user presses any key
-  background(intial_bg_image);
+  background(bg_iamge);
 }
 
 //

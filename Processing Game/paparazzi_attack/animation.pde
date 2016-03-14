@@ -27,7 +27,7 @@ class Animation extends Object {
     frame = 0;
     this.repeat = repeat;
     speech_text = loadStrings("Speech.txt");
-    text_emitter = new TextEmitter(location.x,location.y-20,300);
+    text_emitter = new TextEmitter(location.x,location.y-(size.y/2),300);
     
     // Load each image under the given file path into an array
     for (int i = 0; i < image_count; i++) {
@@ -88,8 +88,8 @@ class Animation extends Object {
     }
     
     // Update text emitter location
-    text_emitter.location = location;
-    
+    text_emitter.location = new PVector(location.x,location.y-(size.y/2),150);
+    // Then display the text
     text_emitter.run();
     
     super.display(); // Run the super class's dispaly method

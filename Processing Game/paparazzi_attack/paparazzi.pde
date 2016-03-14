@@ -77,8 +77,6 @@ class Paparazzi extends Animation {
       main_character.hit( int(random(3, 10)) );
       main_character.drawing_blood = new Blood(100, main_character.location, 5, 8);
       stop();
-      
-      show_speech();
             
       // Play kicking sound
       if(state == "kick") {
@@ -220,6 +218,9 @@ class Paparazzi extends Animation {
     PVector new_location = new PVector(location.x, location.y+heightBuffer+(-size.y));    
     health_bar.update(health, new_location);
     health_bar.display();
+    
+    // Show text above character's head
+    show_speech();    
     
     if(drawing_blood != null) drawing_blood.display();
   }

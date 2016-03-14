@@ -74,7 +74,7 @@ class Celeb extends Animation {
       
       // When celeb is within punching or kicking distance
       if( dist(main_character.location.x, main_character.location.y, paparazzi.location.x, paparazzi.location.y) <= main_character.size.x ) {
-        float randomize = random(15,30);
+        float randomize = random(5,20);
         // Decrease the health of paparazzi because celeb is punching or kicking them
         paparazzi.hit( int(randomize) );
         paparazzi.drawing_blood = new Blood(100, paparazzi.location, 5, 8);

@@ -10,7 +10,6 @@ void sortStrings(vector<string>& v);
 void sortPeople(vector<Person>& v);
 void printStrings(vector<string> v);
 void printPeople(vector<Person> v);
-bool comparePeople(Person p1, Person p2);
 
 int main() {
  vector<string> strVect;
@@ -24,7 +23,7 @@ int main() {
  sortStrings(strVect);
  printStrings(strVect);
 
- sortPeople(personVect, comparePeople);
+ sortPeople(personVect);
  printPeople(personVect);
 }
 
@@ -50,18 +49,12 @@ void sortStrings(vector<string>& v) {
  }
 }
 
-void sortPeople(vector<Person>& v, bool (*comparePeople)(Person, Person)) {
+void sortPeople(vector<Person>& v) {
  for(int i = 0; i < v.size() - 1; i++)
  for(int j = i+1; j < v.size(); j++)
- if( comparePeople(v[j], v[i]) ) {
+ if((v[j].last < v[i].last) || ((v[j].last == v[i].last) && (v[j].first < v[i].first))) {
  Person temp = v[i];
  v[i] = v[j];
  v[j] = temp;
  }
 }
-
-bool comparePeople(vector<Person>& p1, vector<Person>& p2) {
-  return (p1.last < p2.last) || ((p1.last == p2.last) && (p1.first < p2.first));
-}
-
-

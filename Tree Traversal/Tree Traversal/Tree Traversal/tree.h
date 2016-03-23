@@ -22,10 +22,21 @@ public:
 };
 
 
-void search_by_name() {
+void in_order_traversal( Node* node ) {
+    if( node != NULL ) {
+        print_person_data();
+        
+    }
+}
+
+void pre_order_traversal( Node* node ) {
     
 }
 
+void post_order( Node* node ) {
+    
+}
 
-
-void 
+void breadth_first_traversal( Node* node) {
+    
+}

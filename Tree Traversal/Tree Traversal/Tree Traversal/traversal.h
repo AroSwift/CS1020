@@ -1,17 +1,29 @@
 #pragma once
+#include "tree.h"
+#include <string>
+using namespace std;
 
-void in_order_traversal( Node* node ) {
+class Person {
+    string first_name;
+    string last_name;
+    string street_address;
+    string city;
+    string state;
+    string zip;
+public:
+    Person( string first_name, string last_name, string street_address, string city, string state, string zip );
+//  ~Person();
+    void print_person_data();
+};
+
+
+
+void search_by_name() {
     
 }
 
-void pre_order_traversal( Node* node ) {
-    
-}
 
-void post_order( Node* node ) {
-    
-}
 
-void breadth_first_traversal( Node* node) {
+void print_person_data() {
     
 }

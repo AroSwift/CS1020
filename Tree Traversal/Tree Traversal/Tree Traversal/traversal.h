@@ -15,10 +15,19 @@ class Person {
     string zip;
 public:
     Person( string first_name, string last_name, string street_address, string city, string state, string zip );
-//  ~Person();
+    ~Person();
     void print_person_data();
+    void search_for_person();
 };
 
+
+Person::Person( string first_name, string last_name, string street_address, string city, string state, string zip ) {
+    
+}
+
+Person::~Person() {
+    delete Person();
+}
 
 //
 // main_menu
@@ -91,7 +100,7 @@ void choose_choices() {
 }
 
 
-void search_by_name() {
+void search_for_person() {
     
 }
 

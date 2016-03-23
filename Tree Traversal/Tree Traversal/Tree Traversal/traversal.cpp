@@ -1,8 +1,9 @@
 #include <iostream>
+#include <vector>
 #include "traversal.h"
 using namespace std;
 
-// if i do not use templates then
+// if using templates do not need this
 
 int main() {
     

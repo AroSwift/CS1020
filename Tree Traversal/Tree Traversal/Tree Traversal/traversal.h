@@ -3,6 +3,8 @@
 #include <string>
 using namespace std;
 
+const int MAX_FILE_LENGTH = 256; // Max file length on linux is 255
+
 // main functions! AND CLAS FUNCTIONS
 
 class Person {
@@ -28,9 +30,12 @@ Person::Person( string first_name, string last_name, string street_address, stri
 //    delete Person;
 //}
 
+
+
 //
 // main_menu
 //
+template<class T>
 void main_menu( Tree<T> *root_node ) {
     bool exit = false;
     char choice;
@@ -72,13 +77,13 @@ void main_menu( Tree<T> *root_node ) {
 
             case '4': // Show last contact
                 cout << endl;
-                breadth_first_traversal(root_node));
+                breadth_first_traversal(root_node);
                 cout << endl;
                 break;
                 
             case '5': // Show last contact
                 cout << endl;
-                breadth_first_traversal(root_node));
+                breadth_first_traversal(root_node);
                 cout << endl;
                 break;
                 

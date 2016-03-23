@@ -5,7 +5,6 @@ using namespace std;
 
 // main functions! AND CLAS FUNCTIONS
 
-
 class Person {
     string first_name;
     string last_name;
@@ -25,14 +24,14 @@ Person::Person( string first_name, string last_name, string street_address, stri
     
 }
 
-Person::~Person() {
-    delete Person();
-}
+//Person::~Person() {
+//    delete Person;
+//}
 
 //
 // main_menu
 //
-void main_menu( Node *root_node ) {
+void main_menu( Tree<T> *root_node ) {
     bool exit = false;
     char choice;
     

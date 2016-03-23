@@ -1,17 +1,17 @@
 #pragma once
 
-void pre_order_traversal() {
+void in_order_traversal( Node* node ) {
     
 }
 
-void in_order_traversal() {
+void pre_order_traversal( Node* node ) {
     
 }
 
-void post_order_traveral() {
+void post_order( Node* node ) {
     
 }
 
-void breadth_first_traversal() {
+void breadth_first_traversal( Node* node) {
     
 }

@@ -8,6 +8,7 @@ const int MAX_FILE_LENGTH = 256; // Max file length on linux is 255
 // main functions! AND CLAS FUNCTIONS
 
 class Person {
+    friend class Accessable_Person;
     string first_name;
     string last_name;
     string street_address;
@@ -19,100 +20,38 @@ public:
     ~Person();
     void print_person_data();
     void search_for_person();
+    string get_first_name();
+    string get_last_name();
+    
 };
 
-
 Person::Person( string first_name, string last_name, string street_address, string city, string state, string zip ) {
-    
+
+
 }
 
-//Person::~Person() {
+// Person::~Person() {
 //    delete Person;
-//}
+// }
 
-
-
-//
-// main_menu
-//
-template<class T>
-void main_menu( Tree<T> *root_node ) {
-    bool exit = false;
-    char choice;
-    
-    // Display a menu
-    do {
-        
-        // Give user choices
-        cout << "Main Menu" << endl
-        << "------------------" << endl
-        << "1.) Pre-order traversal" << endl
-        << "2.) In-order traversal" << endl
-        << "3.) Post-order traversal" << endl
-        << "4.) Breadth-first traversal" << endl
-        << "5.) Search for a name"
-        << "6.) Exit" << endl
-        << "Choice: ";
-        cin >> choice;
-        
-        // Associate choice with an action
-        switch(choice) {
-            case '1': // Pre-order traversal
-                cout << endl;
-                pre_order_traversal(root_node);
-                cout << endl;
-                break;
-                
-            case '2': // In-order traversal
-                cout << endl;
-                in_order_traversal(root_node);
-                cout << endl;
-                break;
-                
-            case '3': // Post-order traversal
-                cout << endl;
-                post_order_traversal(root_node);
-                cout << endl;
-                break;
-
-            case '4': // Show last contact
-                cout << endl;
-                breadth_first_traversal(root_node);
-                cout << endl;
-                break;
-                
-            case '5': // Show last contact
-                cout << endl;
-                breadth_first_traversal(root_node);
-                cout << endl;
-                break;
-                
-            case '6': // Exit program
-                exit = true;
-                break;
-                
-            default: // Error occured
-                cout << "Please enter a valid option." << endl;
-                break;
-        }
-        
-    } while(!exit);
+string Person::get_first_name() {
+    return first_name;
 }
 
-void choose_choices() {
-    
+string Person::get_last_name() {
+    return last_name;
+}
+
+ostream& operator<<(ostream& os, Person& p) {
+    os << p.get_first_name() << ", " << p.get_last_name();
+    return os;
 }
 
 
-void search_for_person() {
-    
-}
+void load_people(vector<Person> people);
+void main_menu( vector<Person> people );
 
-
-
-void print_person_data() {
-    
-}
-
-
+void choose_choices();
+void search_for_person();
+void print_person_data();
 

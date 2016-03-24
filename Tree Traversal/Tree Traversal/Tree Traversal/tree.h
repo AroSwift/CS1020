@@ -13,7 +13,7 @@ public:
     T get_root();
     T left_node();
     T right_node();
-    print_data(T data);
+    void print_data(T data);
     void in_order_traversal( Tree* node );
     void pre_order_traversal( Tree* node );
     void post_order_traversal( Tree* node );
@@ -25,10 +25,6 @@ public:
 //T Tree<T>::Tree() {
 //    
 //}
-
-
-
-
 
 
 //template<class T>
@@ -55,28 +51,39 @@ void print_data(T data) {
 
 template<class T>
 void Tree<T>::pre_order_traversal( Tree* node ) {
-    if( node != NULL ) return;
 //    print_person_data();
-    pre_order_traversal( node->left_node() );
-    pre_order_traversal( node->right_node() );
+    if( node->left_node() != NULL ) {
+        pre_order_traversal( node->left_node() );
+    }
+
+    if( node->right_node() != NULL ) {
+        pre_order_traversal( node->right_node() );
+    }
 }
 
 template<class T>
 void Tree<T>::in_order_traversal( Tree* node ) {
-    if( node != NULL ) {
+    if( node->left_node() != NULL ) {
         in_order_traversal( node->left_node() );
-//        print_person_data();
+    }
+    
+    // print data
+    
+    if( node->right_node() != NULL ) {
         in_order_traversal( node->right_node() );
     }
 }
 
 template<class T>
 void Tree<T>::post_order_traversal( Tree* node ) {
-    if( node != NULL ) {
+    if( node->left_node() != NULL ) {
         post_order_traversal( node->left_node() );
-        post_order_traversal( node->right_node() );
-//        print_person_data();
     }
+    
+    if( node->right_node() != NULL ) {
+        post_order_traversal( node->right_node() );
+    }
+    // print data
 }
 
 template<class T>

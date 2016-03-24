@@ -59,6 +59,8 @@ void load_people(vector<Person> people) {
 
         people.push_back( Person(first_name, last_name, street_address, city, state, zip) );
 
+        // put in the tree
+        
     }
 
 }

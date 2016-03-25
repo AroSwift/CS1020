@@ -10,14 +10,12 @@ class Tree {
 public:
    Tree();
 //   ~Tree();
-   T left_node();
-   T right_node();
    void insert(T data);
    void print_data(T data);
-   void in_order_traversal( Tree* node );
-   void pre_order_traversal( Tree* node );
-   void post_order_traversal( Tree* node );
-   void breadth_first_traversal( Tree* node);
+   void in_order_traversal( Tree* root );
+   void pre_order_traversal( Tree* root );
+   void post_order_traversal( Tree* root );
+   void breadth_first_traversal( Tree* root);
 };
 
 
@@ -37,11 +35,15 @@ void print_data(T data) {
 }
 
 template<class T>
+void Tree<T>::print_data( T data ) {
+   cout << data;
+}
+
+template<class T>
 void Tree<T>::insert(T data) {
    Tree* tree = new Tree();
    tree->data = data;
-   tree->left = NULL;
-   tree->right = NULL;
+   tree->left = tree->right = NULL;
 
    if( root == NULL ) tree->root = tree;
 
@@ -98,13 +100,4 @@ template<class T>
 void Tree<T>::breadth_first_traversal( Tree* node) {
 
 }
-
-template<class T>
-void Tree<T>::print_data( T data ) {
-   cout << data;
-}
-
-
-
-
 

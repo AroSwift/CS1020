@@ -27,6 +27,9 @@ public:
 template<class T>
 Tree<T>::Tree() {
    root = NULL;
+   left = NULL;
+   right = NULL;
+   data = NULL;
 }
 
 //template<class T>
@@ -46,13 +49,20 @@ void Tree<T>::print_data( T data ) {
 
 template<class T>
 void Tree<T>::insert(T data) {
-   Tree* tree = new Tree();
-   tree->data = data;
-   tree->left = tree->right = NULL;
+   insert(root, data);
+}
 
-   if( root == NULL ) tree->root = tree;
-
-
+template<class T>
+void Tree<T>::insert( Tree* tree, T data) {
+   if( root == NULL ) {
+      Tree* tree = new Tree();
+      tree->data = data;
+      tree->left = tree->right = NULL;
+   } else if( data < tree->data ) {
+      tree->left = insert(tree->left, data);
+   } else {
+      tree->right = insert(tree->right, data);
+   }
 }
 
 template<class T>

@@ -8,9 +8,8 @@ class Tree {
    Tree *left;
    Tree *right;
 public:
-   //    Tree();
-   //    ~Tree();
-   T get_root();
+   Tree();
+//   ~Tree();
    T left_node();
    T right_node();
    void insert(T data);
@@ -23,26 +22,14 @@ public:
 
 
 template<class T>
-T Tree<T>::Tree() {
+Tree<T>::Tree() {
    root = NULL;
 }
 
-
 //template<class T>
-//T Tree<T>::get_root() {
+//Tree<T>::~Tree() {
 //    return root;
 //}
-
-template<class T>
-T Tree<T>::left_node() {
-   return left;
-}
-
-template<class T>
-T Tree<T>::right_node() {
-   return right;
-}
-
 
 template <typename T>
 void print_data(T data) {
@@ -55,54 +42,67 @@ void Tree<T>::insert(T data) {
    tree->data = data;
    tree->left = NULL;
    tree->right = NULL;
-   
+
    if( root == NULL ) tree->root = tree;
-   
-   
+
+
 }
 
 template<class T>
-void Tree<T>::pre_order_traversal( Tree* node ) {
-   //    print_person_data();
-   if( node->left_node() != NULL ) {
-      pre_order_traversal( node->left_node() );
-   }
-   
-   if( node->right_node() != NULL ) {
-      pre_order_traversal( node->right_node() );
-   }
-}
+void Tree<T>::pre_order_traversal( Tree* root ) {
+   if( root == NULL ) return;
 
-template<class T>
-void Tree<T>::in_order_traversal( Tree* node ) {
-   if( node->left_node() != NULL ) {
-      in_order_traversal( node->left_node() );
+    print_data(data);
+
+   if( root->left != NULL ) {
+      pre_order_traversal( root->left);
    }
-   
-   // print data
-   
-   if( node->right_node() != NULL ) {
-      in_order_traversal( node->right_node() );
+
+   if( root->right != NULL ) {
+      pre_order_traversal( root->right );
    }
 }
 
 template<class T>
-void Tree<T>::post_order_traversal( Tree* node ) {
-   if( node->left_node() != NULL ) {
-      post_order_traversal( node->left_node() );
+void Tree<T>::in_order_traversal( Tree* root ) {
+   if( root == NULL ) return;
+
+   if( root->left != NULL ) {
+      in_order_traversal( root->left );
    }
-   
-   if( node->right_node() != NULL ) {
-      post_order_traversal( node->right_node() );
+
+   print_data(data);
+
+   if( root->right != NULL ) {
+      in_order_traversal( root->right );
    }
-   // print data
 }
+
+template<class T>
+void Tree<T>::post_order_traversal( Tree* root ) {
+   if( root == NULL ) return;
+
+   if( root->left != NULL ) {
+      post_order_traversal( root->left );
+   }
+
+   if( root->right != NULL ) {
+      post_order_traversal( root->right );
+   }
+
+   print_data(data);
+}
+
 
 template<class T>
 void Tree<T>::breadth_first_traversal( Tree* node) {
-   
+
 }
 
+template<class T>
+void Tree<T>::print_data( T data ) {
+   cout << data;
+}
 
 
 

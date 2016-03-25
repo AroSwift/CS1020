@@ -11,11 +11,16 @@ public:
    Tree();
 //   ~Tree();
    void insert(T data);
+   void insert( Tree* node, T data);
    void print_data(T data);
-   void in_order_traversal( Tree* root );
-   void pre_order_traversal( Tree* root );
-   void post_order_traversal( Tree* root );
-   void breadth_first_traversal( Tree* root);
+   void in_order_traversal();
+   void pre_order_traversal();
+   void post_order_traversal();
+   void breadth_first_traversal();
+   void in_order_traversal( Tree* node );
+   void pre_order_traversal( Tree* node );
+   void post_order_traversal( Tree* node );
+   void breadth_first_traversal( Tree* node );
 };
 
 
@@ -51,45 +56,60 @@ void Tree<T>::insert(T data) {
 }
 
 template<class T>
-void Tree<T>::pre_order_traversal( Tree* root ) {
+void Tree<T>::pre_order_traversal() {
+   pre_order_traversal(root);
+}
+
+template<class T>
+void Tree<T>::in_order_traversal() {
+   in_order_traversal(root);
+}
+
+template<class T>
+void Tree<T>::post_order_traversal() {
+   post_order_traversal(root);
+}
+
+template<class T>
+void Tree<T>::pre_order_traversal( Tree* node ) {
    if( root == NULL ) return;
 
     print_data(data);
 
-   if( root->left != NULL ) {
-      pre_order_traversal( root->left);
+   if( node->left != NULL ) {
+      pre_order_traversal( node->left);
    }
 
-   if( root->right != NULL ) {
-      pre_order_traversal( root->right );
+   if( node->right != NULL ) {
+      pre_order_traversal( node->right );
    }
 }
 
 template<class T>
-void Tree<T>::in_order_traversal( Tree* root ) {
+void Tree<T>::in_order_traversal( Tree* node ) {
    if( root == NULL ) return;
 
-   if( root->left != NULL ) {
-      in_order_traversal( root->left );
+   if( node->left != NULL ) {
+      in_order_traversal( node->left );
    }
 
    print_data(data);
 
-   if( root->right != NULL ) {
-      in_order_traversal( root->right );
+   if( node->right != NULL ) {
+      in_order_traversal( node->right );
    }
 }
 
 template<class T>
-void Tree<T>::post_order_traversal( Tree* root ) {
+void Tree<T>::post_order_traversal( Tree* node ) {
    if( root == NULL ) return;
 
-   if( root->left != NULL ) {
-      post_order_traversal( root->left );
+   if( node->left != NULL ) {
+      post_order_traversal( node->left );
    }
 
-   if( root->right != NULL ) {
-      post_order_traversal( root->right );
+   if( node->right != NULL ) {
+      post_order_traversal( node->right );
    }
 
    print_data(data);

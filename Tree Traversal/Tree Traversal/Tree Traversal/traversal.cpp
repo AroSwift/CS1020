@@ -8,17 +8,18 @@ using namespace std;
 
 int main() {
    vector<Person> people;
+   Tree<Person> tree;
    
-   load_people(people);
+   load_people(people, tree);
    
    // Show the menu
-   main_menu(people);
+   main_menu(people, tree);
    
    
 }
 
 
-void load_people(vector<Person> people) {
+void load_people(vector<Person> people, Tree<Person> tree) {
    ifstream input;
    char filename[MAX_FILE_LENGTH];
    bool file_errors;
@@ -60,7 +61,8 @@ void load_people(vector<Person> people) {
       people.push_back( Person(first_name, last_name, street_address, city, state, zip) );
       
       // put in the tree
-      
+
+      tree.insert(people[i]);
       
    }
    
@@ -72,7 +74,7 @@ void load_people(vector<Person> people) {
 // main_menu
 //
 template<class T>
-void main_menu( vector<Person> people) {
+void main_menu( vector<Person> people, Tree<Person> tree) {
    bool exit = false;
    char choice;
    
@@ -95,31 +97,31 @@ void main_menu( vector<Person> people) {
       switch(choice) {
          case '1': // Pre-order traversal
             cout << endl;
-            pre_order_traversal();
+            tree.pre_order_traversal();
             cout << endl;
             break;
             
          case '2': // In-order traversal
             cout << endl;
-            in_order_traversal();
+            tree.in_order_traversal();
             cout << endl;
             break;
             
          case '3': // Post-order traversal
             cout << endl;
-            post_order_traversal();
+            tree.post_order_traversal();
             cout << endl;
             break;
             
          case '4': // Show last contact
             cout << endl;
-            breadth_first_traversal();
+            tree.breadth_first_traversal();
             cout << endl;
             break;
             
          case '5': // Show last contact
             cout << endl;
-            breadth_first_traversal();
+            tree.breadth_first_traversal();
             cout << endl;
             break;
             

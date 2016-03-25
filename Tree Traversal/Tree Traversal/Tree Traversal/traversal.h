@@ -43,8 +43,8 @@ bool operator<(const Person& left, const Person& right) {
    return((left.last_name < right.last_name) || ((left.last_name == right.last_name) && (left.first_name < right.first_name)));
 }
 
-void load_people(vector<Person> people);
-void main_menu(vector<Person> people);
+void load_people(vector<Person> people, Tree<Person> tree);
+void main_menu(vector<Person> people, Tree<Person> tree);
 
 void choose_choices();
 void search_for_person();

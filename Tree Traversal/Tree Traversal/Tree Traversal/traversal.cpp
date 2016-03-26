@@ -133,18 +133,67 @@ void main_menu(Tree<Person>* tree) {
    } while(!exit);
 }
 
-void choose_choices() {
-
+void options_menu(Tree<Person>* tree) {
+   bool exit = false;
+   char choice;
+   
+   // Display a menu
+   do {
+      
+      // Give user choices
+      cout << "Options Menu" << endl
+      << "------------------" << endl
+      << "1.) Pre-order traversal" << endl
+      << "2.) In-order traversal" << endl
+      << "3.) Post-order traversal" << endl
+      << "4.) Breadth-first traversal" << endl
+      << "5.) Search for a name" << endl
+      << "6.) Exit" << endl
+      << "Choice: ";
+      cin >> choice;
+      
+      // Associate choice with an action
+      switch(choice) {
+         case '1': // Pre-order traversal
+            cout << endl;
+            tree->pre_order_traversal();
+            break;
+            
+         case '2': // In-order traversal
+            cout << endl;
+            tree->in_order_traversal();
+            break;
+            
+         case '3': // Post-order traversal
+            cout << endl;
+            tree->post_order_traversal();
+            break;
+            
+         case '4': // Breadth-order traversal
+            cout << endl;
+            tree->breadth_first_traversal();
+            break;
+            
+         case '5': // Search for Name
+            cout << endl;
+            search_for_person();
+            break;
+            
+         case '6': // Exit program
+            exit = true;
+            break;
+            
+         default: // Error occured
+            cout << "Please enter a valid option." << endl;
+            cout << endl;
+            break;
+      }
+      
+   } while(!exit);
 }
 
 void search_for_person() {
 
 }
-
-void print_person_data() {
-
-}
-
-
 
 

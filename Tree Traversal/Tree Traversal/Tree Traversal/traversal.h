@@ -70,10 +70,7 @@ ostream& operator<<(ostream& os, Person& p) {
 // Menu Options
 void load_people(Tree<Person>* tree);
 void main_menu(Tree<Person>* tree);
-void choose_choices();
+void options_menu(Tree<Person>* tree);
 
 void search_for_person();
-void print_person_data();
-
-
 

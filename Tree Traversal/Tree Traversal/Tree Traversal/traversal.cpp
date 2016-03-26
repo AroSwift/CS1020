@@ -59,7 +59,7 @@ void load_people(Tree<Person>* tree) {
       getline( input, state, ',' );
       getline( input, zip, '\n' );
 
-      cout << first_name << " " << last_name << " " << street_address << " " << city << " " << state << " " << zip << endl;
+//      cout << first_name << " " << last_name << " " << street_address << " " << city << " " << state << " " << zip << endl;
 
       Person *p = new Person(first_name, last_name, street_address, city, state, zip);
 

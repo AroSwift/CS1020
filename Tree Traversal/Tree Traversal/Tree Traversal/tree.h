@@ -12,6 +12,7 @@ public:
    void pre_order_traversal();
    void post_order_traversal();
    void breadth_first_traversal();
+//   void search_data(T data, bool (*cp)(T, T))
 private:
    T data;
    Tree* root;
@@ -74,6 +75,26 @@ Tree<T>* Tree<T>::insert( Tree* node, T data, bool (*cp)(T, T)) {
    return node;
 }
 
+//template<class T>
+//T data Tree<T>::search_data(T data, bool (*cp)(T, T)) {
+//   while(  ) {
+//   if( cp( data, node->data ) ) {
+//      //      Tree* node = new Tree();
+//      Tree<T>* node = new Tree<T>;
+//      node->data = data;
+//      node->left = node->right = NULL;
+//      if( root == NULL ) root = node;
+//   } else if( cp(data, node->data) ) {
+//      node->left = insert(node->left, data, cp);
+//   } else {
+//      node->right = insert(node->right, data, cp);
+//   }
+//      
+//      
+//      
+//   return node;
+//}
+
 template<class T>
 void Tree<T>::pre_order_traversal() {
    pre_order_traversal(root);
@@ -102,10 +123,14 @@ void Tree<T>::pre_order_traversal( Tree* node ) {
 
    if( node->left != NULL ) {
       pre_order_traversal(node->left);
+   } else {
+      cout << "no left" << endl;
    }
 
    if( node->right != NULL ) {
       pre_order_traversal(node->right);
+   } else {
+      cout << "no right" << endl;
    }
 }
 

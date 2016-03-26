@@ -101,7 +101,7 @@ void main_menu(Tree<Person>* tree) {
             cout << endl;
             tree->pre_order_traversal();
             break;
-
+            
          case '2': // In-order traversal
             cout << endl;
             tree->in_order_traversal();

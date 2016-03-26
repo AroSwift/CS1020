@@ -3,25 +3,26 @@ using namespace std;
 
 template<class T>
 class Tree {
-   T data;
-   Tree* root;
-   Tree* left;
-   Tree* right;
 public:
    Tree();
    ~Tree();
    void insert(T data, bool (*cp)(T, T));
-   Tree<T>* insert( Tree* node, T data, bool (*cp)(T, T));
-   void remove(Tree* node);
    void print_data(T data);
    void in_order_traversal();
    void pre_order_traversal();
    void post_order_traversal();
    void breadth_first_traversal();
+private:
+   T data;
+   Tree* root;
+   Tree* left;
+   Tree* right;
    void in_order_traversal( Tree* node );
    void pre_order_traversal( Tree* node );
    void post_order_traversal( Tree* node );
    void breadth_first_traversal( Tree* node );
+   Tree<T>* insert( Tree* node, T data, bool (*cp)(T, T));
+   void remove(Tree* node);
 };
 
 
@@ -65,14 +66,13 @@ Tree<T>* Tree<T>::insert( Tree* node, T data, bool (*cp)(T, T)) {
       Tree<T>* node = new Tree<T>;
       node->data = data;
       node->left = node->right = NULL;
+      if( root == NULL ) root = node;
    } else if( cp(data, node->data) ) {
       node->left = insert(node->left, data, cp);
-      return node->left;
    } else {
       node->right = insert(node->right, data, cp);
-      return node->right;
    }
-   return NULL;
+   return node;
 }
 
 template<class T>
@@ -143,6 +143,6 @@ void Tree<T>::post_order_traversal( Tree* node ) {
 
 template<class T>
 void Tree<T>::breadth_first_traversal( Tree* node) {
-
+   print_data(data);
 }
 

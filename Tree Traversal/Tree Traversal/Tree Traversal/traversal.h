@@ -53,15 +53,11 @@ bool operator<(const Person& left, const Person& right) {
 }
 
 // Menu Options
-void load_people(vector<Person> people, Tree<Person>* tree);
-void main_menu(vector<Person> people, Tree<Person>* tree);
+void load_people(Tree<Person>* tree);
+void main_menu(Tree<Person>* tree);
 void choose_choices();
 
-void Person::search_for_person() {
-   
-}
-
-
+void search_for_person();
 void print_person_data();
 
 

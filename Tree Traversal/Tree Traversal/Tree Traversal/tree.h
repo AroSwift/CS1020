@@ -9,9 +9,10 @@ class Tree {
    Tree* right;
 public:
    Tree();
-//   ~Tree();
+   ~Tree();
    void insert(T data, bool (*cp)(T, T));
    Tree<T>* insert( Tree* node, T data, bool (*cp)(T, T));
+   void remove(Tree* node);
    void print_data(T data);
    void in_order_traversal();
    void pre_order_traversal();
@@ -32,10 +33,20 @@ Tree<T>::Tree() {
 //   data = NULL;
 }
 
-//template<class T>
-//Tree<T>::~Tree() {
-//    return root;
-//}
+template<class T>
+Tree<T>::~Tree() {
+   remove(root);
+}
+
+template<class T>
+void Tree<T>::remove(Tree* node) {
+   if(node != NULL) {
+      destroy(node->left);
+      destroy(node->right);
+      delete node;
+//      node = NULL;
+   }
+}
 
 template <class T>
 void Tree<T>::print_data(T data) {

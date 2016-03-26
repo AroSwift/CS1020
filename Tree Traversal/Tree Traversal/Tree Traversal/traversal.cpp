@@ -7,20 +7,20 @@ using namespace std;
 // if using templates do not need this
 
 int main() {
-   vector<Person> people;
+//   vector<Person> people;
 //   Tree<Person> tree;
    Tree<Person>* tree = new Tree<Person>;
 
-   load_people(people, tree);
+   load_people(tree);
 
    // Show the menu
-   main_menu(people, tree);
+   main_menu(tree);
 
 
 }
 
 
-void load_people(vector<Person> people, Tree<Person>* tree) {
+void load_people(Tree<Person>* tree) {
    ifstream input;
    char filename[MAX_FILE_LENGTH];
    bool file_errors;
@@ -57,12 +57,15 @@ void load_people(vector<Person> people, Tree<Person>* tree) {
       getline( input, street_address, ',' );
       getline( input, city, ',' );
       getline( input, state, ',' );
-      getline( input, zip, ',' );
+      getline( input, zip, '\n' );
+      
+//      cout << first_name << " " << last_name << " " << street_address << " " << city << " " << state << " " << zip << endl;
 
-      people.push_back( Person(first_name, last_name, street_address, city, state, zip) );
+//      people.push_back( Person(first_name, last_name, street_address, city, state, zip) );
+      Person *p = new Person(first_name, last_name, street_address, city, state, zip);
 
       // put in the tree
-      tree->insert(people[i], &compare_people);
+      tree->insert(*p, &compare_people);
 
    }
 
@@ -73,7 +76,7 @@ void load_people(vector<Person> people, Tree<Person>* tree) {
 //
 // main_menu
 //
-void main_menu( vector<Person> people, Tree<Person>* tree) {
+void main_menu(Tree<Person>* tree) {
    bool exit = false;
    char choice;
 
@@ -116,7 +119,7 @@ void main_menu( vector<Person> people, Tree<Person>* tree) {
 
          case '5': // Search for Name
             cout << endl;
-            tree->search_for_person();
+            search_for_person();
             break;
 
          case '6': // Exit program

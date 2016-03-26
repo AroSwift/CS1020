@@ -43,11 +43,6 @@ void print_data(T data) {
 }
 
 template<class T>
-void Tree<T>::print_data( T data ) {
-   cout << data;
-}
-
-template<class T>
 void Tree<T>::insert(T data) {
    insert(root, data);
 }

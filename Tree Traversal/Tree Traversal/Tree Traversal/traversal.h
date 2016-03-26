@@ -15,6 +15,7 @@ class Person {
    string state;
    string zip;
 public:
+   Person();
    Person( string first_name, string last_name, string street_address, string city, string state, string zip );
    ~Person();
    void print_person_data();
@@ -24,7 +25,6 @@ public:
 };
 
 Person::Person( string first_name, string last_name, string street_address, string city, string state, string zip ) {
-
 
 }
 

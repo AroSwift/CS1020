@@ -60,7 +60,7 @@ void Tree<T>::insert(T data, bool (*cp)(T, T)) {
 
 template<class T>
 Tree<T>* Tree<T>::insert( Tree* node, T data, bool (*cp)(T, T)) {
-   if( root == NULL ) {
+   if( node == NULL ) {
 //      Tree* node = new Tree();
       Tree<T>* node = new Tree<T>;
       node->data = data;

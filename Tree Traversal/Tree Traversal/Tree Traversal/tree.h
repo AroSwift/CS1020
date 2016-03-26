@@ -31,7 +31,6 @@ Tree<T>::Tree() {
    root = NULL;
    left = NULL;
    right = NULL;
-//   data = NULL;
 }
 
 template<class T>

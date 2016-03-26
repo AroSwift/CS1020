@@ -19,8 +19,21 @@ public:
    void print_person_data();
    void search_for_person();
    friend ostream& operator<<(ostream& os, Person& p);
-   friend bool operator<(const Person& left, const Person& right);
+//   friend bool operator<(const Person& left, const Person& right);
    friend bool compare_people(Person p1, Person p2);
+};
+
+class Settings {
+public:
+   Settings();
+   ~Settings();
+private:
+   bool can_show_first_name;
+   bool can_show_last_name;
+   bool can_show_street_address;
+   bool can_show_city;
+   bool can_show_state;
+   bool can_show_zip;
 };
 
 Person::Person( string first_name, string last_name, string street_address, string city, string state, string zip ) {
@@ -50,9 +63,9 @@ ostream& operator<<(ostream& os, Person& p) {
    return os;
 }
 
-bool operator<(const Person& left, const Person& right) {
-   return((left.last_name < right.last_name) || ((left.last_name == right.last_name) && (left.first_name < right.first_name)));
-}
+//bool operator<(const Person& left, const Person& right) {
+//   return((left.last_name < right.last_name) || ((left.last_name == right.last_name) && (left.first_name < right.first_name)));
+//}
 
 // Menu Options
 void load_people(Tree<Person>* tree);

@@ -96,15 +96,10 @@ void main_menu(Tree<Person>* tree) {
       // Associate choice with an action
       switch(choice) {
          case '1': // Pre-order traversal
-         {
             cout << endl;
             tree->pre_order_traversal();
-
-            Person *person = new Person("first_name", "last_name", "street_address", "city", "state", "zip");
-            tree->print_data(*person);
             break;
 
-         }
          case '2': // In-order traversal
             cout << endl;
             tree->in_order_traversal();

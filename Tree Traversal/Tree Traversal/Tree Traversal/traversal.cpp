@@ -7,7 +7,6 @@ using namespace std;
 // if using templates do not need this
 
 int main() {
-//   vector<Person> people;
 //   Tree<Person> tree;
    Tree<Person>* tree = new Tree<Person>;
 
@@ -49,7 +48,7 @@ void load_people(Tree<Person>* tree) {
 
 
    // Read in file row by row
-   for( int i = 0; !input.eof(); i++ ) {
+   while( !input.eof() ) {
       // Ensure null character is accounted for in file
       string first_name, last_name, street_address, city, state, zip;
       getline( input, first_name, ',' );
@@ -59,9 +58,8 @@ void load_people(Tree<Person>* tree) {
       getline( input, state, ',' );
       getline( input, zip, '\n' );
       
-//      cout << first_name << " " << last_name << " " << street_address << " " << city << " " << state << " " << zip << endl;
+      cout << first_name << " " << last_name << " " << street_address << " " << city << " " << state << " " << zip << endl;
 
-//      people.push_back( Person(first_name, last_name, street_address, city, state, zip) );
       Person *p = new Person(first_name, last_name, street_address, city, state, zip);
 
       // put in the tree

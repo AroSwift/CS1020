@@ -26,7 +26,12 @@ public:
 };
 
 Person::Person( string first_name, string last_name, string street_address, string city, string state, string zip ) {
-
+   this->first_name = first_name;
+   this->last_name = last_name;
+   this->street_address = street_address;
+   this->city = city;
+   this->state = state;
+   this->zip = zip;
 }
 
 Person::Person() {

@@ -72,7 +72,6 @@ void load_people(vector<Person> people, Tree<Person> tree) {
 //
 // main_menu
 //
-template<class T>
 void main_menu( vector<Person> people, Tree<Person> tree) {
    bool exit = false;
    char choice;
@@ -136,22 +135,17 @@ void main_menu( vector<Person> people, Tree<Person> tree) {
    } while(!exit);
 }
 
-template<class T>
 void choose_choices() {
    
 }
 
-template<class T>
 void search_for_person() {
    
 }
 
-
-template<class T>
 void print_person_data() {
    
 }
-
 
 
 

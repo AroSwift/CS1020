@@ -4,9 +4,9 @@ using namespace std;
 template<class T>
 class Tree {
    T data;
-   Tree *root;
-   Tree *left;
-   Tree *right;
+   Tree* root;
+   Tree* left;
+   Tree* right;
 public:
    Tree();
 //   ~Tree();
@@ -29,7 +29,7 @@ Tree<T>::Tree() {
    root = NULL;
    left = NULL;
    right = NULL;
-   data = NULL;
+//   data = NULL;
 }
 
 //template<class T>
@@ -37,7 +37,7 @@ Tree<T>::Tree() {
 //    return root;
 //}
 
-template <typename T>
+template <class T>
 void print_data(T data) {
    cout << data << endl;
 }
@@ -53,15 +53,15 @@ void Tree<T>::insert(T data) {
 }
 
 template<class T>
-void Tree<T>::insert( Tree* tree, T data) {
+void Tree<T>::insert( Tree* node, T data) {
    if( root == NULL ) {
-      Tree* tree = new Tree();
-      tree->data = data;
-      tree->left = tree->right = NULL;
-   } else if( data < tree->data ) {
-      tree->left = insert(tree->left, data);
+      Tree* node = new Tree();
+      node->data = data;
+      node->left = node->right = NULL;
+   } else if( data < node->data ) {
+      node->left = insert(node->left, data);
    } else {
-      tree->right = insert(tree->right, data);
+      node->right = insert(node->right, data);
    }
 }
 

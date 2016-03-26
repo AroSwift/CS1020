@@ -17,7 +17,7 @@ class Person {
 public:
    Person();
    Person( string first_name, string last_name, string street_address, string city, string state, string zip );
-   ~Person();
+//   ~Person();
    void print_person_data();
    void search_for_person();
    friend ostream& operator<<(ostream& os, Person& p);
@@ -26,6 +26,10 @@ public:
 
 Person::Person( string first_name, string last_name, string street_address, string city, string state, string zip ) {
 
+}
+
+Person::Person() {
+   
 }
 
 // Person::~Person() {
@@ -42,8 +46,8 @@ bool operator<(const Person& left, const Person& right) {
    return((left.last_name < right.last_name) || ((left.last_name == right.last_name) && (left.first_name < right.first_name)));
 }
 
-void load_people(vector<Person> people, Tree<Person> tree);
-void main_menu(vector<Person> people, Tree<Person> tree);
+void load_people(vector<Person> people, Tree<Person>* tree);
+void main_menu(vector<Person> people, Tree<Person>* tree);
 
 void choose_choices();
 void search_for_person();

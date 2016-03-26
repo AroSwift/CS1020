@@ -62,7 +62,7 @@ void load_people(vector<Person> people, Tree<Person>* tree) {
       people.push_back( Person(first_name, last_name, street_address, city, state, zip) );
 
       // put in the tree
-//      tree.insert(people[i]);
+      tree->insert(people[i], &compare_people);
 
    }
 
@@ -125,6 +125,7 @@ void main_menu( vector<Person> people, Tree<Person>* tree) {
 
          default: // Error occured
             cout << "Please enter a valid option." << endl;
+            cout << endl;
             break;
       }
 

@@ -23,6 +23,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		8B46DAB21CA633BC00FAC1D5 /* data */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = data; sourceTree = "<group>"; };
 		8BD3A5751CA0A730009EF354 /* Tree Traversal */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Tree Traversal"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8BD3A57F1CA0A7D4009EF354 /* traversal.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = traversal.cpp; sourceTree = "<group>"; };
 		8BD3A5801CA0A7D4009EF354 /* traversal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = traversal.h; sourceTree = "<group>"; };
@@ -59,6 +60,7 @@
 		8BD3A5771CA0A730009EF354 /* Tree Traversal */ = {
 			isa = PBXGroup;
 			children = (
+				8B46DAB21CA633BC00FAC1D5 /* data */,
 				8BD3A57F1CA0A7D4009EF354 /* traversal.cpp */,
 				8BD3A5801CA0A7D4009EF354 /* traversal.h */,
 				8BD3A5821CA0A87C009EF354 /* tree.h */,
@@ -241,6 +243,7 @@
 				8BD3A57E1CA0A730009EF354 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

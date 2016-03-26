@@ -10,8 +10,8 @@ class Tree {
 public:
    Tree();
 //   ~Tree();
-   void insert(T data);
-   void insert( Tree* node, T data);
+   void insert(T data, bool (*cp)(T, T));
+   Tree<T>* insert( Tree* node, T data, bool (*cp)(T, T));
    void print_data(T data);
    void in_order_traversal();
    void pre_order_traversal();
@@ -43,21 +43,24 @@ void print_data(T data) {
 }
 
 template<class T>
-void Tree<T>::insert(T data) {
-   insert(root, data);
+void Tree<T>::insert(T data, bool (*cp)(T, T)) {
+   insert(root, data, cp);
 }
 
 template<class T>
-void Tree<T>::insert( Tree* node, T data) {
+Tree<T>* Tree<T>::insert( Tree* node, T data, bool (*cp)(T, T)) {
    if( root == NULL ) {
       Tree* node = new Tree();
       node->data = data;
       node->left = node->right = NULL;
-   } else if( data < node->data ) {
-      node->left = insert(node->left, data);
+   } else if( cp(data, node->data) ) {
+      node->left = insert(node->left, data, cp);
+      return node->left;
    } else {
-      node->right = insert(node->right, data);
+      node->right = insert(node->right, data, cp);
+      return node->right;
    }
+   return NULL;
 }
 
 template<class T>

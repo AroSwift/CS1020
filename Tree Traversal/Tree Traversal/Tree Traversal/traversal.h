@@ -22,6 +22,7 @@ public:
    void search_for_person();
    friend ostream& operator<<(ostream& os, Person& p);
    friend bool operator<(const Person& left, const Person& right);
+   friend bool compare_people(Person p1, Person p2);
 };
 
 Person::Person( string first_name, string last_name, string street_address, string city, string state, string zip ) {
@@ -29,12 +30,17 @@ Person::Person( string first_name, string last_name, string street_address, stri
 }
 
 Person::Person() {
-   
+
 }
 
 // Person::~Person() {
 //    delete Person;
 // }
+
+
+bool compare_people(Person p1, Person p2) {
+   return((p2.last_name < p1.last_name) || ((p2.last_name == p1.last_name) && (p2.first_name < p1.first_name)));
+}
 
 
 ostream& operator<<(ostream& os, Person& p) {

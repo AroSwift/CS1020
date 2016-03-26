@@ -99,7 +99,7 @@ template<class T>
 void Tree<T>::pre_order_traversal( Tree* node ) {
    if( node == NULL ) return;
 
-   print_data(data);
+   print_data(node->data);
 
    if( node->left != NULL ) {
       pre_order_traversal( node->left);
@@ -118,7 +118,7 @@ void Tree<T>::in_order_traversal( Tree* node ) {
       in_order_traversal( node->left );
    }
 
-   print_data(data);
+   print_data(node->data);
 
    if( node->right != NULL ) {
       in_order_traversal( node->right );
@@ -137,7 +137,7 @@ void Tree<T>::post_order_traversal( Tree* node ) {
       post_order_traversal( node->right );
    }
 
-   print_data(data);
+   print_data(node->data);
 }
 
 

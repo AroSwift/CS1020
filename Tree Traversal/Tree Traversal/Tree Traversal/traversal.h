@@ -5,8 +5,6 @@ using namespace std;
 
 const int MAX_FILE_LENGTH = 256; // Max file length on linux is 255
 
-// main functions! AND CLAS FUNCTIONS
-
 class Person {
    string first_name;
    string last_name;
@@ -35,7 +33,6 @@ Person::Person( string first_name, string last_name, string street_address, stri
 }
 
 Person::Person() {
-
 }
 
 // Person::~Person() {

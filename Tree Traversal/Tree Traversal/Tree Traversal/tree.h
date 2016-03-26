@@ -97,7 +97,7 @@ void Tree<T>::breadth_first_traversal() {
 
 template<class T>
 void Tree<T>::pre_order_traversal( Tree* node ) {
-   if( root == NULL ) return;
+   if( node == NULL ) return;
 
    print_data(data);
 
@@ -112,7 +112,7 @@ void Tree<T>::pre_order_traversal( Tree* node ) {
 
 template<class T>
 void Tree<T>::in_order_traversal( Tree* node ) {
-   if( root == NULL ) return;
+   if( node == NULL ) return;
 
    if( node->left != NULL ) {
       in_order_traversal( node->left );
@@ -127,7 +127,7 @@ void Tree<T>::in_order_traversal( Tree* node ) {
 
 template<class T>
 void Tree<T>::post_order_traversal( Tree* node ) {
-   if( root == NULL ) return;
+   if( node == NULL ) return;
 
    if( node->left != NULL ) {
       post_order_traversal( node->left );

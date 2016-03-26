@@ -87,7 +87,7 @@ void main_menu( vector<Person> people, Tree<Person>* tree) {
       << "2.) In-order traversal" << endl
       << "3.) Post-order traversal" << endl
       << "4.) Breadth-first traversal" << endl
-      << "5.) Search for a name"
+      << "5.) Search for a name" << endl
       << "6.) Exit" << endl
       << "Choice: ";
       cin >> choice;
@@ -97,31 +97,26 @@ void main_menu( vector<Person> people, Tree<Person>* tree) {
          case '1': // Pre-order traversal
             cout << endl;
             tree->pre_order_traversal();
-            cout << endl;
             break;
 
          case '2': // In-order traversal
             cout << endl;
             tree->in_order_traversal();
-            cout << endl;
             break;
 
          case '3': // Post-order traversal
             cout << endl;
             tree->post_order_traversal();
-            cout << endl;
             break;
 
          case '4': // Show last contact
             cout << endl;
             tree->breadth_first_traversal();
-            cout << endl;
             break;
 
          case '5': // Show last contact
             cout << endl;
             tree->breadth_first_traversal();
-            cout << endl;
             break;
 
          case '6': // Exit program

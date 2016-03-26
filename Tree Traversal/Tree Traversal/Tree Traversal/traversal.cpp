@@ -14,7 +14,8 @@ int main() {
 
    // Show the menu
    main_menu(tree);
-
+   
+   delete tree;
 
 }
 

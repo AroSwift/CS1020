@@ -101,11 +101,11 @@ void Tree<T>::pre_order_traversal( Tree* node ) {
    print_data(node->data);
 
    if( node->left != NULL ) {
-      pre_order_traversal( node->left);
+      pre_order_traversal(node->left);
    }
 
    if( node->right != NULL ) {
-      pre_order_traversal( node->right );
+      pre_order_traversal(node->right);
    }
 }
 
@@ -114,13 +114,13 @@ void Tree<T>::in_order_traversal( Tree* node ) {
    if( node == NULL ) return;
 
    if( node->left != NULL ) {
-      in_order_traversal( node->left );
+      in_order_traversal(node->left);
    }
 
    print_data(node->data);
 
    if( node->right != NULL ) {
-      in_order_traversal( node->right );
+      in_order_traversal(node->right);
    }
 }
 
@@ -129,11 +129,11 @@ void Tree<T>::post_order_traversal( Tree* node ) {
    if( node == NULL ) return;
 
    if( node->left != NULL ) {
-      post_order_traversal( node->left );
+      post_order_traversal(node->left);
    }
 
    if( node->right != NULL ) {
-      post_order_traversal( node->right );
+      post_order_traversal(node->right);
    }
 
    print_data(node->data);
@@ -142,6 +142,6 @@ void Tree<T>::post_order_traversal( Tree* node ) {
 
 template<class T>
 void Tree<T>::breadth_first_traversal( Tree* node) {
-   print_data(data);
+   print_data(node->data);
 }
 

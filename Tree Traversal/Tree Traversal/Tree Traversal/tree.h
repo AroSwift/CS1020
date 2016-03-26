@@ -38,7 +38,7 @@ Tree<T>::Tree() {
 //}
 
 template <class T>
-void print_data(T data) {
+void Tree<T>::print_data(T data) {
    cout << data << endl;
 }
 
@@ -50,7 +50,8 @@ void Tree<T>::insert(T data, bool (*cp)(T, T)) {
 template<class T>
 Tree<T>* Tree<T>::insert( Tree* node, T data, bool (*cp)(T, T)) {
    if( root == NULL ) {
-      Tree* node = new Tree();
+//      Tree* node = new Tree();
+      Tree<T>* node = new Tree<T>;
       node->data = data;
       node->left = node->right = NULL;
    } else if( cp(data, node->data) ) {
@@ -87,7 +88,7 @@ template<class T>
 void Tree<T>::pre_order_traversal( Tree* node ) {
    if( root == NULL ) return;
 
-//   print_data(data);
+   print_data(data);
 
    if( node->left != NULL ) {
       pre_order_traversal( node->left);
@@ -106,7 +107,7 @@ void Tree<T>::in_order_traversal( Tree* node ) {
       in_order_traversal( node->left );
    }
 
-//   print_data(data);
+   print_data(data);
 
    if( node->right != NULL ) {
       in_order_traversal( node->right );
@@ -125,7 +126,7 @@ void Tree<T>::post_order_traversal( Tree* node ) {
       post_order_traversal( node->right );
    }
 
-//   print_data(data);
+   print_data(data);
 }
 
 

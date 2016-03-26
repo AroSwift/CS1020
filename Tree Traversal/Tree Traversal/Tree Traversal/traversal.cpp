@@ -49,7 +49,7 @@ void load_people(vector<Person> people, Tree<Person>* tree) {
 
 
    // Read in file row by row
-   for( int i = 0; i < people.size(); i++ ) {
+   for( int i = 0; !input.eof(); i++ ) {
       // Ensure null character is accounted for in file
       string first_name, last_name, street_address, city, state, zip;
       getline( input, first_name, ',' );
@@ -109,14 +109,14 @@ void main_menu( vector<Person> people, Tree<Person>* tree) {
             tree->post_order_traversal();
             break;
 
-         case '4': // Show last contact
+         case '4': // Breadth-order traversal
             cout << endl;
             tree->breadth_first_traversal();
             break;
 
-         case '5': // Show last contact
+         case '5': // Search for Name
             cout << endl;
-            tree->breadth_first_traversal();
+            tree->search_for_person();
             break;
 
          case '6': // Exit program

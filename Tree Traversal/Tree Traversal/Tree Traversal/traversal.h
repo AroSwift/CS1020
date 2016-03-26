@@ -52,10 +52,17 @@ bool operator<(const Person& left, const Person& right) {
    return((left.last_name < right.last_name) || ((left.last_name == right.last_name) && (left.first_name < right.first_name)));
 }
 
+// Menu Options
 void load_people(vector<Person> people, Tree<Person>* tree);
 void main_menu(vector<Person> people, Tree<Person>* tree);
-
 void choose_choices();
-void search_for_person();
+
+void Person::search_for_person() {
+   
+}
+
+
 void print_person_data();
+
+
 

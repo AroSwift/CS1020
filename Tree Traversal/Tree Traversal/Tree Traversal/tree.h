@@ -42,8 +42,8 @@ Tree<T>::~Tree() {
 template<class T>
 void Tree<T>::remove(Tree* node) {
    if(node != NULL) {
-      destroy(node->left);
-      destroy(node->right);
+      remove(node->left);
+      remove(node->right);
       delete node;
 //      node = NULL;
    }

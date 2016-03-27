@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Tree Traversal/tree.h"
-            timestampString = "480732828.695823"
+            timestampString = "480734401.149312"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "91"
-            endingLineNumber = "91"
+            startingLineNumber = "89"
+            endingLineNumber = "89"
             landmarkName = "insert( T data, bool (*cp)(T, T))"
             landmarkType = "7">
             <Locations>
@@ -26,11 +26,11 @@
                   moduleName = "Tree Traversal"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/aaronbarlow/Desktop/College/Spring%202016/Computer%20Science/Tree%20Traversal/Tree%20Traversal/Tree%20Traversal/tree.h"
-                  timestampString = "480733344.279824"
+                  timestampString = "480734611.184572"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "93"
-                  endingLineNumber = "93"
+                  startingLineNumber = "91"
+                  endingLineNumber = "91"
                   offsetFromSymbolStart = "194">
                </Location>
                <Location
@@ -41,30 +41,14 @@
                   moduleName = "Tree Traversal"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/aaronbarlow/Desktop/College/Spring%202016/Computer%20Science/Tree%20Traversal/Tree%20Traversal/Tree%20Traversal/tree.h"
-                  timestampString = "480733344.28023"
+                  timestampString = "480734611.184957"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "93"
-                  endingLineNumber = "93"
+                  startingLineNumber = "91"
+                  endingLineNumber = "91"
                   offsetFromSymbolStart = "411">
                </Location>
             </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Tree Traversal/tree.h"
-            timestampString = "480733425.566606"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "43"
-            endingLineNumber = "43"
-            landmarkName = "remove(Tree&lt;T&gt;* node)"
-            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

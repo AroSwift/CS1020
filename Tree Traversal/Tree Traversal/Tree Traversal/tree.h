@@ -22,7 +22,7 @@ private:
    void pre_order_traversal( Tree* node );
    void post_order_traversal( Tree* node );
    void breadth_first_traversal( Tree* node );
-   void remove(Tree<T>* node);
+   void remove(Tree* node);
 };
 
 
@@ -38,7 +38,7 @@ Tree<T>::~Tree() {
 }
 
 template<class T>
-void Tree<T>::remove(Tree<T>* node) {
+void Tree<T>::remove(Tree* node) {
    if(node == root) return;
    if(node->left != NULL) remove(node->left);
    if(node->right != NULL)remove(node->right);

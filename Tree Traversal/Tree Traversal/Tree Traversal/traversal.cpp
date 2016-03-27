@@ -7,7 +7,6 @@ using namespace std;
 // if using templates do not need this
 
 int main() {
-//   Tree<Person> tree;
    Tree<Person>* tree = new Tree<Person>;
 
    load_people(tree);

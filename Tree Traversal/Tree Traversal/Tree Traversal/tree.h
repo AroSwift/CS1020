@@ -191,16 +191,14 @@ void Tree<T>::breadth_first_traversal() {
    {
       // Print front of queue and remove it from queue
       Tree<T> node = q.front();
-      print_data(data);
+      print_data(node.data);
       q.pop();
 
       /* Enqueue left child */
-      if (node.left != NULL)
-         q.push(*node.left);
+      if (node.left != NULL) q.push(*node.left);
 
       /*Enqueue right child */
-      if (node.right != NULL)
-         q.push(*node.right);
+      if (node.right != NULL) q.push(*node.right);
    }
 }
 

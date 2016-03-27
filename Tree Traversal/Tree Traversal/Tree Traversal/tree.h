@@ -22,8 +22,7 @@ private:
    void pre_order_traversal( Tree* node );
    void post_order_traversal( Tree* node );
    void breadth_first_traversal( Tree* node );
-//   void insert( Tree* node, T data, bool (*cp)(T, T));
-   void remove(Tree* node);
+   void remove(Tree<T>* node);
 };
 
 
@@ -39,24 +38,17 @@ Tree<T>::~Tree() {
 }
 
 template<class T>
-void Tree<T>::remove(Tree* node) {
-   if(node != NULL) {
-      remove(node->left);
-      remove(node->right);
-      delete node;
-//      node = NULL;
-   }
+void Tree<T>::remove(Tree<T>* node) {
+   if(node == root) return;
+   if(node->left != NULL) remove(node->left);
+   if(node->right != NULL)remove(node->right);
+   delete node;
 }
 
 template <class T>
 void Tree<T>::print_data(T data) {
    cout << data << endl;
 }
-
-//template<class T>
-//void Tree<T>::insert(T data, bool (*cp)(T, T)) {
-//   insert(root, data, cp);
-//}
 
 template<class T>
 void Tree<T>::insert( T data, bool (*cp)(T, T)) {
@@ -70,7 +62,7 @@ void Tree<T>::insert( T data, bool (*cp)(T, T)) {
       bool inserted = false;
       // search for the place to insert the new value
       do {
-         if ( current->data < data ) {
+         if ( cp(current->data, data) ) {
             // if the current node already has left child
             // so we concern it further
             if ( NULL != current->left ) {

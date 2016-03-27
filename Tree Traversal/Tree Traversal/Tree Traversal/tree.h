@@ -22,7 +22,7 @@ private:
    void pre_order_traversal( Tree* node );
    void post_order_traversal( Tree* node );
    void breadth_first_traversal( Tree* node );
-   void insert( Tree* node, T data, bool (*cp)(T, T));
+//   void insert( Tree* node, T data, bool (*cp)(T, T));
    void remove(Tree* node);
 };
 
@@ -53,50 +53,48 @@ void Tree<T>::print_data(T data) {
    cout << data << endl;
 }
 
-template<class T>
-void Tree<T>::insert(T data, bool (*cp)(T, T)) {
-   insert(root, data, cp);
-}
+//template<class T>
+//void Tree<T>::insert(T data, bool (*cp)(T, T)) {
+//   insert(root, data, cp);
+//}
 
 template<class T>
-void Tree<T>::insert( Tree* node, T data, bool (*cp)(T, T)) {
-   if( node == NULL ) {
-      Tree<T>* new_node = new Tree<T>;
-      new_node->data = data;
-//      new_node->left = new_node->right = NULL;
-      if( root == NULL ) root = new_node;
-      } else {
-         Tree *current = root;
-         // search for the place to insert the new value
-         while ( true ) {
-            if ( current->data < data ) {
-               // if the current node already has left child
-               // so we concern it further
-               if ( NULL != current->left ) {
-                  current = current->left;
-//                  continue;
-                  // if the current node has no left child
-                  // so we create it with the new value
-               } else {
-                  current->left = new Tree<T>;
-                  current->data = data;
-//                  current->left->left = current->left->right = NULL;
-                  break;
-               }
+void Tree<T>::insert( T data, bool (*cp)(T, T)) {
+   if( root == NULL ) {
+      root = new Tree<T>;
+      root->data = data;
+      root->left = root->right = NULL;
+//      if( root == NULL ) root = new_node;
+   } else {
+      Tree *current = root;
+      bool inserted = false;
+      // search for the place to insert the new value
+      do {
+         if ( current->data < data ) {
+            // if the current node already has left child
+            // so we concern it further
+            if ( NULL != current->left ) {
+               current = current->left;
+               // if the current node has no left child
+               // so we create it with the new value
             } else {
-               // similarly for the value that should be inserted into
-               // right subtree
-               if ( NULL != current->right ) {
-                  current = current->right;
-               } else {
-                  current->right = new Tree<T>;
-                  current->data = data;
-//                  current->right->left = current->right->right = NULL;
-                  break;
-               }
+               current->left = new Tree<T>;
+               current->left->data = data;
+               inserted = true;
+            }
+         } else {
+            // similarly for the value that should be inserted into
+            // right subtree
+            if ( NULL != current->right ) {
+               current = current->right;
+            } else {
+               current->right = new Tree<T>;
+               current->right->data = data;
+               inserted = true;
             }
          }
-      }
+      } while( !inserted );
+   }
       
 }
 

@@ -22,14 +22,13 @@ private:
    void pre_order_traversal( Tree* node );
    void post_order_traversal( Tree* node );
    void breadth_first_traversal( Tree* node );
-   Tree<T>* insert( Tree* node, T data, bool (*cp)(T, T));
+   void insert( Tree* node, T data, bool (*cp)(T, T));
    void remove(Tree* node);
 };
 
 
 template<class T>
 Tree<T>::Tree() {
-   root = NULL;
    left = NULL;
    right = NULL;
 }
@@ -60,19 +59,45 @@ void Tree<T>::insert(T data, bool (*cp)(T, T)) {
 }
 
 template<class T>
-Tree<T>* Tree<T>::insert( Tree* node, T data, bool (*cp)(T, T)) {
+void Tree<T>::insert( Tree* node, T data, bool (*cp)(T, T)) {
    if( node == NULL ) {
-//      Tree* node = new Tree();
-      Tree<T>* node = new Tree<T>;
-      node->data = data;
-      node->left = node->right = NULL;
-      if( root == NULL ) root = node;
-   } else if( cp(data, node->data) ) {
-      node->left = insert(node->left, data, cp);
-   } else {
-      node->right = insert(node->right, data, cp);
-   }
-   return node;
+      Tree<T>* new_node = new Tree<T>;
+      new_node->data = data;
+//      new_node->left = new_node->right = NULL;
+      if( root == NULL ) root = new_node;
+      } else {
+         Tree *current = root;
+         // search for the place to insert the new value
+         while ( true ) {
+            if ( current->data < data ) {
+               // if the current node already has left child
+               // so we concern it further
+               if ( NULL != current->left ) {
+                  current = current->left;
+//                  continue;
+                  // if the current node has no left child
+                  // so we create it with the new value
+               } else {
+                  current->left = new Tree<T>;
+                  current->data = data;
+//                  current->left->left = current->left->right = NULL;
+                  break;
+               }
+            } else {
+               // similarly for the value that should be inserted into
+               // right subtree
+               if ( NULL != current->right ) {
+                  current = current->right;
+               } else {
+                  current->right = new Tree<T>;
+                  current->data = data;
+//                  current->right->left = current->right->right = NULL;
+                  break;
+               }
+            }
+         }
+      }
+      
 }
 
 //template<class T>
@@ -123,14 +148,10 @@ void Tree<T>::pre_order_traversal( Tree* node ) {
 
    if( node->left != NULL ) {
       pre_order_traversal(node->left);
-   } else {
-      cout << "no left" << endl;
    }
 
    if( node->right != NULL ) {
       pre_order_traversal(node->right);
-   } else {
-      cout << "no right" << endl;
    }
 }
 

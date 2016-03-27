@@ -19,7 +19,7 @@ public:
    void print_person_data();
    void search_for_person();
    friend ostream& operator<<(ostream& os, Person& p);
-//   friend bool operator<(const Person& left, const Person& right);
+   friend bool operator<(const Person& left, const Person& right);
    friend bool compare_people(Person p1, Person p2);
 };
 
@@ -63,9 +63,9 @@ ostream& operator<<(ostream& os, Person& p) {
    return os;
 }
 
-//bool operator<(const Person& left, const Person& right) {
-//   return((left.last_name < right.last_name) || ((left.last_name == right.last_name) && (left.first_name < right.first_name)));
-//}
+bool operator<(const Person& left, const Person& right) {
+   return((left.last_name < right.last_name) || ((left.last_name == right.last_name) && (left.first_name < right.first_name)));
+}
 
 // Menu Options
 void load_people(Tree<Person>* tree);

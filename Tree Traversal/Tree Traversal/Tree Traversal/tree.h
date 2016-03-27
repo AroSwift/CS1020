@@ -1,4 +1,5 @@
 #pragma once
+#include <queue>
 using namespace std;
 
 template<class T>
@@ -21,7 +22,6 @@ private:
    void in_order_traversal( Tree* node );
    void pre_order_traversal( Tree* node );
    void post_order_traversal( Tree* node );
-   void breadth_first_traversal( Tree* node );
    void remove(Tree* node);
 };
 
@@ -87,7 +87,7 @@ void Tree<T>::insert( T data, bool (*cp)(T, T)) {
          }
       } while( !inserted );
    }
-      
+
 }
 
 //template<class T>
@@ -104,9 +104,9 @@ void Tree<T>::insert( T data, bool (*cp)(T, T)) {
 //   } else {
 //      node->right = insert(node->right, data, cp);
 //   }
-//      
-//      
-//      
+//
+//
+//
 //   return node;
 //}
 
@@ -125,10 +125,10 @@ void Tree<T>::post_order_traversal() {
    post_order_traversal(root);
 }
 
-template<class T>
-void Tree<T>::breadth_first_traversal() {
-   breadth_first_traversal(root);
-}
+//template<class T>
+//void Tree<T>::breadth_first_traversal() {
+//   breadth_first_traversal(root);
+//}
 
 template<class T>
 void Tree<T>::pre_order_traversal( Tree* node ) {
@@ -177,7 +177,30 @@ void Tree<T>::post_order_traversal( Tree* node ) {
 
 
 template<class T>
-void Tree<T>::breadth_first_traversal( Tree* node) {
-   print_data(node->data);
+void Tree<T>::breadth_first_traversal() {
+   if (root == NULL)  return;
+
+   // Create an empty queue for level order tarversal
+//   Tree<T>* q;
+   queue<Tree> q;
+
+   // Enqueue Root and initialize height
+   q.push(*root);
+
+   while ( !q.empty() )
+   {
+      // Print front of queue and remove it from queue
+      Tree<T> node = q.front();
+      print_data(data);
+      q.pop();
+
+      /* Enqueue left child */
+      if (node.left != NULL)
+         q.push(*node.left);
+
+      /*Enqueue right child */
+      if (node.right != NULL)
+         q.push(*node.right);
+   }
 }
 

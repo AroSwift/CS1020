@@ -10,45 +10,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Tree Traversal/tree.h"
-            timestampString = "480734401.149312"
+            timestampString = "480740144.759909"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "89"
-            endingLineNumber = "89"
-            landmarkName = "insert( T data, bool (*cp)(T, T))"
+            startingLineNumber = "181"
+            endingLineNumber = "181"
+            landmarkName = "breadth_first_traversal()"
             landmarkType = "7">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Tree&lt;Person&gt;::insert(Person, bool (*)(Person, Person))"
-                  moduleName = "Tree Traversal"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/aaronbarlow/Desktop/College/Spring%202016/Computer%20Science/Tree%20Traversal/Tree%20Traversal/Tree%20Traversal/tree.h"
-                  timestampString = "480734611.184572"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "91"
-                  endingLineNumber = "91"
-                  offsetFromSymbolStart = "194">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Tree&lt;Person&gt;::insert(Person, bool (*)(Person, Person))"
-                  moduleName = "Tree Traversal"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/aaronbarlow/Desktop/College/Spring%202016/Computer%20Science/Tree%20Traversal/Tree%20Traversal/Tree%20Traversal/tree.h"
-                  timestampString = "480734611.184957"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "91"
-                  endingLineNumber = "91"
-                  offsetFromSymbolStart = "411">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

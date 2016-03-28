@@ -13,7 +13,7 @@ public:
    void pre_order_traversal();
    void post_order_traversal();
    void breadth_first_traversal();
-   T find_data();
+   T find_data(T data, bool (*less_greater_cp)(T, T), bool (*equal_cp)(T, T));
 private:
    T data;
    Tree* root;
@@ -86,28 +86,26 @@ void Tree<T>::insert( T data, bool (*cp)(T, T)) {
          }
       } while( !inserted );
    }
-
+   
 }
 
-//template<class T>
-//T data Tree<T>::search_data(T data, bool (*cp)(T, T)) {
-//   while(  ) {
-//   if( cp( data, node->data ) ) {
-//      //      Tree* node = new Tree();
-//      Tree<T>* node = new Tree<T>;
-//      node->data = data;
-//      node->left = node->right = NULL;
-//      if( root == NULL ) root = node;
-//   } else if( cp(data, node->data) ) {
-//      node->left = insert(node->left, data, cp);
-//   } else {
-//      node->right = insert(node->right, data, cp);
-//   }
-//
-//
-//
-//   return node;
-//}
+template<class T>
+T Tree<T>::find_data(T data, bool (*less_greater_cp)(T, T), bool (*equal_cp)(T, T)) {
+   Tree<T> current = root;
+   bool data_found = false, done_searching = false;
+   while( !data_found && !done_searching ) {
+      if( equal_cp( data, current->data ) ) {
+         data_found = true;
+      } else if( less_greater_cp( data, current->data ) ) {
+         current = current->left;
+      } else {
+         current = current->right;
+      }
+      
+   }
+   
+   return (data_found) ? current->data : cout << "Could not find the record" << endl;
+}
 
 template<class T>
 void Tree<T>::pre_order_traversal() {
@@ -127,7 +125,7 @@ void Tree<T>::post_order_traversal() {
 template<class T>
 void Tree<T>::pre_order_traversal( Tree* node ) {
    if( node == NULL ) return;
-
+   
    print_data(node->data);
    
    if( node->left != NULL ) pre_order_traversal(node->left);
@@ -137,21 +135,21 @@ void Tree<T>::pre_order_traversal( Tree* node ) {
 template<class T>
 void Tree<T>::in_order_traversal( Tree* node ) {
    if( node == NULL ) return;
-
+   
    if( node->left != NULL ) in_order_traversal(node->left);
-
+   
    print_data(node->data);
-
+   
    if( node->right != NULL ) in_order_traversal(node->right);
 }
 
 template<class T>
 void Tree<T>::post_order_traversal( Tree* node ) {
    if( node == NULL ) return;
-
+   
    if( node->left != NULL ) post_order_traversal(node->left);
    if( node->right != NULL ) post_order_traversal(node->right);
-
+   
    print_data(node->data);
 }
 
@@ -159,35 +157,25 @@ void Tree<T>::post_order_traversal( Tree* node ) {
 template<class T>
 void Tree<T>::breadth_first_traversal() {
    if (root == NULL)  return;
-
+   
    // Create an empty queue for breadth first tarversal
    queue<Tree> q;
-
+   
    // Enqueue Root and initialize height
    q.push(*root);
-
+   
    while ( !q.empty() ) {
       // Print front of queue and remove it from queue
       Tree<T> node = q.front();
       print_data(node.data);
       q.pop();
-
+      
       // Enqueue left child
       if (node.left != NULL) q.push(*node.left);
-
+      
       // Enqueue right child
       if (node.right != NULL) q.push(*node.right);
    }
 }
-
-template<class T>
-T Tree<T>::find_data() {
-   if(root == NULL) return NULL;
-
-   
-}
-
-
-
 
 

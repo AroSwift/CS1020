@@ -13,7 +13,7 @@ public:
    void pre_order_traversal();
    void post_order_traversal();
    void breadth_first_traversal();
-//   void search_data(T data, bool (*cp)(T, T))
+   T find_data();
 private:
    T data;
    Tree* root;
@@ -56,7 +56,6 @@ void Tree<T>::insert( T data, bool (*cp)(T, T)) {
       root = new Tree<T>;
       root->data = data;
       root->left = root->right = NULL;
-//      if( root == NULL ) root = new_node;
    } else {
       Tree *current = root;
       bool inserted = false;
@@ -125,52 +124,33 @@ void Tree<T>::post_order_traversal() {
    post_order_traversal(root);
 }
 
-//template<class T>
-//void Tree<T>::breadth_first_traversal() {
-//   breadth_first_traversal(root);
-//}
-
 template<class T>
 void Tree<T>::pre_order_traversal( Tree* node ) {
    if( node == NULL ) return;
 
    print_data(node->data);
-
-   if( node->left != NULL ) {
-      pre_order_traversal(node->left);
-   }
-
-   if( node->right != NULL ) {
-      pre_order_traversal(node->right);
-   }
+   
+   if( node->left != NULL ) pre_order_traversal(node->left);
+   if( node->right != NULL ) pre_order_traversal(node->right);
 }
 
 template<class T>
 void Tree<T>::in_order_traversal( Tree* node ) {
    if( node == NULL ) return;
 
-   if( node->left != NULL ) {
-      in_order_traversal(node->left);
-   }
+   if( node->left != NULL ) in_order_traversal(node->left);
 
    print_data(node->data);
 
-   if( node->right != NULL ) {
-      in_order_traversal(node->right);
-   }
+   if( node->right != NULL ) in_order_traversal(node->right);
 }
 
 template<class T>
 void Tree<T>::post_order_traversal( Tree* node ) {
    if( node == NULL ) return;
 
-   if( node->left != NULL ) {
-      post_order_traversal(node->left);
-   }
-
-   if( node->right != NULL ) {
-      post_order_traversal(node->right);
-   }
+   if( node->left != NULL ) post_order_traversal(node->left);
+   if( node->right != NULL ) post_order_traversal(node->right);
 
    print_data(node->data);
 }
@@ -180,25 +160,34 @@ template<class T>
 void Tree<T>::breadth_first_traversal() {
    if (root == NULL)  return;
 
-   // Create an empty queue for level order tarversal
-//   Tree<T>* q;
+   // Create an empty queue for breadth first tarversal
    queue<Tree> q;
 
    // Enqueue Root and initialize height
    q.push(*root);
 
-   while ( !q.empty() )
-   {
+   while ( !q.empty() ) {
       // Print front of queue and remove it from queue
       Tree<T> node = q.front();
       print_data(node.data);
       q.pop();
 
-      /* Enqueue left child */
+      // Enqueue left child
       if (node.left != NULL) q.push(*node.left);
 
-      /*Enqueue right child */
+      // Enqueue right child
       if (node.right != NULL) q.push(*node.right);
    }
 }
+
+template<class T>
+T Tree<T>::find_data() {
+   if(root == NULL) return NULL;
+
+   
+}
+
+
+
+
 

@@ -35,7 +35,7 @@ public:
    friend ostream& operator<<(ostream& os, Person& p);
    friend bool operator==(const Person& left, const Person& right);
    friend bool compare_people(Person p1, Person p2);
-   friend bool compare_equality( Person p1, Person p2);
+   friend bool compare_equality(Person p1, Person p2);
 private:
    string first_name;
    string last_name;
@@ -92,11 +92,13 @@ bool compare_people(Person p1, Person p2) {
    return( (p2.last_name < p1.last_name) || ((p2.last_name == p1.last_name) && (p2.first_name < p1.first_name)) );
 }
 
-bool compare_equality( Person p1, Person p2) {
+bool compare_equality(Person p1, Person p2) {
 //   return( (lower_case(p1.last_name) == lower_case(p2.last_name)) && (lower_case(p1.first_name) ==  lower_case(p2.last_name)) );
-   return lower_case(p1.last_name) == lower_case(p2.last_name);
+//   return lower_case(p1.last_name) == lower_case(p2.last_name);
+   string p1_first_name = lower_case(p1.first_name);
+   string p2_first_name = lower_case(p2.first_name);
+   return p1_first_name == p2_first_name;
 }
-
 
 
 void load_people(Tree<Person>* tree);

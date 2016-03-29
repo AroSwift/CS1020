@@ -112,12 +112,23 @@ void Tree<T>::insert( T data, bool (*cp)(T, T)) {
    
 }
 
-
+//
+// search
+// Call the private method search
+// and set the base case to root
+// and pass the passed paramaters.
+//
 template<class T>
 void Tree<T>::search(T d, bool (*eq)( T, T )) {
    search( root, d, eq, 1 );
 }
 
+//
+// search
+// Searches through the tree until the given data matches
+// the node's data. If the data is never found in the tree
+// Then inform the user that the data was not found.
+//
 template<class T>
 void Tree<T>::search(Tree* node, T d, bool (*eq)( T, T ), int num_searches) {
    // Ensure node exists
@@ -127,11 +138,14 @@ void Tree<T>::search(Tree* node, T d, bool (*eq)( T, T ), int num_searches) {
    if( eq(node->data, d) ) {
       // Print the data and number of nodes traversed to find the data
       cout << num_searches << " nodes were traversed to find the data." << endl;
-      print_data(d);
+      print_data(node->data);
    } else { // Node's data is not equal to the given data
       if( node->left != NULL ) node->left->search( node->left, d, eq, num_searches++ );
       if( node->right != NULL ) node->right->search( node->right, d, eq, num_searches++ );
    }
+   
+   // Inform user no record can be found when whole tree has been traversed
+   cout << "The record could not be found." << endl;
 }
 
 //

@@ -22,7 +22,7 @@ private:
    void in_order_traversal( Tree* node );
    void pre_order_traversal( Tree* node );
    void post_order_traversal( Tree* node );
-   void search(Tree* node, T d, bool (*eq)( T, T ), int num_searches);
+   bool search(Tree* node, T d, bool (*eq)( T, T ), int num_searches);
    void remove(Tree* node);
 };
 
@@ -120,7 +120,11 @@ void Tree<T>::insert( T data, bool (*cp)(T, T)) {
 //
 template<class T>
 void Tree<T>::search(T d, bool (*eq)( T, T )) {
-   search( root, d, eq, 1 );
+   bool found_data = search( root, d, eq, 1 );
+   if(!found_data) {
+      // Inform user no record can be found when whole tree has been traversed
+      cout << "The record could not be found." << endl;
+   }
 }
 
 //
@@ -130,24 +134,21 @@ void Tree<T>::search(T d, bool (*eq)( T, T )) {
 // Then inform the user that the data was not found.
 //
 template<class T>
-void Tree<T>::search(Tree* node, T d, bool (*eq)( T, T ), int num_searches) {
+bool Tree<T>::search(Tree* node, T d, bool (*eq)( T, T ), int num_searches) {
    // Ensure node exists
-   if(node == NULL) return;
+   if(node == NULL) return false;
    
    // Determine if node's data is equal to given data using function pointer
    if( eq(node->data, d) ) {
       // Print the data and number of nodes traversed to find the data
       cout << num_searches << " nodes were traversed to find the data." << endl;
       print_data(node->data);
-      return;
+      return true;
    } else { // Node's data is not equal to the given data
       if( node->left != NULL ) search( node->left, d, eq, num_searches++ );
       if( node->right != NULL ) search( node->right, d, eq, num_searches++ );
-      return;
+      return false;
    }
-   
-   // Inform user no record can be found when whole tree has been traversed
-   cout << "The record could not be found." << endl;
 }
 
 //

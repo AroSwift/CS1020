@@ -232,6 +232,9 @@ void Settings::change_settings_menu() {
       }
 
    } while(!exit);
+   
+   cout << endl;
+   
 }
 
 void search_for_person(Tree<Person>* tree) {
@@ -251,11 +254,7 @@ void search_for_person(Tree<Person>* tree) {
 //   Person *found_person = new Person;
 //   Person found_person = tree->find_data(*search_person, &compare_people, &compare_equality);
    
-   if( Person found_person = tree->find_data(*search_person, &compare_people, &compare_equality) ) {
-      
-   }
-   
-   
+   tree->search(*search_person, &compare_equality);
    
 }
 
@@ -274,4 +273,32 @@ string lower_case( string value ) {
    
    return value; // As a lowercased string
 }
+
+
+bool compare_people(Person p1, Person p2) {
+   return( (p2.last_name < p1.last_name) || ((p2.last_name == p1.last_name) && (p2.first_name < p1.first_name)) );
+}
+
+bool compare_equality( Person p1, Person p2) {
+   return( (lower_case(p1.last_name) == lower_case(p2.last_name)) && (lower_case(p1.first_name) == lower_case(p2.last_name)) );
+}
+
+ostream& operator<<(ostream& os, Person& p) {
+   os << p.first_name << ", " << p.last_name;
+   //   if( can_show_first_name ) os << p.first_name;
+   return os;
+}
+
+//bool operator<(const Person& left, const Person& right) {
+//   return((left.last_name < right.last_name) || ((left.last_name == right.last_name) && (left.first_name < right.first_name)));
+//}
+
+
+
+bool operator==(const Person& left, const Person& right) {
+   //   return((left.last_name == right.last_name) && left.first_name == right.first_name);
+   return ((lower_case(left.last_name) == lower_case(right.last_name)) && (lower_case(left.first_name) == lower_case(right.last_name)) );
+}
+
+
 

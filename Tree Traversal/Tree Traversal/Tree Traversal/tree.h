@@ -13,7 +13,8 @@ public:
    void pre_order_traversal();
    void post_order_traversal();
    void breadth_first_traversal();
-   T find_data(T data, bool (*less_greater_cp)(T, T), bool (*equal_cp)(T, T));
+//   T find_data(T data, bool (*less_greater_cp)(T, T), bool (*equal_cp)(T, T));
+   void search(T data, bool (*cp)( T, T ));
 private:
    T data;
    Tree* root;
@@ -22,6 +23,7 @@ private:
    void in_order_traversal( Tree* node );
    void pre_order_traversal( Tree* node );
    void post_order_traversal( Tree* node );
+   void search(Tree* node, T d, bool (*cp)( T, T ), int num_searches);
    void remove(Tree* node);
 };
 
@@ -89,31 +91,45 @@ void Tree<T>::insert( T data, bool (*cp)(T, T)) {
    
 }
 
-template<class T>
-T Tree<T>::find_data(T data, bool (*less_greater_cp)(T, T), bool (*equal_cp)(T, T)) {
-   if( root == NULL ) return NULL;
-   
-   Tree<T> current = root;
-   bool data_found = false, done_searching = false;
-   while( !data_found && !done_searching ) {
-      if( equal_cp( data, current->data ) ) {
-         data_found = true;
-      } else if( less_greater_cp( data, current->data ) ) {
-         current = current->left;
-      } else {
-         current = current->right;
-      }
-      
-   }
-   
-   return (data_found) ? current->data : NULL;
-}
-//
 //template<class T>
-//T Tree<T>::traverse() {
+//T Tree<T>::find_data(T data, bool (*less_greater_cp)(T, T), bool (*equal_cp)(T, T)) {
+//   if( root == NULL ) return boost::none;
 //   
+//   Tree<T> current = root;
+//   bool data_found = false, done_searching = false;
+//   while( !data_found && !done_searching ) {
+//      if( equal_cp( data, current->data ) ) {
+//         data_found = true;
+//      } else if( less_greater_cp( data, current->data ) ) {
+//         current = current->left;
+//      } else {
+//         current = current->right;
+//      }
+//      
+//   }
+//   
+//   return (data_found) ? current->data : NULL;
 //}
 
+template<class T>
+void Tree<T>::search(T data, bool (*cp)( T, T )) {
+   search( root, data, cp, 1 );
+}
+
+template<class T>
+void Tree<T>::search(Tree* node, T d, bool (*cp)( T, T ), int num_searches) {
+   if(node == NULL) return;
+   
+//   if( node->data == d ) {
+   if( cp(node->data, d) ) {
+   cout << num_searches << " nodes were traversed to find the data." << endl;
+      print_data(d);
+      return;
+   }
+   
+   if( node->left != NULL ) node->left->search( node->left, d, cp, num_searches++ );
+   if( node->right != NULL ) node->right->search( node->right, d, cp, num_searches++ );
+}
 
 template<class T>
 void Tree<T>::pre_order_traversal() {

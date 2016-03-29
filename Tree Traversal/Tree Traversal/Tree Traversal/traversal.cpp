@@ -130,7 +130,7 @@ void main_menu(Tree<Person>* tree, string settings) {
          case '5': // Search for Name
             cout << endl;
             options_menu(settings);
-//            search_for_person(tree->get_root(), settings);
+            search_for_person(tree, settings);
             break;
 
          case '6': // Exit program
@@ -185,19 +185,26 @@ void change_settings_menu(string &settings) {
    << "Choice: ";
    cin >> choice;
 
-//   settings = choice;
    settings = choice;
    
-//   for( int i = 0; i < choice.length(); i++ ) {
-//      if( isdigit(choice[i]) && (choice[i] >= 1 && choice[i] <= 6) ) {
-//         if( settings.find(choice[i]) != string::npos ) settings += choice[i];
-//      }
-//   }
-
-
    cout << endl;
 
 }
+
+//
+// search
+// Call the private method search
+// and set the base case to root
+// and pass the passed paramaters.
+//
+void search(Tree<Person>* tree, Person p, string settings) {
+   bool found_data = tree->search( tree->get_root(), p, &compare_equality, 1 );
+   if(!found_data) {
+      // Inform user no record can be found when whole tree has been traversed
+      cout << "The person could not be found." << endl << endl;
+   }
+}
+
 
 void search_for_person(Tree<Person>* tree, string settings) {
    string first_name, last_name;
@@ -211,12 +218,10 @@ void search_for_person(Tree<Person>* tree, string settings) {
    cout << "Enter the last name: ";
    cin >> last_name;
 
-//   Person *search_person = new Person( first_name, last_name );
-
-//   Person *found_person = new Person;
-
-//   tree->search(*search_person, &compare_equality);
-
+   Person *search_person = new Person( first_name, last_name );
+   
+   search(tree, *search_person, settings);
+   
 }
 
 
@@ -247,7 +252,6 @@ void print_data(Person p, string settings) {
    // Add sufficent spacing between records
    if(settings != "") cout << endl << endl;
 }
-
 
 
 //

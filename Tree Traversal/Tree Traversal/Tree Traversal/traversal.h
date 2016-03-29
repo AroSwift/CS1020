@@ -55,7 +55,8 @@ bool compare_equality(Person p1, Person p2) {
 
 
 void load_people(Tree<Person>* tree);
-void search_for_person(Tree<Person>* tree);
+void search_for_person(Tree<Person>* tree, string settings);
+void search(Tree<Person>* tree, Person p, string settings);
 
 // Menu Options
 void main_menu(Tree<Person>* tree, string settings);

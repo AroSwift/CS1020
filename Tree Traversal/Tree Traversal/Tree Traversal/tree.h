@@ -8,19 +8,20 @@ public:
    Tree();
    ~Tree();
    void insert(T data, bool (*cp)(T, T));
-   void print_data(T data);
+//   void print_data(T data);
    Tree<T>* get_root();
    Tree<T>* get_left();
    Tree<T>* get_right();
    T get_data();
+//   void search(T d, bool (*eq)( T, T ));
    bool search(Tree* node, T d, bool (*eq)( T, T ), int num_searches);
-   void search(T d, bool (*eq)( T, T ));
 private:
    T data;
    Tree* root;
    Tree* left;
    Tree* right;
    void remove(Tree* node);
+//   bool search(Tree* node, T d, bool (*eq)( T, T ), int num_searches);
 };
 
 template<class T>
@@ -67,16 +68,16 @@ void Tree<T>::remove(Tree* node) {
    delete node;
 }
 
-//
-// print_data
-// Prints the given template data.
-// Note: this must be overwritten by
-// a custom cout operator function.
-//
-template <class T>
-void Tree<T>::print_data(T data) {
-   cout << data << endl;
-}
+////
+//// print_data
+//// Prints the given template data.
+//// Note: this must be overwritten by
+//// a custom cout operator function.
+////
+//template <class T>
+//void Tree<T>::print_data(T data) {
+//   cout << &data << endl;
+//}
 
 //
 // insert
@@ -129,20 +130,20 @@ void Tree<T>::insert( T data, bool (*cp)(T, T)) {
    
 }
 
-//
-// search
-// Call the private method search
-// and set the base case to root
-// and pass the passed paramaters.
-//
-template<class T>
-void Tree<T>::search(T d, bool (*eq)( T, T )) {
-   bool found_data = search( root, d, eq, 1 );
-   if(!found_data) {
-      // Inform user no record can be found when whole tree has been traversed
-      cout << "The record could not be found." << endl;
-   }
-}
+////
+//// search
+//// Call the private method search
+//// and set the base case to root
+//// and pass the passed paramaters.
+////
+//template<class T>
+//void Tree<T>::search(T d, bool (*eq)( T, T )) {
+//   bool found_data = search( root, d, eq, 1 );
+//   if(!found_data) {
+//      // Inform user no record can be found when whole tree has been traversed
+//      cout << "The record could not be found." << endl;
+//   }
+//}
 
 //
 // search
@@ -159,7 +160,7 @@ bool Tree<T>::search(Tree* node, T d, bool (*eq)( T, T ), int num_searches) {
    if( eq(node->data, d) ) {
       // Print the data and number of nodes traversed to find the data
       cout << num_searches << " nodes were traversed to find the data." << endl;
-      print_data(node->data);
+//      print_data(node->data);
       return true;
    } else { // Node's data is not equal to the given data
       bool outcome = false;

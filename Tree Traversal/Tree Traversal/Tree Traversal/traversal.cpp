@@ -147,7 +147,7 @@ void main_menu(Tree<Person>* tree, char settings[]) {
 }
 
 void options_menu(char settings[]) {
-   if( strcmp(settings, "") == 0 ) {
+   if( settings[0] == '\0' ) {
       bool acceptable_input;
       do {
          char user_choice;
@@ -172,8 +172,6 @@ void options_menu(char settings[]) {
 void change_settings_menu(char settings[]) {
    string choice;
 
-   // Display a menu
-   
    // Give user choices
    cout << "Field Selection Menu" << endl
    << "-------------------------" << endl
@@ -237,7 +235,15 @@ string lower_case( string value ) {
 }
 
 ostream& operator<<(ostream& os, Person& p) {
-   os << p.first_name << ", " << p.last_name;
+   os << "First Name: " << p.first_name;
+   os << "Last Name: " << p.last_name;
+   os << "Street Address: " << p.street_address;
+   os << "City: " << p.city;
+   os << "State: " << p.state;
+   os << "Zip: " << p.zip;
+   
+   // Add sufficent spacing between records
+   cout << endl << endl;
    return os;
 }
 

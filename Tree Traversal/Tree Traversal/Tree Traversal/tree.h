@@ -13,7 +13,6 @@ public:
    void pre_order_traversal();
    void post_order_traversal();
    void breadth_first_traversal();
-//   T find_data(T data, bool (*less_greater_cp)(T, T), bool (*equal_cp)(T, T));
    void search(T data, bool (*cp)( T, T ));
 private:
    T data;
@@ -26,8 +25,10 @@ private:
    void search(Tree* node, T d, bool (*cp)( T, T ), int num_searches);
    void remove(Tree* node);
 };
-
-
+//
+// Constructor for Tree
+// Sets the left and right node to nothing
+//
 template<class T>
 Tree<T>::Tree() {
    left = NULL;
@@ -47,6 +48,12 @@ void Tree<T>::remove(Tree* node) {
    delete node;
 }
 
+//
+// print_data
+// Prints the generic template data.
+// Note: this must be overwritten by
+// a custom cout operator function.
+//
 template <class T>
 void Tree<T>::print_data(T data) {
    cout << data << endl;
@@ -91,26 +98,6 @@ void Tree<T>::insert( T data, bool (*cp)(T, T)) {
    
 }
 
-//template<class T>
-//T Tree<T>::find_data(T data, bool (*less_greater_cp)(T, T), bool (*equal_cp)(T, T)) {
-//   if( root == NULL ) return boost::none;
-//   
-//   Tree<T> current = root;
-//   bool data_found = false, done_searching = false;
-//   while( !data_found && !done_searching ) {
-//      if( equal_cp( data, current->data ) ) {
-//         data_found = true;
-//      } else if( less_greater_cp( data, current->data ) ) {
-//         current = current->left;
-//      } else {
-//         current = current->right;
-//      }
-//      
-//   }
-//   
-//   return (data_found) ? current->data : NULL;
-//}
-
 template<class T>
 void Tree<T>::search(T data, bool (*cp)( T, T )) {
    search( root, data, cp, 1 );
@@ -120,9 +107,8 @@ template<class T>
 void Tree<T>::search(Tree* node, T d, bool (*cp)( T, T ), int num_searches) {
    if(node == NULL) return;
    
-//   if( node->data == d ) {
    if( cp(node->data, d) ) {
-   cout << num_searches << " nodes were traversed to find the data." << endl;
+      cout << num_searches << " nodes were traversed to find the data." << endl;
       print_data(d);
       return;
    }
@@ -131,28 +117,54 @@ void Tree<T>::search(Tree* node, T d, bool (*cp)( T, T ), int num_searches) {
    if( node->right != NULL ) node->right->search( node->right, d, cp, num_searches++ );
 }
 
+//
+// pre_order_traversal
+// Call the private method pre_order_traversal
+// and set the base case to root.
+//
 template<class T>
 void Tree<T>::pre_order_traversal() {
    pre_order_traversal(root);
 }
 
+//
+// in_order_traversal
+// Call the private method in_order_traversal
+// and set the base case to root.
+//
 template<class T>
 void Tree<T>::in_order_traversal() {
    in_order_traversal(root);
 }
 
+//
+// post_order_traversal
+// Call the private method post_order_traversal
+// and set the base case to root.
+//
 template<class T>
 void Tree<T>::post_order_traversal() {
    post_order_traversal(root);
 }
 
+//
+// pre_order_traversal
+// Traverse the tree starting at root and
+// Then go to the left side and then right
+// The result is the data is printed in order.
+//
 template<class T>
 void Tree<T>::pre_order_traversal( Tree* node ) {
+   // Ensure node exists
    if( node == NULL ) return;
    
+   // Print node's data
    print_data(node->data);
    
+   // Recursively go to left side of tree
    if( node->left != NULL ) pre_order_traversal(node->left);
+   
+   // Recursively go to right side of tree
    if( node->right != NULL ) pre_order_traversal(node->right);
 }
 
@@ -204,6 +216,7 @@ void Tree<T>::post_order_traversal( Tree* node ) {
 //
 template<class T>
 void Tree<T>::breadth_first_traversal() {
+   // Ensure root node exists
    if (root == NULL)  return;
    
    // Create an empty queue
@@ -212,13 +225,13 @@ void Tree<T>::breadth_first_traversal() {
    // Enqueue root
    q.push(*root);
    
-   // Continue to go through each
+   // Continue to go through each node while queue is not empty
    while ( !q.empty() ) {
       // Get and print front of queue
       Tree<T> node = q.front();
       print_data(node.data);
-      // Remove the node from the queue
-      q.pop();
+      
+      q.pop(); // Remove the node from the queue
       
       // Enqueue left node
       if (node.left != NULL) q.push(*node.left);

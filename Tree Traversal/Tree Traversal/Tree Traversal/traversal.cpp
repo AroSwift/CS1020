@@ -171,7 +171,6 @@ void options_menu(string &settings) {
 
 void change_settings_menu(string &settings) {
    string choice;
-   settings = "";
 
    // Give user choices
    cout << "Field Selection Menu" << endl
@@ -186,12 +185,15 @@ void change_settings_menu(string &settings) {
    << "Choice: ";
    cin >> choice;
 
+//   settings = choice;
+   settings = choice;
+   
+//   for( int i = 0; i < choice.length(); i++ ) {
+//      if( isdigit(choice[i]) && (choice[i] >= 1 && choice[i] <= 6) ) {
+//         if( settings.find(choice[i]) != string::npos ) settings += choice[i];
+//      }
+//   }
 
-   for( int i = 0; i < choice.length(); i++ ) {
-      if( isdigit(choice[i]) && (choice[i] >= 1 || choice[i] <= 6) ) {
-         if( settings.find(choice[i]) == string::npos ) settings += choice[i];
-      }
-   }
 
    cout << endl;
 
@@ -235,12 +237,12 @@ string lower_case( string value ) {
 
 
 void print_data(Person p, string settings) {
-   if( settings.find('1') == string::npos) cout << "First Name: " << p.first_name << endl;
-   if( settings.find('2') == string::npos) cout << "Last Name: " << p.last_name << endl;
-   if( settings.find('3') == string::npos) cout << "Street Address: " << p.street_address << endl;
-   if( settings.find('4') == string::npos) cout << "City: " << p.city << endl;
-   if( settings.find('5') == string::npos) cout << "State: " << p.state << endl;
-   if( settings.find('6') == string::npos) cout << "Zip: " << p.zip << endl;
+   if( settings.find('1') != string::npos) cout << "First Name: " << p.first_name << endl;
+   if( settings.find('2') != string::npos) cout << "Last Name: " << p.last_name << endl;
+   if( settings.find('3') != string::npos) cout << "Street Address: " << p.street_address << endl;
+   if( settings.find('4') != string::npos) cout << "City: " << p.city << endl;
+   if( settings.find('5') != string::npos) cout << "State: " << p.state << endl;
+   if( settings.find('6') != string::npos) cout << "Zip: " << p.zip << endl;
 
    // Add sufficent spacing between records
    if(settings != "") cout << endl << endl;

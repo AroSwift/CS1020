@@ -12,11 +12,9 @@ public:
    Person() {};
    Person(string first_name, string last_name);
    Person( string first_name, string last_name, string street_address, string city, string state, string zip );
-//   ~Person();
    void print_person_data();
    void search_for_person();
    friend ostream& operator<<(ostream& os, Person& p);
-   friend bool operator==(const Person& left, const Person& right);
    friend bool compare_people(Person p1, Person p2);
    friend bool compare_equality(Person p1, Person p2);
 private:
@@ -43,12 +41,7 @@ Person::Person(string first_name, string last_name) {
 }
 
 
-// Person::~Person() {
-//    delete Person;
-// }
-
 string lower_case( string value );
-
 
 
 bool compare_people(Person p1, Person p2) {

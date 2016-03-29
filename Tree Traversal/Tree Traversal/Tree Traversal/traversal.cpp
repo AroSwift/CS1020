@@ -238,19 +238,6 @@ string lower_case( string value ) {
 
 ostream& operator<<(ostream& os, Person& p) {
    os << p.first_name << ", " << p.last_name;
-   //   if( can_show_first_name ) os << p.first_name;
    return os;
 }
-
-//bool operator<(const Person& left, const Person& right) {
-//   return((left.last_name < right.last_name) || ((left.last_name == right.last_name) && (left.first_name < right.first_name)));
-//}
-
-
-bool operator==(const Person& left, const Person& right) {
-   //   return((left.last_name == right.last_name) && left.first_name == right.first_name);
-   return ((lower_case(left.last_name) == lower_case(right.last_name)) && (lower_case(left.first_name) == lower_case(right.last_name)) );
-}
-
-
 

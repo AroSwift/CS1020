@@ -139,9 +139,11 @@ void Tree<T>::search(Tree* node, T d, bool (*eq)( T, T ), int num_searches) {
       // Print the data and number of nodes traversed to find the data
       cout << num_searches << " nodes were traversed to find the data." << endl;
       print_data(node->data);
+      return;
    } else { // Node's data is not equal to the given data
-      if( node->left != NULL ) node->left->search( node->left, d, eq, num_searches++ );
-      if( node->right != NULL ) node->right->search( node->right, d, eq, num_searches++ );
+      if( node->left != NULL ) search( node->left, d, eq, num_searches++ );
+      if( node->right != NULL ) search( node->right, d, eq, num_searches++ );
+      return;
    }
    
    // Inform user no record can be found when whole tree has been traversed

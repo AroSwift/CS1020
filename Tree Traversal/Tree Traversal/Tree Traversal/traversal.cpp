@@ -6,12 +6,13 @@ using namespace std;
 
 int main() {
    Tree<Person>* tree = new Tree<Person>;
-   Settings *s = new Settings();
+//   Settings *s = new Settings();
+   char settings[NUM_OPTIONS];
 
    load_people(tree);
 
    // Show the menu
-   main_menu(tree, s);
+   main_menu(tree, settings);
 
    delete tree;
 
@@ -50,11 +51,20 @@ void load_people(Tree<Person>* tree) {
    while( !input.eof() ) {
       // Read in the data that encompasses a person
       string first_name, last_name, street_address, city, state, zip;
+      
+      // Remove preceding whitespace with 'ws' if it is present,
+      // But do not assume it will be by using getline delimiters
+      input >> ws;
       getline( input, first_name, ',' );
+      input >> ws;
       getline( input, last_name, ',' );
+      input >> ws;
       getline( input, street_address, ',' );
+      input >> ws;
       getline( input, city, ',' );
+      input >> ws;
       getline( input, state, ',' );
+      input >> ws;
       getline( input, zip, '\n' );
 
       // Instantiate a new person with the data read in
@@ -72,7 +82,7 @@ void load_people(Tree<Person>* tree) {
 //
 // main_menu
 //
-void main_menu(Tree<Person>* tree, Settings *s) {
+void main_menu(Tree<Person>* tree, char settings[]) {
    bool exit = false;
    char choice;
 
@@ -95,31 +105,31 @@ void main_menu(Tree<Person>* tree, Settings *s) {
       switch(choice) {
          case '1': // Pre-order traversal
             cout << endl;
-            s->options_menu();
+            options_menu(settings);
             tree->pre_order_traversal();
             break;
 
          case '2': // In-order traversal
             cout << endl;
-            s->options_menu();
+            options_menu(settings);
             tree->in_order_traversal();
             break;
 
          case '3': // Post-order traversal
             cout << endl;
-            s->options_menu();
+            options_menu(settings);
             tree->post_order_traversal();
             break;
 
          case '4': // Breadth-order traversal
             cout << endl;
-            s->options_menu();
+            options_menu(settings);
             tree->breadth_first_traversal();
             break;
 
          case '5': // Search for Name
             cout << endl;
-            s->options_menu();
+            options_menu(settings);
             search_for_person(tree);
             break;
 
@@ -136,8 +146,8 @@ void main_menu(Tree<Person>* tree, Settings *s) {
    } while(!exit);
 }
 
-void Settings::options_menu() {
-   if( prior_settings ) {
+void options_menu(char settings[]) {
+   if( strcmp(settings, "") == 0 ) {
       bool acceptable_input;
       do {
          char user_choice;
@@ -146,89 +156,45 @@ void Settings::options_menu() {
 
          if( user_choice == 'Y' || user_choice == 'y' ) {
             acceptable_input = true;
-            change_settings_menu();
+            change_settings_menu(settings);
          } else if( user_choice == 'N' || user_choice == 'n' ) {
             acceptable_input = true;
          } else {
-            cout << "Please enter 'Y' or 'N' to indicate whether you would like to use the prior settings" << endl;
+            cout << "Please enter 'Y' or 'N' to indicate whether you would like to use the prior settings." << endl;
             acceptable_input = false;
          }
       } while( !acceptable_input );
    } else {
-      change_settings_menu();
+      change_settings_menu(settings);
    }
 }
 
-void Settings::change_settings_menu() {
-   bool exit = false;
-   char choice;
+void change_settings_menu(char settings[]) {
+   string choice;
 
    // Display a menu
-   do {
+   
+   // Give user choices
+   cout << "Field Selection Menu" << endl
+   << "-------------------------" << endl
+   << "Please select which fields you would like to be displayed:" << endl
+   << "1.) Show first name" << endl
+   << "2.) Show last name" << endl
+   << "3.) Show street address" << endl
+   << "4.) Show city" << endl
+   << "5.) Show state" << endl
+   << "6.) Show zip" << endl
+   << "Choice: ";
+   cin >> choice;
 
-      // Give user choices
-      cout << "Field Selection Menu" << endl
-      << "-------------------------" << endl
-      << "Please select which fields you would like to be displayed:" << endl
-      << "1.) Show first name" << endl
-      << "2.) Show last name" << endl
-      << "3.) Show street address" << endl
-      << "4.) Show city" << endl
-      << "5.) Show state" << endl
-      << "6.) Show zip" << endl
-      << "7.) Exit field selection" << endl
-      << "Choice: ";
-      cin >> choice;
-
-      // Associate choice with an action
-      switch(choice) {
-         case '1': // Pre-order traversal
-            cout << endl;
-            can_show_first_name = true;
-            prior_settings = true;
-            break;
-
-         case '2': // In-order traversal
-            cout << endl;
-            can_show_last_name = true;
-            prior_settings = true;
-            break;
-
-         case '3': // Post-order traversal
-            cout << endl;
-            can_show_street_address = true;
-            prior_settings = true;
-            break;
-
-         case '4': // Breadth-order traversal
-            cout << endl;
-            can_show_city = true;
-            prior_settings = true;
-            break;
-
-         case '5': // Search for Name
-            cout << endl;
-            can_show_state = true;
-            prior_settings = true;
-            break;
-
-         case '6': // Search for Name
-            cout << endl;
-            can_show_zip = true;
-            prior_settings = true;
-            break;
-
-         case '7': // Exit program
-            exit = true;
-            break;
-
-         default: // Error occured
-            cout << "Please enter a valid option." << endl;
-            cout << endl;
-            break;
+      
+   for( int i = 0, s = 0; i < choice.length(); i++ ) {
+      if( isdigit(choice[i]) ) {
+         if(choice[i] >= 1 || choice[i] <= 6) {
+            if( strstr(settings, &choice[i]) ) settings[s++] = choice[i];
+         }
       }
-
-   } while(!exit);
+   }
    
    cout << endl;
    
@@ -249,7 +215,6 @@ void search_for_person(Tree<Person>* tree) {
    Person *search_person = new Person( first_name, last_name );
    
 //   Person *found_person = new Person;
-//   Person found_person = tree->find_data(*search_person, &compare_people, &compare_equality);
    
    tree->search(*search_person, &compare_equality);
    

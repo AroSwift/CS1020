@@ -274,15 +274,6 @@ string lower_case( string value ) {
    return value; // As a lowercased string
 }
 
-
-bool compare_people(Person p1, Person p2) {
-   return( (p2.last_name < p1.last_name) || ((p2.last_name == p1.last_name) && (p2.first_name < p1.first_name)) );
-}
-
-bool compare_equality( Person p1, Person p2) {
-   return( (lower_case(p1.last_name) == lower_case(p2.last_name)) && (lower_case(p1.first_name) == lower_case(p2.last_name)) );
-}
-
 ostream& operator<<(ostream& os, Person& p) {
    os << p.first_name << ", " << p.last_name;
    //   if( can_show_first_name ) os << p.first_name;
@@ -292,7 +283,6 @@ ostream& operator<<(ostream& os, Person& p) {
 //bool operator<(const Person& left, const Person& right) {
 //   return((left.last_name < right.last_name) || ((left.last_name == right.last_name) && (left.first_name < right.first_name)));
 //}
-
 
 
 bool operator==(const Person& left, const Person& right) {

@@ -156,48 +156,74 @@ void Tree<T>::pre_order_traversal( Tree* node ) {
    if( node->right != NULL ) pre_order_traversal(node->right);
 }
 
+//
+// in_order_traversal
+// Traverse the tree on the left side
+// Then go to the root then the right side.
+// The result is the data is printed in order.
+//
 template<class T>
 void Tree<T>::in_order_traversal( Tree* node ) {
+   // Ensure that node exists
    if( node == NULL ) return;
    
+   // Recursively go to left side of tree
    if( node->left != NULL ) in_order_traversal(node->left);
    
+   // Print the node's data
    print_data(node->data);
    
+   // Recursively go to right side of tree
    if( node->right != NULL ) in_order_traversal(node->right);
 }
 
+//
+// post_order_traversal
+// Traverse the tree starting at root
+// Then go to the left side then the right side.
+//
 template<class T>
 void Tree<T>::post_order_traversal( Tree* node ) {
+   // Ensure that node exists
    if( node == NULL ) return;
    
+   // Recursively go to left side of tree
    if( node->left != NULL ) post_order_traversal(node->left);
+   
+   // Recursively go to right side of tree
    if( node->right != NULL ) post_order_traversal(node->right);
    
+   //Print the node's data
    print_data(node->data);
 }
 
-
+//
+// breadth_first_traversal
+// Traverse the tree starting at root
+// Then go to the left side then the right side.
+//
 template<class T>
 void Tree<T>::breadth_first_traversal() {
    if (root == NULL)  return;
    
-   // Create an empty queue for breadth first tarversal
+   // Create an empty queue
    queue<Tree> q;
    
-   // Enqueue Root and initialize height
+   // Enqueue root
    q.push(*root);
    
+   // Continue to go through each
    while ( !q.empty() ) {
-      // Print front of queue and remove it from queue
+      // Get and print front of queue
       Tree<T> node = q.front();
       print_data(node.data);
+      // Remove the node from the queue
       q.pop();
       
-      // Enqueue left child
+      // Enqueue left node
       if (node.left != NULL) q.push(*node.left);
       
-      // Enqueue right child
+      // Enqueue right node
       if (node.right != NULL) q.push(*node.right);
    }
 }

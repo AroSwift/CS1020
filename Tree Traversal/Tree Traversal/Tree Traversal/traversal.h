@@ -86,6 +86,19 @@ Person::Person(string first_name, string last_name) {
 
 string lower_case( string value );
 
+
+
+bool compare_people(Person p1, Person p2) {
+   return( (p2.last_name < p1.last_name) || ((p2.last_name == p1.last_name) && (p2.first_name < p1.first_name)) );
+}
+
+bool compare_equality( Person p1, Person p2) {
+//   return( (lower_case(p1.last_name) == lower_case(p2.last_name)) && (lower_case(p1.first_name) ==  lower_case(p2.last_name)) );
+   return lower_case(p1.last_name) == lower_case(p2.last_name);
+}
+
+
+
 void load_people(Tree<Person>* tree);
 void search_for_person(Tree<Person>* tree);
 

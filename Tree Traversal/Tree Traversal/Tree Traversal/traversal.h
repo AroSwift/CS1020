@@ -1,4 +1,5 @@
 #pragma once
+#include <string>
 #include "tree.h"
 #include <string>
 using namespace std;
@@ -26,12 +27,14 @@ private:
 class Person {
 public:
    Person() {};
+   Person(string first_name, string last_name);
    Person( string first_name, string last_name, string street_address, string city, string state, string zip );
 //   ~Person();
    void print_person_data();
    void search_for_person();
    friend ostream& operator<<(ostream& os, Person& p);
    friend bool compare_people(Person p1, Person p2);
+   friend bool compare_equality( Person p1, Person p2);
 private:
    string first_name;
    string last_name;
@@ -74,13 +77,25 @@ Person::Person( string first_name, string last_name, string street_address, stri
    this->zip = zip;
 }
 
+Person::Person(string first_name, string last_name) {
+   this->first_name = first_name;
+   this->last_name = last_name;
+}
+
+
 // Person::~Person() {
 //    delete Person;
 // }
 
+string lower_case( string value );
+
 
 bool compare_people(Person p1, Person p2) {
-   return((p2.last_name < p1.last_name) || ((p2.last_name == p1.last_name) && (p2.first_name < p1.first_name)));
+   return( (p2.last_name < p1.last_name) || ((p2.last_name == p1.last_name) && (p2.first_name < p1.first_name)) );
+}
+
+bool compare_equality( Person p1, Person p2) {
+   return( (lower_case(p1.last_name) == lower_case(p2.last_name)) && (lower_case(p1.first_name) == lower_case(p2.last_name)) );
 }
 
 
@@ -95,10 +110,10 @@ ostream& operator<<(ostream& os, Person& p) {
 //}
 
 void load_people(Tree<Person>* tree);
+void search_for_person(Tree<Person>* tree);
+
 
 // Menu Options
 void main_menu(Tree<Person>* tree, Settings *s);
 void options_menu(Tree<Person>* tree, Settings *s);
-
-void search_for_person();
 

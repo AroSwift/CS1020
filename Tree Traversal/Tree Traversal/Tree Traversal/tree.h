@@ -91,6 +91,8 @@ void Tree<T>::insert( T data, bool (*cp)(T, T)) {
 
 template<class T>
 T Tree<T>::find_data(T data, bool (*less_greater_cp)(T, T), bool (*equal_cp)(T, T)) {
+   if( root == NULL ) return NULL;
+   
    Tree<T> current = root;
    bool data_found = false, done_searching = false;
    while( !data_found && !done_searching ) {
@@ -104,8 +106,14 @@ T Tree<T>::find_data(T data, bool (*less_greater_cp)(T, T), bool (*equal_cp)(T, 
       
    }
    
-   return (data_found) ? current->data : cout << "Could not find the record" << endl;
+   return (data_found) ? current->data : NULL;
 }
+//
+//template<class T>
+//T Tree<T>::traverse() {
+//   
+//}
+
 
 template<class T>
 void Tree<T>::pre_order_traversal() {

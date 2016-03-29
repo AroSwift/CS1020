@@ -123,7 +123,7 @@ void main_menu(Tree<Person>* tree, Settings *s) {
          case '5': // Search for Name
             cout << endl;
             s->options_menu();
-            search_for_person();
+            search_for_person(tree);
             break;
 
          case '6': // Exit program
@@ -234,8 +234,44 @@ void Settings::change_settings_menu() {
    } while(!exit);
 }
 
-void search_for_person() {
-
+void search_for_person(Tree<Person>* tree) {
+   string first_name, last_name;
+   
+   cout << "Find a Person:" << endl
+   << "-------------------" << endl;
+   
+   cout << "Enter the first name: ";
+   cin >> first_name;
+   
+   cout << "Enter the last name: ";
+   cin >> last_name;
+   
+   Person *search_person = new Person( first_name, last_name );
+   
+//   Person *found_person = new Person;
+//   Person found_person = tree->find_data(*search_person, &compare_people, &compare_equality);
+   
+   if( Person found_person = tree->find_data(*search_person, &compare_people, &compare_equality) ) {
+      
+   }
+   
+   
+   
 }
 
+
+
+//
+// lower_case
+// Lowercases all characters in a given string.
+// Returns the lowercased string.
+//
+string lower_case( string value ) {
+   // Lowercase each character in a given string
+   for( int i = 0; i < strlen( value.c_str() ); i++ ) {
+      value[i] = tolower( value[i] );
+   }
+   
+   return value; // As a lowercased string
+}
 

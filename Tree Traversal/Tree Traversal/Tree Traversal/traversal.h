@@ -64,7 +64,7 @@ void options_menu(string &settings);
 void change_settings_menu(string &settings);
 
 
-
+// Traversal prototypes
 void pre_order_traversal( Tree<Person>* node, string settings );
 void in_order_traversal( Tree<Person>* tree, string settings );
 void post_order_traversal( Tree<Person>* tree, string settings );

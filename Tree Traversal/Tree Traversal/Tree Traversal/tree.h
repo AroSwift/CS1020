@@ -14,7 +14,7 @@ public:
    Tree<T>* get_right();
    T get_data();
 //   void search(T d, bool (*eq)( T, T ));
-   bool search(Tree* node, T d, bool (*eq)( T, T ), int num_searches);
+   T* search(Tree* node, T d, bool (*eq)( T, T ), int num_searches);
 private:
    T data;
    Tree* root;
@@ -152,20 +152,26 @@ void Tree<T>::insert( T data, bool (*cp)(T, T)) {
 // Then inform the user that the data was not found.
 //
 template<class T>
-bool Tree<T>::search(Tree* node, T d, bool (*eq)( T, T ), int num_searches) {
+T* Tree<T>::search(Tree* node, T d, bool (*eq)( T, T ), int num_searches) {
    // Ensure node exists
-   if(node == NULL) return false;
+   if(node == NULL) return NULL;
    
    // Determine if node's data is equal to given data using function pointer
    if( eq(node->data, d) ) {
       // Print the data and number of nodes traversed to find the data
       cout << num_searches << " nodes were traversed to find the data." << endl;
 //      print_data(node->data);
-      return true;
+      return &node->data;
    } else { // Node's data is not equal to the given data
-      bool outcome = false;
-      if( node->left != NULL ) outcome = search( node->left, d, eq, num_searches++ );
-      if( node->right != NULL ) outcome = search( node->right, d, eq, num_searches++ );
+      T* outcome = NULL;
+      if( node->left != NULL ) {
+         outcome = search( node->left, d, eq, num_searches++ );
+         if(outcome != NULL) return outcome;
+      }
+      if( node->right != NULL ) {
+         outcome = search( node->right, d, eq, num_searches++ );
+         if(outcome != NULL) return outcome;
+      }
       return outcome;
    }
 }

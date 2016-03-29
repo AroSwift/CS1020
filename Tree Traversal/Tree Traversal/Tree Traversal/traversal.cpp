@@ -198,10 +198,12 @@ void change_settings_menu(string &settings) {
 // and pass the passed paramaters.
 //
 void search(Tree<Person>* tree, Person p, string settings) {
-   bool found_data = tree->search( tree->get_root(), p, &compare_equality, 1 );
-   if(!found_data) {
+   Person *found_person = tree->search( tree->get_root(), p, &compare_equality, 1 );
+   if(found_person == NULL) {
       // Inform user no record can be found when whole tree has been traversed
       cout << "The person could not be found." << endl << endl;
+   } else {
+      print_data(*found_person, settings);
    }
 }
 
@@ -250,7 +252,7 @@ void print_data(Person p, string settings) {
    if( settings.find('6') != string::npos) cout << "Zip: " << p.zip << endl;
 
    // Add sufficent spacing between records
-   if(settings != "") cout << endl << endl;
+   if(settings != "") cout << endl;
 }
 
 

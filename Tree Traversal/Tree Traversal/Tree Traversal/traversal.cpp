@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
+#include <queue>
 #include "traversal.h"
 using namespace std;
 
@@ -321,29 +322,29 @@ void post_order_traversal( Tree<Person>* node, string settings ) {
 // Then go to the left side then the right side.
 //
 void breadth_first_traversal( Tree<Person>* node, string settings ) {
-   // Ensure root node exists
-//   if (node->get_root() == NULL)  return;
-//
-//   // Create an empty queue
-//   queue<Tree> q;
-//
-//   // Enqueue root
-//   q.push(node->get_root());
-//
-//   // Continue to go through each node while queue is not empty
-//   while ( !q.empty() ) {
-//      // Get and print front of queue
-//      Tree<Person>* node = q.front();
-//      print_data(node.data);
-//
-//      q.pop(); // Remove the node from the queue
-//
-//      // Enqueue left node
-//      if (node.left != NULL) q.push(*node.left);
-//
-//      // Enqueue right node
-//      if (node.right != NULL) q.push(*node.right);
-//   }
+//    Ensure root node exists
+   if (node->get_root() == NULL)  return;
+
+   // Create an empty queue
+   queue<Tree <Person>> q;
+
+   // Enqueue root
+   q.push(*node->get_root());
+
+   // Continue to go through each node while queue is not empty
+   while ( !q.empty() ) {
+      // Get and print front of queue
+      Tree<Person> node = q.front();
+      print_data(node.get_data(), settings);
+
+      q.pop(); // Remove the node from the queue
+
+      // Enqueue left node
+      if (node.get_left() != NULL) q.push(*node.get_left());
+
+      // Enqueue right node
+      if (node.get_right() != NULL) q.push(*node.get_right());
+   }
 }
 
 

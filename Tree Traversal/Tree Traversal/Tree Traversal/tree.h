@@ -1,5 +1,4 @@
 #pragma once
-#include <queue>
 using namespace std;
 
 template<class T>
@@ -8,12 +7,10 @@ public:
    Tree();
    ~Tree();
    void insert(T data, bool (*cp)(T, T));
-//   void print_data(T data);
    Tree<T>* get_root();
    Tree<T>* get_left();
    Tree<T>* get_right();
    T get_data();
-//   void search(T d, bool (*eq)( T, T ));
    T* search(Tree* node, T d, bool (*eq)( T, T ), int num_searches);
 private:
    T data;
@@ -21,7 +18,6 @@ private:
    Tree* left;
    Tree* right;
    void remove(Tree* node);
-//   bool search(Tree* node, T d, bool (*eq)( T, T ), int num_searches);
 };
 
 template<class T>
@@ -50,7 +46,7 @@ T Tree<T>::get_data() {
 //
 template<class T>
 Tree<T>::Tree() {
-   root = NULL;
+//   root = NULL;
    left = NULL;
    right = NULL;
 }
@@ -129,21 +125,6 @@ void Tree<T>::insert( T data, bool (*cp)(T, T)) {
    }
    
 }
-
-////
-//// search
-//// Call the private method search
-//// and set the base case to root
-//// and pass the passed paramaters.
-////
-//template<class T>
-//void Tree<T>::search(T d, bool (*eq)( T, T )) {
-//   bool found_data = search( root, d, eq, 1 );
-//   if(!found_data) {
-//      // Inform user no record can be found when whole tree has been traversed
-//      cout << "The record could not be found." << endl;
-//   }
-//}
 
 //
 // search

@@ -1,7 +1,6 @@
 #pragma once
 #include <string>
 #include "tree.h"
-#include <string>
 using namespace std;
 
 const int MAX_FILE_LENGTH = 256; // Max file length on linux is 255

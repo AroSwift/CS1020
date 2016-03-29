@@ -145,9 +145,10 @@ bool Tree<T>::search(Tree* node, T d, bool (*eq)( T, T ), int num_searches) {
       print_data(node->data);
       return true;
    } else { // Node's data is not equal to the given data
-      if( node->left != NULL ) search( node->left, d, eq, num_searches++ );
-      if( node->right != NULL ) search( node->right, d, eq, num_searches++ );
-      return false;
+      bool outcome = false;
+      if( node->left != NULL ) outcome = search( node->left, d, eq, num_searches++ );
+      if( node->right != NULL ) outcome = search( node->right, d, eq, num_searches++ );
+      return outcome;
    }
 }
 

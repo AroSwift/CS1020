@@ -7,7 +7,7 @@ using namespace std;
 int main() {
    Tree<Person>* tree = new Tree<Person>;
 //   Settings *s = new Settings();
-   char settings[NUM_OPTIONS];
+   string settings;
 
    load_people(tree);
 
@@ -51,7 +51,7 @@ void load_people(Tree<Person>* tree) {
    while( !input.eof() ) {
       // Read in the data that encompasses a person
       string first_name, last_name, street_address, city, state, zip;
-      
+
       // Remove preceding whitespace with 'ws' if it is present,
       // But do not assume it will be by using getline delimiters
       input >> ws;
@@ -82,7 +82,7 @@ void load_people(Tree<Person>* tree) {
 //
 // main_menu
 //
-void main_menu(Tree<Person>* tree, char settings[]) {
+void main_menu(Tree<Person>* tree, string settings) {
    bool exit = false;
    char choice;
 
@@ -106,31 +106,31 @@ void main_menu(Tree<Person>* tree, char settings[]) {
          case '1': // Pre-order traversal
             cout << endl;
             options_menu(settings);
-            tree->pre_order_traversal();
+            pre_order_traversal(tree->get_root(), settings);
             break;
 
          case '2': // In-order traversal
             cout << endl;
             options_menu(settings);
-            tree->in_order_traversal();
+            in_order_traversal(tree->get_root(), settings);
             break;
 
          case '3': // Post-order traversal
             cout << endl;
             options_menu(settings);
-            tree->post_order_traversal();
+            post_order_traversal(tree->get_root(), settings);
             break;
 
          case '4': // Breadth-order traversal
             cout << endl;
             options_menu(settings);
-            tree->breadth_first_traversal();
+            breadth_first_traversal(tree->get_root(), settings);
             break;
 
          case '5': // Search for Name
             cout << endl;
             options_menu(settings);
-            search_for_person(tree);
+//            search_for_person(tree->get_root(), settings);
             break;
 
          case '6': // Exit program
@@ -146,8 +146,8 @@ void main_menu(Tree<Person>* tree, char settings[]) {
    } while(!exit);
 }
 
-void options_menu(char settings[]) {
-   if( settings[0] == '\0' ) {
+void options_menu(string &settings) {
+   if( settings != "" ) {
       bool acceptable_input;
       do {
          char user_choice;
@@ -156,9 +156,9 @@ void options_menu(char settings[]) {
 
          if( user_choice == 'Y' || user_choice == 'y' ) {
             acceptable_input = true;
-            change_settings_menu(settings);
          } else if( user_choice == 'N' || user_choice == 'n' ) {
             acceptable_input = true;
+            change_settings_menu(settings);
          } else {
             cout << "Please enter 'Y' or 'N' to indicate whether you would like to use the prior settings." << endl;
             acceptable_input = false;
@@ -169,8 +169,9 @@ void options_menu(char settings[]) {
    }
 }
 
-void change_settings_menu(char settings[]) {
+void change_settings_menu(string &settings) {
    string choice;
+   settings = "";
 
    // Give user choices
    cout << "Field Selection Menu" << endl
@@ -185,37 +186,35 @@ void change_settings_menu(char settings[]) {
    << "Choice: ";
    cin >> choice;
 
-      
-   for( int i = 0, s = 0; i < choice.length(); i++ ) {
-      if( isdigit(choice[i]) ) {
-         if(choice[i] >= 1 || choice[i] <= 6) {
-            if( strstr(settings, &choice[i]) ) settings[s++] = choice[i];
-         }
+
+   for( int i = 0; i < choice.length(); i++ ) {
+      if( isdigit(choice[i]) && (choice[i] >= 1 || choice[i] <= 6) ) {
+         if( settings.find(choice[i]) == string::npos ) settings += choice[i];
       }
    }
-   
+
    cout << endl;
-   
+
 }
 
-void search_for_person(Tree<Person>* tree) {
+void search_for_person(Tree<Person>* tree, string settings) {
    string first_name, last_name;
-   
+
    cout << "Find a Person:" << endl
    << "-------------------" << endl;
-   
+
    cout << "Enter the first name: ";
    cin >> first_name;
-   
+
    cout << "Enter the last name: ";
    cin >> last_name;
-   
-   Person *search_person = new Person( first_name, last_name );
-   
+
+//   Person *search_person = new Person( first_name, last_name );
+
 //   Person *found_person = new Person;
-   
-   tree->search(*search_person, &compare_equality);
-   
+
+//   tree->search(*search_person, &compare_equality);
+
 }
 
 
@@ -230,20 +229,115 @@ string lower_case( string value ) {
    for( int i = 0; i < strlen( value.c_str() ); i++ ) {
       value[i] = tolower( value[i] );
    }
-   
+
    return value; // As a lowercased string
 }
 
-ostream& operator<<(ostream& os, Person& p) {
-   os << "First Name: " << p.first_name;
-   os << "Last Name: " << p.last_name;
-   os << "Street Address: " << p.street_address;
-   os << "City: " << p.city;
-   os << "State: " << p.state;
-   os << "Zip: " << p.zip;
-   
+
+void print_data(Person p, string settings) {
+   if( settings.find('1') == string::npos) cout << "First Name: " << p.first_name << endl;
+   if( settings.find('2') == string::npos) cout << "Last Name: " << p.last_name << endl;
+   if( settings.find('3') == string::npos) cout << "Street Address: " << p.street_address << endl;
+   if( settings.find('4') == string::npos) cout << "City: " << p.city << endl;
+   if( settings.find('5') == string::npos) cout << "State: " << p.state << endl;
+   if( settings.find('6') == string::npos) cout << "Zip: " << p.zip << endl;
+
    // Add sufficent spacing between records
-   cout << endl << endl;
-   return os;
+   if(settings != "") cout << endl << endl;
 }
+
+
+
+//
+// pre_order_traversal
+// Traverse the tree starting at root and
+// Then go to the left side and then right
+// The result is the data is printed in order.
+//
+void pre_order_traversal( Tree<Person>* node, string settings ) {
+   // Ensure node exists
+   if( node == NULL ) return;
+
+   // Print node's data
+   print_data(node->get_data(), settings);
+
+   // Recursively go to left side of tree
+   if( node->get_left() != NULL ) pre_order_traversal(node->get_left(), settings);
+
+   // Recursively go to right side of tree
+   if( node->get_right() != NULL ) pre_order_traversal(node->get_right(), settings);
+}
+
+//
+// in_order_traversal
+// Traverse the tree on the left side
+// Then go to the root then the right side.
+// The result is the data is printed in order.
+//
+void in_order_traversal( Tree<Person>* node, string settings ) {
+   // Ensure that node exists
+   if( node == NULL ) return;
+
+   // Recursively go to left side of tree
+   if( node->get_left() != NULL ) in_order_traversal(node->get_left(), settings);
+
+   // Print the node's data
+   print_data(node->get_data(), settings);
+
+   // Recursively go to right side of tree
+   if( node->get_right() != NULL ) in_order_traversal(node->get_right(), settings);
+}
+
+//
+// post_order_traversal
+// Traverse the tree starting at root
+// Then go to the left side then the right side.
+//
+void post_order_traversal( Tree<Person>* node, string settings ) {
+   // Ensure that node exists
+   if( node == NULL ) return;
+
+   // Recursively go to left side of tree
+   if( node->get_left() != NULL ) post_order_traversal(node->get_left(), settings);
+
+   // Recursively go to right side of tree
+   if( node->get_right() != NULL ) post_order_traversal(node->get_right(), settings);
+
+   //Print the node's data
+   print_data(node->get_data(), settings);
+}
+
+//
+// breadth_first_traversal
+// Traverse the tree starting at root
+// Then go to the left side then the right side.
+//
+void breadth_first_traversal( Tree<Person>* node, string settings ) {
+   // Ensure root node exists
+//   if (node->get_root() == NULL)  return;
+//
+//   // Create an empty queue
+//   queue<Tree> q;
+//
+//   // Enqueue root
+//   q.push(node->get_root());
+//
+//   // Continue to go through each node while queue is not empty
+//   while ( !q.empty() ) {
+//      // Get and print front of queue
+//      Tree<Person>* node = q.front();
+//      print_data(node.data);
+//
+//      q.pop(); // Remove the node from the queue
+//
+//      // Enqueue left node
+//      if (node.left != NULL) q.push(*node.left);
+//
+//      // Enqueue right node
+//      if (node.right != NULL) q.push(*node.right);
+//   }
+}
+
+
+
 

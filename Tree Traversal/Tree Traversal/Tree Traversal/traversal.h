@@ -5,7 +5,6 @@
 using namespace std;
 
 const int MAX_FILE_LENGTH = 256; // Max file length on linux is 255
-const int NUM_OPTIONS = 6;
 
 class Person {
 public:
@@ -14,9 +13,9 @@ public:
    Person( string first_name, string last_name, string street_address, string city, string state, string zip );
    void print_person_data();
    void search_for_person();
-   friend ostream& operator<<(ostream& os, Person& p);
    friend bool compare_people(Person p1, Person p2);
    friend bool compare_equality(Person p1, Person p2);
+   friend void print_data(Person p, string settings);
 private:
    string first_name;
    string last_name;
@@ -59,8 +58,13 @@ void load_people(Tree<Person>* tree);
 void search_for_person(Tree<Person>* tree);
 
 // Menu Options
-void main_menu(Tree<Person>* tree, char settings[]);
-void options_menu(char settings[]);
-void change_settings_menu(char settings[]);
+void main_menu(Tree<Person>* tree, string settings);
+void options_menu(string &settings);
+void change_settings_menu(string &settings);
 
 
+
+void pre_order_traversal( Tree<Person>* node, string settings );
+void in_order_traversal( Tree<Person>* tree, string settings );
+void post_order_traversal( Tree<Person>* tree, string settings );
+void breadth_first_traversal( Tree<Person>* node, string settings );

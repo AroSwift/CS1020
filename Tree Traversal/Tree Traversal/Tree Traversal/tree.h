@@ -9,22 +9,38 @@ public:
    ~Tree();
    void insert(T data, bool (*cp)(T, T));
    void print_data(T data);
-   void in_order_traversal();
-   void pre_order_traversal();
-   void post_order_traversal();
-   void breadth_first_traversal();
+   Tree<T>* get_root();
+   Tree<T>* get_left();
+   Tree<T>* get_right();
+   T get_data();
+   bool search(Tree* node, T d, bool (*eq)( T, T ), int num_searches);
    void search(T d, bool (*eq)( T, T ));
 private:
    T data;
    Tree* root;
    Tree* left;
    Tree* right;
-   void in_order_traversal( Tree* node );
-   void pre_order_traversal( Tree* node );
-   void post_order_traversal( Tree* node );
-   bool search(Tree* node, T d, bool (*eq)( T, T ), int num_searches);
    void remove(Tree* node);
 };
+
+template<class T>
+Tree<T>* Tree<T>::get_root() {
+   return root;
+}
+
+template<class T>
+Tree<T>* Tree<T>::get_left() {
+   return left;
+}
+template<class T>
+Tree<T>* Tree<T>::get_right() {
+   return right;
+}
+
+template<class T>
+T Tree<T>::get_data() {
+   return data;
+}
 
 
 //
@@ -33,6 +49,7 @@ private:
 //
 template<class T>
 Tree<T>::Tree() {
+   root = NULL;
    left = NULL;
    right = NULL;
 }
@@ -151,129 +168,129 @@ bool Tree<T>::search(Tree* node, T d, bool (*eq)( T, T ), int num_searches) {
       return outcome;
    }
 }
-
 //
-// pre_order_traversal
-// Call the private method pre_order_traversal
-// and set the base case to root.
+////
+//// pre_order_traversal
+//// Call the private method pre_order_traversal
+//// and set the base case to root.
+////
+//template<class T>
+//void Tree<T>::pre_order_traversal() {
+//   pre_order_traversal(root);
+//}
 //
-template<class T>
-void Tree<T>::pre_order_traversal() {
-   pre_order_traversal(root);
-}
-
+////
+//// in_order_traversal
+//// Call the private method in_order_traversal
+//// and set the base case to root.
+////
+//template<class T>
+//void Tree<T>::in_order_traversal() {
+//   in_order_traversal(root);
+//}
 //
-// in_order_traversal
-// Call the private method in_order_traversal
-// and set the base case to root.
+////
+//// post_order_traversal
+//// Call the private method post_order_traversal
+//// and set the base case to root.
+////
+//template<class T>
+//void Tree<T>::post_order_traversal() {
+//   post_order_traversal(root);
+//}
 //
-template<class T>
-void Tree<T>::in_order_traversal() {
-   in_order_traversal(root);
-}
-
+////
+//// pre_order_traversal
+//// Traverse the tree starting at root and
+//// Then go to the left side and then right
+//// The result is the data is printed in order.
+////
+//template<class T>
+//void Tree<T>::pre_order_traversal( Tree* node ) {
+//   // Ensure node exists
+//   if( node == NULL ) return;
+//   
+//   // Print node's data
+//   print_data(node->data);
+//   
+//   // Recursively go to left side of tree
+//   if( node->left != NULL ) pre_order_traversal(node->left);
+//   
+//   // Recursively go to right side of tree
+//   if( node->right != NULL ) pre_order_traversal(node->right);
+//}
 //
-// post_order_traversal
-// Call the private method post_order_traversal
-// and set the base case to root.
+////
+//// in_order_traversal
+//// Traverse the tree on the left side
+//// Then go to the root then the right side.
+//// The result is the data is printed in order.
+////
+//template<class T>
+//void Tree<T>::in_order_traversal( Tree* node ) {
+//   // Ensure that node exists
+//   if( node == NULL ) return;
+//   
+//   // Recursively go to left side of tree
+//   if( node->left != NULL ) in_order_traversal(node->left);
+//   
+//   // Print the node's data
+//   print_data(node->data);
+//   
+//   // Recursively go to right side of tree
+//   if( node->right != NULL ) in_order_traversal(node->right);
+//}
 //
-template<class T>
-void Tree<T>::post_order_traversal() {
-   post_order_traversal(root);
-}
-
+////
+//// post_order_traversal
+//// Traverse the tree starting at root
+//// Then go to the left side then the right side.
+////
+//template<class T>
+//void Tree<T>::post_order_traversal( Tree* node ) {
+//   // Ensure that node exists
+//   if( node == NULL ) return;
+//   
+//   // Recursively go to left side of tree
+//   if( node->left != NULL ) post_order_traversal(node->left);
+//   
+//   // Recursively go to right side of tree
+//   if( node->right != NULL ) post_order_traversal(node->right);
+//   
+//   //Print the node's data
+//   print_data(node->data);
+//}
 //
-// pre_order_traversal
-// Traverse the tree starting at root and
-// Then go to the left side and then right
-// The result is the data is printed in order.
+////
+//// breadth_first_traversal
+//// Traverse the tree starting at root
+//// Then go to the left side then the right side.
+////
+//template<class T>
+//void Tree<T>::breadth_first_traversal() {
+//   // Ensure root node exists
+//   if (root == NULL)  return;
+//   
+//   // Create an empty queue
+//   queue<Tree> q;
+//   
+//   // Enqueue root
+//   q.push(*root);
+//   
+//   // Continue to go through each node while queue is not empty
+//   while ( !q.empty() ) {
+//      // Get and print front of queue
+//      Tree<T> node = q.front();
+//      print_data(node.data);
+//      
+//      q.pop(); // Remove the node from the queue
+//      
+//      // Enqueue left node
+//      if (node.left != NULL) q.push(*node.left);
+//      
+//      // Enqueue right node
+//      if (node.right != NULL) q.push(*node.right);
+//   }
+//}
 //
-template<class T>
-void Tree<T>::pre_order_traversal( Tree* node ) {
-   // Ensure node exists
-   if( node == NULL ) return;
-   
-   // Print node's data
-   print_data(node->data);
-   
-   // Recursively go to left side of tree
-   if( node->left != NULL ) pre_order_traversal(node->left);
-   
-   // Recursively go to right side of tree
-   if( node->right != NULL ) pre_order_traversal(node->right);
-}
-
 //
-// in_order_traversal
-// Traverse the tree on the left side
-// Then go to the root then the right side.
-// The result is the data is printed in order.
-//
-template<class T>
-void Tree<T>::in_order_traversal( Tree* node ) {
-   // Ensure that node exists
-   if( node == NULL ) return;
-   
-   // Recursively go to left side of tree
-   if( node->left != NULL ) in_order_traversal(node->left);
-   
-   // Print the node's data
-   print_data(node->data);
-   
-   // Recursively go to right side of tree
-   if( node->right != NULL ) in_order_traversal(node->right);
-}
-
-//
-// post_order_traversal
-// Traverse the tree starting at root
-// Then go to the left side then the right side.
-//
-template<class T>
-void Tree<T>::post_order_traversal( Tree* node ) {
-   // Ensure that node exists
-   if( node == NULL ) return;
-   
-   // Recursively go to left side of tree
-   if( node->left != NULL ) post_order_traversal(node->left);
-   
-   // Recursively go to right side of tree
-   if( node->right != NULL ) post_order_traversal(node->right);
-   
-   //Print the node's data
-   print_data(node->data);
-}
-
-//
-// breadth_first_traversal
-// Traverse the tree starting at root
-// Then go to the left side then the right side.
-//
-template<class T>
-void Tree<T>::breadth_first_traversal() {
-   // Ensure root node exists
-   if (root == NULL)  return;
-   
-   // Create an empty queue
-   queue<Tree> q;
-   
-   // Enqueue root
-   q.push(*root);
-   
-   // Continue to go through each node while queue is not empty
-   while ( !q.empty() ) {
-      // Get and print front of queue
-      Tree<T> node = q.front();
-      print_data(node.data);
-      
-      q.pop(); // Remove the node from the queue
-      
-      // Enqueue left node
-      if (node.left != NULL) q.push(*node.left);
-      
-      // Enqueue right node
-      if (node.right != NULL) q.push(*node.right);
-   }
-}
-
-

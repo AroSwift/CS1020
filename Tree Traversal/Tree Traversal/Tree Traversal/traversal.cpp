@@ -4,8 +4,6 @@
 #include "traversal.h"
 using namespace std;
 
-// if using templates do not need this
-
 int main() {
    Tree<Person>* tree = new Tree<Person>;
    Settings *s = new Settings();
@@ -19,7 +17,6 @@ int main() {
 
 }
 
-
 void load_people(Tree<Person>* tree) {
    ifstream input;
    char filename[MAX_FILE_LENGTH];
@@ -32,6 +29,7 @@ void load_people(Tree<Person>* tree) {
       cout << "Enter file name: ";
       cin.getline( filename, MAX_FILE_LENGTH );
 
+      // Attempt to open the filename the user gave
       input.open( filename );
 
       // When file could not be found
@@ -48,9 +46,9 @@ void load_people(Tree<Person>* tree) {
    } while( file_errors );
 
 
-   // Read in file row by row
+   // Read in file row by row while there is data to read in
    while( !input.eof() ) {
-      // Ensure null character is accounted for in file
+      // Read in the data that encompasses a person
       string first_name, last_name, street_address, city, state, zip;
       getline( input, first_name, ',' );
       getline( input, last_name, ',' );
@@ -59,11 +57,10 @@ void load_people(Tree<Person>* tree) {
       getline( input, state, ',' );
       getline( input, zip, '\n' );
 
-//      cout << first_name << " " << last_name << " " << street_address << " " << city << " " << state << " " << zip << endl;
-
+      // Instantiate a new person with the data read in
       Person *p = new Person(first_name, last_name, street_address, city, state, zip);
 
-      // put in the tree
+      // Then put this data in the tree
       tree->insert(*p, &compare_people);
 
    }

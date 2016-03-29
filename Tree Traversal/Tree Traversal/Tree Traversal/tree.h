@@ -13,7 +13,7 @@ public:
    void pre_order_traversal();
    void post_order_traversal();
    void breadth_first_traversal();
-   void search(T data, bool (*cp)( T, T ));
+   void search(T d, bool (*eq)( T, T ));
 private:
    T data;
    Tree* root;
@@ -22,7 +22,7 @@ private:
    void in_order_traversal( Tree* node );
    void pre_order_traversal( Tree* node );
    void post_order_traversal( Tree* node );
-   void search(Tree* node, T d, bool (*cp)( T, T ), int num_searches);
+   void search(Tree* node, T d, bool (*eq)( T, T ), int num_searches);
    void remove(Tree* node);
 };
 
@@ -84,7 +84,7 @@ void Tree<T>::insert( T data, bool (*cp)(T, T)) {
       // Search the tree to identify the alphebetically correct location to place the data
       do {
          // Use the function pointer to compare the current node's data against the new data
-z         if ( cp(current->data, data) ) {
+         if ( cp(current->data, data) ) {
             // When the current tree node does not exist
             if ( current->left == NULL ) {
                // Create a new node with the data
@@ -114,22 +114,24 @@ z         if ( cp(current->data, data) ) {
 
 
 template<class T>
-void Tree<T>::search(T data, bool (*cp)( T, T )) {
-   search( root, data, cp, 1 );
+void Tree<T>::search(T d, bool (*eq)( T, T )) {
+   search( root, d, eq, 1 );
 }
 
 template<class T>
-void Tree<T>::search(Tree* node, T d, bool (*cp)( T, T ), int num_searches) {
+void Tree<T>::search(Tree* node, T d, bool (*eq)( T, T ), int num_searches) {
+   // Ensure node exists
    if(node == NULL) return;
    
-   if( cp(node->data, d) ) {
+   // Determine if node's data is equal to given data using function pointer
+   if( eq(node->data, d) ) {
+      // Print the data and number of nodes traversed to find the data
       cout << num_searches << " nodes were traversed to find the data." << endl;
       print_data(d);
-      return;
+   } else { // Node's data is not equal to the given data
+      if( node->left != NULL ) node->left->search( node->left, d, eq, num_searches++ );
+      if( node->right != NULL ) node->right->search( node->right, d, eq, num_searches++ );
    }
-   
-   if( node->left != NULL ) node->left->search( node->left, d, cp, num_searches++ );
-   if( node->right != NULL ) node->right->search( node->right, d, cp, num_searches++ );
 }
 
 //

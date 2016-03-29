@@ -25,6 +25,8 @@ private:
    void search(Tree* node, T d, bool (*cp)( T, T ), int num_searches);
    void remove(Tree* node);
 };
+
+
 //
 // Constructor for Tree
 // Sets the left and right node to nothing
@@ -50,7 +52,7 @@ void Tree<T>::remove(Tree* node) {
 
 //
 // print_data
-// Prints the generic template data.
+// Prints the given template data.
 // Note: this must be overwritten by
 // a custom cout operator function.
 //
@@ -59,44 +61,57 @@ void Tree<T>::print_data(T data) {
    cout << data << endl;
 }
 
+//
+// insert
+// Given a templated data and a function pointer for the comparison
+// of the data, set the first inserted data equal to root.
+// If the data is not root, then find it's order by comparing data with
+// the function pointer and place it in the location in which it is
+// alphebetically ordered with nodes.
+//
 template<class T>
 void Tree<T>::insert( T data, bool (*cp)(T, T)) {
+   // When the element is the first in the tree
    if( root == NULL ) {
+      // Create a new tree and set it to root
       root = new Tree<T>;
       root->data = data;
       root->left = root->right = NULL;
-   } else {
+   } else { // Not the first element in the tree
       Tree *current = root;
       bool inserted = false;
-      // search for the place to insert the new value
+      
+      // Search the tree to identify the alphebetically correct location to place the data
       do {
-         if ( cp(current->data, data) ) {
-            // if the current node already has left child
-            // so we concern it further
-            if ( NULL != current->left ) {
-               current = current->left;
-               // if the current node has no left child
-               // so we create it with the new value
-            } else {
+         // Use the function pointer to compare the current node's data against the new data
+z         if ( cp(current->data, data) ) {
+            // When the current tree node does not exist
+            if ( current->left == NULL ) {
+               // Create a new node with the data
                current->left = new Tree<T>;
                current->left->data = data;
                inserted = true;
+            } else { // The left node already exists
+               current = current->left;
             }
          } else {
-            // similarly for the value that should be inserted into
-            // right subtree
-            if ( NULL != current->right ) {
-               current = current->right;
-            } else {
+            // When the curent node does not exist
+            if ( current->right == NULL ) {
+               // Create a new tree node with the data
                current->right = new Tree<T>;
                current->right->data = data;
                inserted = true;
+            } else { // The right node already exists
+               current = current->right;
             }
          }
+      // Continue to search the tree until the appropriate
+      // position is identified and then the tree node is inserted
       } while( !inserted );
    }
    
 }
+
 
 template<class T>
 void Tree<T>::search(T data, bool (*cp)( T, T )) {

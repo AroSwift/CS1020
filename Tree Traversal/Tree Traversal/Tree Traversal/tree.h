@@ -22,9 +22,9 @@ public:
    T* search(Tree* node, T d, bool (*eq)( T, T ), int num_searches);
 private:
    T data; // Generic data
-   Tree* root;
-   Tree* left;
-   Tree* right;
+   Tree* root; // Root (base node)
+   Tree* left; // Left child
+   Tree* right; // Right child
    void remove(Tree* node); // Helper for destructing all nodes
 };
 

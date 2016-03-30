@@ -371,6 +371,3 @@ void breadth_first_traversal( Tree<Person>* node, string settings ) {
    }
 }
 
-
-
-

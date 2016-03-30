@@ -46,7 +46,7 @@ void load_people(Tree<Person>* tree) {
       cout << "Enter file name: ";
       cin.getline( filename, MAX_FILE_LENGTH );
 
-      // Attempt to open the filename the user gave
+      // Attempt to open the given filename
       input.open( filename );
 
       // When file could not be found
@@ -60,12 +60,12 @@ void load_people(Tree<Person>* tree) {
          file_errors = true;
       }
 
+   // Continue until we get a valid file
    } while( file_errors );
 
 
    // Read in file row by row while there is data to read in
    while( !input.eof() ) {
-      // Read in the data that encompasses a person
       string first_name, last_name, street_address, city, state, zip;
 
       // Remove preceding whitespace with 'ws' if it is present,
@@ -83,12 +83,12 @@ void load_people(Tree<Person>* tree) {
       input >> ws;
       getline( input, zip, '\n' );
 
-      // Instantiate a new person with the data read in
+      // Instantiate a new person with the data that was read in
       Person *p = new Person(first_name, last_name, street_address, city, state, zip);
 
       // Then put this data in the tree
       tree->insert(*p, &compare_people);
-
+      
    }
 
 }
@@ -125,35 +125,35 @@ void main_menu(Tree<Person>* tree, string settings) {
       switch(choice) {
          case '1': // Pre-order traversal
             cout << endl;
-            options_menu(settings);
+            options_menu(settings); // Determine fields that can be displayed
             pre_order_traversal(tree->get_root(), settings);
             break;
 
          case '2': // In-order traversal
             cout << endl;
-            options_menu(settings);
+            options_menu(settings); // Determine fields that can be displayed
             in_order_traversal(tree->get_root(), settings);
             break;
 
          case '3': // Post-order traversal
             cout << endl;
-            options_menu(settings);
+            options_menu(settings); // Determine fields that can be displayed
             post_order_traversal(tree->get_root(), settings);
             break;
 
          case '4': // Breadth-order traversal
             cout << endl;
-            options_menu(settings);
+            options_menu(settings); // Determine fields that can be displayed
             breadth_first_traversal(tree->get_root(), settings);
             break;
 
          case '5': // Search for Name
             cout << endl;
-            options_menu(settings);
+            options_menu(settings); // Determine fields that can be displayed
             search_for_person(tree, settings);
             break;
 
-         case '6': // Exit program
+         case '6': // Exit the menu
             exit = true;
             break;
 
@@ -169,9 +169,14 @@ void main_menu(Tree<Person>* tree, string settings) {
 
 //
 // options_menu
-//
+// When there are no settings, give user the change settings menu.
+// When there are settings, ask the user if they would like to utilize
+// The previous settings. If they would, give the user the change settings menu,
+// Otherwise, allow the user to utilize the previous settings. Continue to ask
+// Until a yes or no is provided.
 //
 void options_menu(string &settings) {
+   // When the settings 
    if( settings != "" ) {
       bool acceptable_input;
       do {

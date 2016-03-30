@@ -76,6 +76,9 @@ void in_order_traversal( Tree<Person>* tree, string settings );
 void post_order_traversal( Tree<Person>* tree, string settings );
 void breadth_first_traversal( Tree<Person>* node, string settings );
 
+
+/* Class friends for comparising people */
+
 //
 // compare_people
 // Given two person objects, see which person's
@@ -89,10 +92,8 @@ bool compare_people(Person p1, Person p2) {
 
 //
 // compare_people
-// Given two person objects, see which person's
-// last name then first name is larger.
-// Return true if the person p1 is higher alphebetically
-// by last name and first name and false if otherwise.
+// Given two person objects, compare person's
+// Lowercased version of first name and last name.
 //
 bool compare_equality(Person p1, Person p2) {
    string p1_first_name = lower_case(p1.first_name), p2_first_name = lower_case(p2.first_name);

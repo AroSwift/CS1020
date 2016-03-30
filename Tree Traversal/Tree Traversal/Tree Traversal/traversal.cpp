@@ -1,3 +1,11 @@
+//
+// Name: Aaron Barlow
+// Date: 3/29/2016
+// Description: Traversal program which given a file, gives a user
+// a menu that provides 4 various traversals, a search for a person,
+// and a exit option. Traversals are built upon a tree.
+//
+
 #include <iostream>
 #include <fstream>
 #include <vector>
@@ -6,19 +14,25 @@
 using namespace std;
 
 int main() {
+   // Instantiate a new instance of tree with person as the template data
    Tree<Person>* tree = new Tree<Person>;
-//   Settings *s = new Settings();
    string settings;
 
+   // Load the people from file and put it in the tree
    load_people(tree);
 
-   // Show the menu
+   // Show the main menu
    main_menu(tree, settings);
 
+   // Dellocate tree with the tree destructor
    delete tree;
 
 }
 
+//
+// load_people
+// 
+//
 void load_people(Tree<Person>* tree) {
    ifstream input;
    char filename[MAX_FILE_LENGTH];
@@ -82,6 +96,10 @@ void load_people(Tree<Person>* tree) {
 
 //
 // main_menu
+// Display a menu to the user with the following options:
+// pre order traversal, in order traversal, post order traversal,
+// breadth first traversal, search for a name, and exit the program.
+// Read in the user's choice and then do the appropriate action.
 //
 void main_menu(Tree<Person>* tree, string settings) {
    bool exit = false;
@@ -138,15 +156,20 @@ void main_menu(Tree<Person>* tree, string settings) {
             exit = true;
             break;
 
-         default: // Error occured
+         default: // An error occured
             cout << "Please enter a valid option." << endl;
             cout << endl;
             break;
       }
 
+   // Continue to give the menu until user is done with program
    } while(!exit);
 }
 
+//
+// options_menu
+//
+//
 void options_menu(string &settings) {
    if( settings != "" ) {
       bool acceptable_input;

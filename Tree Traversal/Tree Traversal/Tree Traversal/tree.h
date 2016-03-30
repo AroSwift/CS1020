@@ -1,39 +1,65 @@
+//
+// Name: Aaron Barlow
+// Date: 3/29/2016
+// Description: Header file that encapsulates the
+// templated tree class with its public and private methods.
+//
+
 #pragma once
 using namespace std;
 
+// Declare a templated tree class
 template<class T>
 class Tree {
 public:
-   Tree();
-   ~Tree();
+   Tree(); // constructor
+   ~Tree(); // destructor
+   Tree<T>* get_root(); // public method to access root
+   Tree<T>* get_left(); // public method to access left child
+   Tree<T>* get_right(); // public method to access right child
+   T get_data(); // public method to access data
    void insert(T data, bool (*cp)(T, T));
-   Tree<T>* get_root();
-   Tree<T>* get_left();
-   Tree<T>* get_right();
-   T get_data();
    T* search(Tree* node, T d, bool (*eq)( T, T ), int num_searches);
 private:
-   T data;
+   T data; // Generic data
    Tree* root;
    Tree* left;
    Tree* right;
-   void remove(Tree* node);
+   void remove(Tree* node); // Helper for destructing all nodes
 };
 
+
+//
+// get_root
+// Returns the root
+//
 template<class T>
 Tree<T>* Tree<T>::get_root() {
    return root;
 }
 
+//
+// get_left
+// Returns the left child
+//
 template<class T>
 Tree<T>* Tree<T>::get_left() {
    return left;
 }
+
+//
+// get_right
+// Returns the right child
+//
 template<class T>
 Tree<T>* Tree<T>::get_right() {
    return right;
 }
 
+//
+// get_data
+// Returns the templated data
+//
 template<class T>
 T Tree<T>::get_data() {
    return data;
@@ -42,7 +68,7 @@ T Tree<T>::get_data() {
 
 //
 // Constructor for Tree
-// Sets the left and right node to nothing
+// Explicitly sets the left and right node to null
 //
 template<class T>
 Tree<T>::Tree() {
@@ -60,8 +86,8 @@ Tree<T>::~Tree() {
 
 //
 // remove
-// Recursively call remove on node to delete the nodes
-// from left to right.
+// Recursively call remove on node to
+// delete the nodes from left to right.
 //
 template<class T>
 void Tree<T>::remove(Tree* node) {
@@ -79,7 +105,7 @@ void Tree<T>::remove(Tree* node) {
 // of the data, set the first inserted data equal to root.
 // If the data is not root, then find it's order by comparing data with
 // the function pointer and place it in the location in which it is
-// alphebetically ordered with nodes.
+// alphebetically ordered against other nodes.
 //
 template<class T>
 void Tree<T>::insert( T data, bool (*cp)(T, T)) {
@@ -104,9 +130,10 @@ void Tree<T>::insert( T data, bool (*cp)(T, T)) {
                current->left->data = data;
                inserted = true;
             } else { // The left node already exists
+               // Set current to the left node
                current = current->left;
             }
-         } else {
+         } else { // Date is greater than current node's data
             // When the curent node does not exist
             if ( current->right == NULL ) {
                // Create a new tree node with the data
@@ -114,11 +141,12 @@ void Tree<T>::insert( T data, bool (*cp)(T, T)) {
                current->right->data = data;
                inserted = true;
             } else { // The right node already exists
+               // Set current to the right node
                current = current->right;
             }
          }
       // Continue to search the tree until the appropriate
-      // position is identified and then the tree node is inserted
+      // position is identified and the tree node is inserted
       } while( !inserted );
    }
    
@@ -126,31 +154,38 @@ void Tree<T>::insert( T data, bool (*cp)(T, T)) {
 
 //
 // search
-// Searches through the tree until the given data matches
-// the node's data. If the data is never found in the tree
-// Then inform the user that the data was not found.
+// Recursively searches through the tree until the given data matches
+// The node's data and recursively goes back up to base and return
+// a pointer to the data. Also, print the number of nodes that were traversed.
+// If the data is never found in the tree, return a null pointer.
 //
 template<class T>
 T* Tree<T>::search(Tree* node, T d, bool (*eq)( T, T ), int num_searches) {
    // Ensure node exists
    if(node == NULL) return NULL;
    
-   // Determine if node's data is equal to given data using function pointer
+   // Determine if node's data is equal to given data using the given function pointer
    if( eq(node->data, d) ) {
       // Print the data and number of nodes traversed to find the data
       cout << num_searches << " nodes were traversed to find the data." << endl;
-//      print_data(node->data);
       return &node->data;
    } else { // Node's data is not equal to the given data
       T* outcome = NULL;
+      // When left node exists
       if( node->left != NULL ) {
+         // Call this function and get the outcome
          outcome = search( node->left, d, eq, num_searches++ );
          if(outcome != NULL) return outcome;
       }
+      
+      // When right node exists
       if( node->right != NULL ) {
+         // Call this function and get the outcome
          outcome = search( node->right, d, eq, num_searches++ );
          if(outcome != NULL) return outcome;
       }
+      // Either return null because we could not
+      // find the data or return the data found.
       return outcome;
    }
 }

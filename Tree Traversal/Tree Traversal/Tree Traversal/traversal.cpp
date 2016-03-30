@@ -31,7 +31,8 @@ int main() {
 
 //
 // load_people
-// 
+// Get a valid file from the user and then
+// Read in the people into the tree.
 //
 void load_people(Tree<Person>* tree) {
    ifstream input;

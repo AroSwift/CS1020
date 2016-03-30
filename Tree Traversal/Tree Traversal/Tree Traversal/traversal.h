@@ -1,3 +1,10 @@
+//
+// Name: Aaron Barlow
+// Date: 3/29/2016
+// Description: Header file that encapsulates the person class
+// as well as the traversal and person prototypes.
+//
+
 #pragma once
 #include <string>
 #include "tree.h"
@@ -52,12 +59,14 @@ bool compare_equality(Person p1, Person p2) {
    return p1_first_name == p2_first_name && p1_last_name == p2_last_name;
 }
 
-
+// Prototype for
 void load_people(Tree<Person>* tree);
+
+// Search prototypes
 void search_for_person(Tree<Person>* tree, string settings);
 void search(Tree<Person>* tree, Person p, string settings);
 
-// Menu Options
+// Menu function prototypes
 void main_menu(Tree<Person>* tree, string settings);
 void options_menu(string &settings);
 void change_settings_menu(string &settings);

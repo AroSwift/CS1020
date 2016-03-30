@@ -1,13 +1,18 @@
 //
 // Name: Aaron Barlow
 // Date: 3/29/2016
-// Description: Traversal program which given a file, gives a user
-// a menu that provides 4 various traversals, a search for a person,
-// and a exit option. Traversals are built upon a tree.
+// Description: Traversal program allows user to traverse a tree in various ways.
+// When given a file, the following data is read into a tree:
+// first_name, last_name, street_address, city, state, zip
+// The user is then given a menu that provides pre order traversal,
+// In order traversal, post order traversal, breadth first traversal,
+// A search for a person, and an exit option. The traversals and
+// search for person utlize the tree that was built with the data.
 //
 
 #include <iostream>
 #include <fstream>
+#include <cstring>
 #include <vector>
 #include <queue>
 #include "traversal.h"
@@ -176,33 +181,42 @@ void main_menu(Tree<Person>* tree, string settings) {
 // Until a yes or no is provided.
 //
 void options_menu(string &settings) {
-   // When the settings 
+   // When the settings are not set
    if( settings != "" ) {
       bool acceptable_input;
-      do {
+      do { // Continue to ask the user for a response until valid input is given
          char user_choice;
          cout << "Would you like to use your previous settings? (Y, N): ";
          cin >> user_choice;
 
+         // The user wants to use the current settings
          if( user_choice == 'Y' || user_choice == 'y' ) {
             acceptable_input = true;
+         // The user wants to change the settings
          } else if( user_choice == 'N' || user_choice == 'n' ) {
             acceptable_input = true;
             change_settings_menu(settings);
-         } else {
+         } else { // No appropriate input was given
             cout << "Please enter 'Y' or 'N' to indicate whether you would like to use the prior settings." << endl;
             acceptable_input = false;
          }
       } while( !acceptable_input );
-   } else {
+   } else { // There are no previous settings
+      // Give user the change settings menu
       change_settings_menu(settings);
    }
 }
 
+//
+// change_settings_menu
+// Display settings menu and allow the user to select
+// Which fields they want to be displayed. Allows user to input
+// Multiple fields and then sets the settings string to that input.
+//
 void change_settings_menu(string &settings) {
    string choice;
 
-   // Give user choices
+   // Display the options of fields that the user can select to be displayed
    cout << "Field Selection Menu" << endl
    << "-------------------------" << endl
    << "Please select which fields you would like to be displayed:" << endl
@@ -215,6 +229,7 @@ void change_settings_menu(string &settings) {
    << "Choice: ";
    cin >> choice;
 
+   // Set the settings to what the user wants to use
    settings = choice;
    
    cout << endl;
@@ -228,35 +243,46 @@ void change_settings_menu(string &settings) {
 // and pass the passed paramaters.
 //
 void search(Tree<Person>* tree, Person p, string settings) {
-   Person *found_person = tree->search( tree->get_root(), p, &compare_equality, 1 );
-   if(found_person == NULL) {
-      // Inform user no record can be found when whole tree has been traversed
+   // Search for the person and set the search_person to what is returned
+   Person *person_searched = tree->search( tree->get_root(), p, &compare_equality, 1 );
+   
+   // User was not found
+   if(person_searched == NULL) {
+      // Inform user no person was found
       cout << "The person could not be found." << endl << endl;
-   } else {
-      print_data(*found_person, settings);
+   } else { // User was found
+      // Print the user that was found with the fields the user wants
+      print_data(*person_searched, settings);
    }
 }
 
-
+//
+// search_for_person
+// Prompt the user to enter the first name
+// And last name of ther person they are searching for.
+// After getting input, searching for the person.
+//
 void search_for_person(Tree<Person>* tree, string settings) {
    string first_name, last_name;
 
    cout << "Find a Person:" << endl
    << "-------------------" << endl;
 
+   // Prompt user for first name
    cout << "Enter the first name: ";
    cin >> first_name;
 
+   // Prompt user for last name
    cout << "Enter the last name: ";
    cin >> last_name;
 
+   // Instantiate a new instance of person
    Person *search_person = new Person( first_name, last_name );
    
+   // Then search for the person and show the fields that the user wants to see
    search(tree, *search_person, settings);
    
 }
-
-
 
 //
 // lower_case
@@ -272,8 +298,13 @@ string lower_case( string value ) {
    return value; // As a lowercased string
 }
 
-
+//
+// print_data
+// Print out the fields that the user has
+// Indicated that they want to view.
+//
 void print_data(Person p, string settings) {
+   // For each setting determine if field should be displayed
    if( settings.find('1') != string::npos) cout << "First Name: " << p.first_name << endl;
    if( settings.find('2') != string::npos) cout << "Last Name: " << p.last_name << endl;
    if( settings.find('3') != string::npos) cout << "Street Address: " << p.street_address << endl;
@@ -296,7 +327,7 @@ void pre_order_traversal( Tree<Person>* node, string settings ) {
    // Ensure node exists
    if( node == NULL ) return;
 
-   // Print node's data
+   // Print the node's data with the fields that the user wants to view
    print_data(node->get_data(), settings);
 
    // Recursively go to left side of tree
@@ -319,7 +350,7 @@ void in_order_traversal( Tree<Person>* node, string settings ) {
    // Recursively go to left side of tree
    if( node->get_left() != NULL ) in_order_traversal(node->get_left(), settings);
 
-   // Print the node's data
+   // Print the node's data with the fields that the user wants to view
    print_data(node->get_data(), settings);
 
    // Recursively go to right side of tree
@@ -341,7 +372,7 @@ void post_order_traversal( Tree<Person>* node, string settings ) {
    // Recursively go to right side of tree
    if( node->get_right() != NULL ) post_order_traversal(node->get_right(), settings);
 
-   //Print the node's data
+   // Print the node's data with the fields that the user wants to view
    print_data(node->get_data(), settings);
 }
 
@@ -355,7 +386,7 @@ void breadth_first_traversal( Tree<Person>* node, string settings ) {
    if (node->get_root() == NULL)  return;
 
    // Create an empty queue
-   queue<Tree <Person>> q;
+   queue<Tree <Person> > q;
 
    // Enqueue root
    q.push(*node->get_root());
